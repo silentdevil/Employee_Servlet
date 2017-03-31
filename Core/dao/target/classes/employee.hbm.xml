@@ -12,6 +12,11 @@
 		<property name="lastname" type="string" column="lastname"/>
 		<property name="middlename" type="string" column="middlename"/>
 		<many-to-one name="address" column="address" class="com.exist.employee.Address" cascade="all"/>
+		<property name="birthday" type="calendar_date" column="birthday"/>
+		<property name="gwa" type="float" column="gwa"/>
+		<property name="currentlyHired" type="boolean" column="currentlyhired"/>
+		<many-to-one name="contact" column="contact" class="com.exist.employee.Contact" cascade="all"/>
+		
 	</class>
 
 	 <class name="com.exist.employee.Address" table="addresses">
@@ -23,6 +28,16 @@
       <property name="city" column="city" type="string"/>
       <property name="brgy" column="brgy" type="string"/>
       <property name="zipcode" column="zipcode" type="string"/>
+   </class>
+   
+   <class name="com.exist.employee.Contact" table="contacts">
+      <id name="contactId" column="contactid" type="long" unsaved-value="0">
+         <generator class="native"/>
+      </id>
+       <property name="landline" column="landline" type="string"/>
+      <property name="mobile" column="mobile" type="string"/>
+      <property name="email" column="email" type="string"/>
+   
    </class>
 
 </hibernate-mapping>

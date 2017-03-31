@@ -49,4 +49,13 @@ public class Address{
       this.zipcode = zipcode;
    }
    
+   public String toString() {
+	   StringBuffer sb = new StringBuffer();
+		sb.append("Street no : ").append(streetno);
+		sb.append(" ,Street : ").append(street);
+		sb.append(" , Brgy : ").append(brgy);
+		sb.append(", City: ").append(city);
+		return sb.toString();
+   }
+   
 }

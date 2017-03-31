@@ -9,20 +9,28 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.Transaction;
 public class EmployeeService {
 
-	public void addEmployee(String lastname, String firstname, String middlename){
+	public void addEmployee(String lastname, String firstname, 
+								String middlename, Address address, float gwa,
+								boolean currentlyHired, Contact contact){
+			
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		Employee emp = new Employee();
 		emp.setFirstname(firstname);
 		emp.setLastname(lastname);
 		emp.setMiddlename(middlename);
+		emp.setAddress(address);
+		emp.setGwa(gwa);
+		emp.setCurrentlyHired(currentlyHired);
+		emp.setContact(contact);
+		
 
 
 		session.save(emp);
 		session.getTransaction().commit();
 	}
 
-	public void addAddress(String brgy, String city){
+	public Address addAddress(String brgy, String city){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		Address add = new Address();
@@ -31,7 +39,20 @@ public class EmployeeService {
 
 		session.save(add);
 		session.getTransaction().commit();
+		return add;
 	}
+	
+	public Contact addContact(String landline){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		Contact contact = new Contact();
+		contact.setLandline(landline);
+
+		session.save(contact);
+		session.getTransaction().commit();
+		return contact;
+	}
+
 
 
 

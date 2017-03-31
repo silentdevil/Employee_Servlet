@@ -1,4 +1,5 @@
 package com.exist.employee;
+import java.util.Date;
 
 public class Employee {
 	private int employeeId;
@@ -8,8 +9,10 @@ public class Employee {
 	private String suffix;
 	private String title;
 	private Address address;
-
-
+	private Date birthday;
+	private Float gwa;
+	private Boolean currentlyHired;
+	private Contact contact;
 
 	public int getEmployeeId() {
 		return employeeId;
@@ -66,12 +69,47 @@ public class Employee {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+	
+	public Date getBirthday() {
+		return birthday;
+	}
+	
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+	
+	public Float getGwa() {
+		return gwa;
+	}
+	
+	public void setGwa(Float gwa) {
+		this.gwa = gwa;
+	}
+	
+	public Boolean getCurrentlyHired() {
+		return currentlyHired;
+	}	
+	
+	public void setCurrentlyHired(Boolean currentlyHired) {
+		this.currentlyHired = currentlyHired;
+	}
+	
+	public Contact getContact() {
+		return contact;
+	}
+	
+	public void setContact(Contact contact) {
+		this.contact = contact;
+	}
+	
+	
 
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("Lastname : ").append(lastname);
 		sb.append(" ,Firstname : ").append(firstname);
 		sb.append(" , Middlename : ").append(middlename);
+		sb.append(" , Address: ").append(address);
 		return sb.toString();
 	}
 }
