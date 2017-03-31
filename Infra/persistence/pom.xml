@@ -1,0 +1,23 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.exist.employee</groupId>
+  <artifactId>persistence</artifactId>
+  <version>1.0</version>
+  <packaging>jar</packaging>
+
+  <name>persistence</name>
+
+  <properties>
+    <RESOURCE_PATH>${project.basedir}/src/main/resources</RESOURCE_PATH>
+  </properties>
+
+<build>
+  <resources>
+    <resource>
+      <directory>${RESOURCE_PATH}</directory>
+      <filtering>true</filtering>
+    </resource>
+  </resources>
+</build>
+</project>

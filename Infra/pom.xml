@@ -1,0 +1,30 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  
+
+  <groupId>com.exist.employee</groupId>
+  <artifactId>Infra</artifactId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+
+
+
+  <name>Infra</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.exist.employee</groupId>
+      <artifactId>persistence</artifactId>
+      <version>1.0</version>
+    </dependency>
+  </dependencies>
+  <modules>
+    <module>persistence</module>
+    <module>buildtools</module>
+  </modules>
+</project>
