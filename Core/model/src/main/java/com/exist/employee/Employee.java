@@ -1,18 +1,20 @@
 package com.exist.employee;
 import java.util.Date;
-
+import java.util.Set;
 public class Employee {
 	private int employeeId;
-	private String lastname;
-	private String firstname;
-	private String middlename;
-	private String suffix;
-	private String title;
+	private String lastname = "";
+	private String firstname = "";
+	private String middlename = "";
+	private String suffix = "";
+	private String title = "";
 	private Address address;
 	private Date birthday;
 	private Float gwa;
+	private Date datehired;
 	private Boolean currentlyHired;
 	private Contact contact;
+	private Set<Role> roles;
 
 	public int getEmployeeId() {
 		return employeeId;
@@ -86,6 +88,14 @@ public class Employee {
 		this.gwa = gwa;
 	}
 	
+	public Date getDatehired() {
+		return datehired;
+	}
+	
+	public void setDatehired(Date datehired) {
+		this.datehired = datehired;
+	}
+	
 	public Boolean getCurrentlyHired() {
 		return currentlyHired;
 	}	
@@ -102,14 +112,27 @@ public class Employee {
 		this.contact = contact;
 	}
 	
+	public Set<Role> getRoles() {
+		return roles;
+	}
 	
-
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+	
+	public Employee addRole(Role role) {
+		roles.add(role);
+		return this;
+	}
+	
+	public Employee deleteRole(Role role) {
+		roles.remove(role);
+		return this;
+	}
+	
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("Lastname : ").append(lastname);
-		sb.append(" ,Firstname : ").append(firstname);
-		sb.append(" , Middlename : ").append(middlename);
-		sb.append(" , Address: ").append(address);
+		sb.append(employeeId + "\t").append(lastname + "," + firstname + " " + middlename + " " + suffix);
 		return sb.toString();
 	}
 }

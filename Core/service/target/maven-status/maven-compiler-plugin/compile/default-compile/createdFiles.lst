@@ -1,2 +1,3 @@
 com\exist\employee\EmployeeService.class
+com\exist\employee\UpdateEmployeeService.class
 com\exist\employee\AddressService.class

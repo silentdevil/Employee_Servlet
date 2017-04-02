@@ -12,12 +12,24 @@
 		<property name="lastname" type="string" column="lastname"/>
 		<property name="middlename" type="string" column="middlename"/>
 		<many-to-one name="address" column="address" class="com.exist.employee.Address" cascade="all"/>
-		<property name="birthday" type="calendar_date" column="birthday"/>
+		<property name="birthday" type="date" column="birthday"/>
+		<property name="datehired" type="date" column="datehired"/>
 		<property name="gwa" type="float" column="gwa"/>
 		<property name="currentlyHired" type="boolean" column="currentlyhired"/>
 		<many-to-one name="contact" column="contact" class="com.exist.employee.Contact" cascade="all"/>
+		<set name="roles" cascade="save-update" table="employee_role">
+         <key column="employeeid"/>
+         <many-to-many column="roleid" class="com.exist.employee.Role"/>
+		</set>
 		
 	</class>
+	
+	<class name="com.exist.employee.Role" table="roles">
+      <id name="roleId" type="long" column="roleid">
+         <generator class="native"/>
+      </id>
+      <property name="role" column="role" type="string"/>
+   </class>
 
 	 <class name="com.exist.employee.Address" table="addresses">
       <id name="addressId" column="addressid" type="long" unsaved-value="0">

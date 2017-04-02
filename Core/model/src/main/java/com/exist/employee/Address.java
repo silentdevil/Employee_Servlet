@@ -51,10 +51,10 @@ public class Address{
    
    public String toString() {
 	   StringBuffer sb = new StringBuffer();
-		sb.append("Street no : ").append(streetno);
-		sb.append(" ,Street : ").append(street);
-		sb.append(" , Brgy : ").append(brgy);
-		sb.append(", City: ").append(city);
+		sb.append(streetno).append(" ");
+		sb.append(street).append(", ");
+		sb.append(brgy).append(", ");
+		sb.append(city).append(" " + zipcode);
 		return sb.toString();
    }
    

@@ -41,4 +41,12 @@ public class Contact {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String toString() {
+	   StringBuffer sb = new StringBuffer();
+		sb.append("Landline:  ").append(landline);
+		sb.append(" Mobile: ").append(mobile);
+		sb.append(" Email : ").append(email);
+		return sb.toString();
+	}
 }
