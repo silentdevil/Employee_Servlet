@@ -9,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.Transaction;
 import java.util.Set;
 import java.util.Date;
+import java.util.HashSet;
 public class EmployeeService {
 	//private UpdateEmployeeService updateEmployeeService;
 	public void addEmployee(Employee employee){
@@ -18,6 +19,7 @@ public class EmployeeService {
 		
 		session.save(employee);
 		session.getTransaction().commit();
+		System.out.println("COMMIT");
 	}
 
 	public void addAddress(Address address){
@@ -29,13 +31,14 @@ public class EmployeeService {
 
 	}
 	
-	public void addContact(Contact contact){
+	public Contact addContact(Contact contact){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		
 
-		session.save(contact);
+		session.saveOrUpdate(contact);
 		session.getTransaction().commit();
+		return contact;
 	}
 	
 	public void addRole(Role role) {
@@ -45,6 +48,15 @@ public class EmployeeService {
 		session.save(role);
 		session.getTransaction().commit();
 	}
+
+	public void deleteRole(Role role) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		session.delete(role);
+		session.getTransaction().commit();
+	}
+
+
 
 
 
@@ -88,17 +100,33 @@ public class EmployeeService {
 		cri = cri.add(Restrictions.eq("role", str));
 		role = (Role)cri.list().get(0);
 		session.getTransaction().commit();
-		
-		System.out.println("Commit");
 		return role;
 	}
-	
+
+	public boolean isRoleDeletable(Role role) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();	
+	 	List<Role> list = session.createSQLQuery("SELECT * FROM roles INNER JOIN employee_role On employee_role.roleid = roles.roleid AND employee_role.roleid =" + role.getRoleId()).addEntity(Role.class).list();
+		session.getTransaction().commit();
+		return list.size() == 0;
+	}
+
+	public Contact searchContact(Employee employee) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();	
+		List<Contact> list = session.createSQLQuery("select * from contacts where contactid=(select contact from employees where employeeid="+ employee.getEmployeeId() + ")").addEntity(Contact.class).list();
+		session.getTransaction().commit();
+		return list.get(0);
+	}
+
+
+
 	
 
-	public void listEmployees(){
+	public void listEmployees(String order){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		List<Employee> list = session.createSQLQuery("select * from employees").addEntity(Employee.class).list();
+		List<Employee> list = session.createSQLQuery("select * from employees" + order).addEntity(Employee.class).list();
 		list.forEach(emp -> System.out.printf("%d\t%s, %s %s\n",emp.getEmployeeId(),emp.getLastname(),emp.getFirstname(),emp.getMiddlename()));
 		session.getTransaction().commit();
 	}
@@ -107,17 +135,18 @@ public class EmployeeService {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();	
 		List<Role> list = session.createSQLQuery("select * from roles").addEntity(Role.class).list();
-		list.forEach(emp -> System.out.printf("%s\t",emp.getRole()));
+		list.forEach(System.out::println);
 		System.out.println();
 		session.getTransaction().commit();
 	}
 	
-	public List<Role> listEmployeeRoles(Employee employee) {
+	public Set<Role> listEmployeeRoles(Employee employee) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();	
 		List<Role> list = session.createSQLQuery("SELECT * FROM roles JOIN employee_role ON employee_role.roleid = roles.roleid JOIN employees ON employees.employeeid = employee_role.employeeid WHERE employees.employeeid = " + employee.getEmployeeId()).addEntity(Role.class).list();
 		//list.forEach(emp -> System.out.printf("%s\t",emp.getRole()));
 		session.getTransaction().commit();
-		return list;
+		return new HashSet<Role>(list);
 	}
+
 }
