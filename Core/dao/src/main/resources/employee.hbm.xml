@@ -5,7 +5,7 @@
 
 <hibernate-mapping package="com.exist.employee">
 	<class name="com.exist.employee.Employee" table="Employees">
-		<id name="employeeId" column="employeeid">
+		<id name="employeeId" column="employeeid" type="long">
 			<generator class="native"/>
 		</id>
 		<property name="firstname" type="string" column="firstname"/>

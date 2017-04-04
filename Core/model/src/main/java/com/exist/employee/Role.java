@@ -43,6 +43,6 @@ public class Role {
    }
    
    public String toString() {
-	   return roleId + "\t" + role;
+	   return roleId + " - " + role;
    }
 }

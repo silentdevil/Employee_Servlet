@@ -36,7 +36,7 @@ CREATE TABLE contacts (
 CREATE TABLE employee_role (
 	employeeid int,
 	roleid int,
-	primaty key(employeeid,roleid)
+	primary key(employeeid,roleid)
 );
 
 CREATE TABLE roles (

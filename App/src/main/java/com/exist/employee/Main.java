@@ -10,7 +10,7 @@ public class Main {
 		EmployeeService empServ = new EmployeeService();
 
 		while(true) {
-			System.out.print("\033\143");
+			//System.out.print("\033\143");
 			empServ.listEmployees("");
 			//System.out.println("What to do? ADDEMP, DELEMP, EDITEMP");
 			String cmd = InputManager.enterString("Action: ADDEMP, DELEMP, EDITEMP, SORT_GWA, MODIFYROLES",
@@ -22,7 +22,7 @@ public class Main {
 						break;
 						
 					case "DELEMP":
-						empServ.deleteEmployee(InputManager.getPositiveNumber("Employee ID"));
+						empServ.deleteElement(empServ.getData(InputManager.getPositiveNumber("Employee ID"),new Employee()));
 						break;
 						
 					case "EDITEMP":

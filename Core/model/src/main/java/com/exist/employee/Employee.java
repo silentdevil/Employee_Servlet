@@ -2,7 +2,7 @@ package com.exist.employee;
 import java.util.Date;
 import java.util.Set;
 public class Employee {
-	private int employeeId;
+	private long employeeId;
 	private String lastname = "";
 	private String firstname = "";
 	private String middlename = "";
@@ -16,11 +16,11 @@ public class Employee {
 	private Contact contact;
 	private Set<Role> roles;
 
-	public int getEmployeeId() {
+	public long getEmployeeId() {
 		return employeeId;
 	}
 
-	public void setEmployeeId(int employeeId) {
+	public void setEmployeeId(long employeeId) {
 		this.employeeId = employeeId;
 	}
 

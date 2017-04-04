@@ -52,6 +52,7 @@ public class InputManager {
 	
 	public static boolean getBoolean(String str) throws Exception {
 		System.out.print("IS "+str+" : ");
-		return scan.nextBoolean();
+		String bool = scan.next().toUpperCase();
+		return (bool.equals("Y") || bool.equals("YES"));
 	}
 }	
