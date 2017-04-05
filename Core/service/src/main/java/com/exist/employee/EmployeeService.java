@@ -31,15 +31,23 @@ public class EmployeeService {
 		session.getTransaction().commit();
 	}
 
-	public <E> E getData(long id, E e) {
+	public <E> E getData(long id, E e) throws Exception{
+		
 		Session session = beginTransaction();
 		Criteria cri = session.createCriteria(e.getClass());
 		String s = e.getClass().getName().toLowerCase() + "Id".trim();
 		s = s.replace("com.exist.employee.", "");
-		cri = cri.add(Restrictions.eq(s, Long.valueOf(id)));
-		E obj = (E) cri.list().get(0);
-		session.getTransaction().commit();
-		return obj;
+		try {
+			cri = cri.add(Restrictions.eq(s, Long.valueOf(id)));
+			E obj = (E) cri.uniqueResult();
+			session.getTransaction().commit();
+			return obj;
+		} catch(Exception ex) {
+			System.err.println(s + " not found. Please enter the correct id");
+			throw new Exception("Data not found");
+		}
+		
+		
 	}
 
 	public boolean isRoleDeletable(Role role) {
@@ -51,8 +59,20 @@ public class EmployeeService {
 
 	public void listEmployees(String order){
 		Session session = beginTransaction();
-		List<Employee> list = session.createSQLQuery("select * from employees" + order).addEntity(Employee.class).list();
-		list.forEach(emp -> System.out.printf("%d\t%s, %s %s\n",emp.getEmployeeId(),emp.getLastname(),emp.getFirstname(),emp.getMiddlename()));
+		List<Employee> list = session.createSQLQuery("select * from employees " + order).addEntity(Employee.class).list();
+		switch(order) {
+			case "ORDER BY gwa":
+				list.forEach(emp -> System.out.printf("%d\t%s, %s %s %f\n",emp.getEmployeeId(),emp.getLastname(),emp.getFirstname(),emp.getMiddlename(),emp.getGwa()));
+				break;
+			case "ORDER BY datehired":
+				list.forEach(emp -> System.out.printf("%d\t%s, %s %s %s\n",emp.getEmployeeId(),emp.getLastname(),emp.getFirstname(),emp.getMiddlename(),emp.getDatehired()));
+				break;
+			case "ORDER BY lastname":
+				list.forEach(emp -> System.out.printf("%d\t%s, %s %s\n",emp.getEmployeeId(),emp.getLastname(),emp.getFirstname(),emp.getMiddlename()));
+				break;
+			default:
+				list.forEach(emp -> System.out.printf("%d\t%s, %s %s\n",emp.getEmployeeId(),emp.getLastname(),emp.getFirstname(),emp.getMiddlename()));
+		}
 		session.getTransaction().commit();
 	}
 	
