@@ -32,7 +32,7 @@ public class EmployeeService {
 		session.getTransaction().commit();
 	}
 
-	public <E> E getData(long id, E e) {
+	public <E> E getData(long id, E e) throws Exception {
 		
 		Session session = beginTransaction();
 		/*Criteria cri = session.createCriteria(e.getClass());
@@ -47,13 +47,18 @@ public class EmployeeService {
 			System.err.println(s + " not found. Please enter the correct id");
 			throw new Exception("Data not found");
 		}*/
+		try {
 		e = (E) session.get(e.getClass(),id);
 		session.getTransaction().commit();
+		} catch(Exception ex) {
+			throw new Exception("Data not found");
+		}
+		
 		return e;
 		
 	}
 
-	public <E> E getData(E e) {
+	public <E> E getData(E e) throws Exception {
 		try {
 			Session session = beginTransaction();
 			List<E> list = session.createCriteria(e.getClass()).list();

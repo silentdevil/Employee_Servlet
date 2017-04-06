@@ -29,7 +29,7 @@ public class FactoryService {
 		//empService.listEmployees("");
 	}
 	
-	private static Address createAddress(EmployeeService empService) {
+	private static Address createAddress(EmployeeService empService) throws Exception {
 		System.out.println("Enter ADDRESS!");
 		Address address = new Address();
 		try {
@@ -48,7 +48,7 @@ public class FactoryService {
 		return empService.getData(address);
 	}
 	
-	private static Contact createContact(EmployeeService empService) {
+	private static Contact createContact(EmployeeService empService) throws Exception {
 		Contact contact = new Contact();
 		try {
 			contact.setLandline(InputManager.enterString("Landline",""));
@@ -63,19 +63,20 @@ public class FactoryService {
 		return empService.getData(contact);
 	}
 
-	private static Role setRoleToEmployee(EmployeeService empService) {
+	private static Role setRoleToEmployee(EmployeeService empService) throws Exception {
 		System.out.println("What role: ");
 		empService.listRoles();
 		try {
 			Role role = empService.getData(Long.valueOf(InputManager.getPositiveNumber("ROLE","EMPTY_NOT_ALLOWED")),new Role());
 			return role;
 		} catch(Exception ex){
-			ex.printStackTrace();
+			//ex.printStackTrace();
+				return null;
 		}
-		return null;
+	
 	}
 
-	public static Employee addEmployeeRole(EmployeeService empService, Employee employee) {
+	public static Employee addEmployeeRole(EmployeeService empService, Employee employee) throws Exception {
 		Set<Role> roles = empService.listEmployeeRoles(employee);
 		roles.add(setRoleToEmployee(empService));	
 		employee.setRoles(roles);
@@ -130,6 +131,10 @@ public class FactoryService {
 		Role role = empService.getData(Long.valueOf(InputManager.getPositiveNumber("ROLE ID","EMPTY_NOT_ALLOWED")), new Role());
 		if(empService.isRoleDeletable(role))
 			empService.deleteElement(role);
+		else {
+			System.out.println("Role " + role + " is sucessfully deleted");
+		}
+		
 	}
 
 }

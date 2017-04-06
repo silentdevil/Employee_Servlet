@@ -18,7 +18,7 @@ public class UpdateEmployeeScreen {
 			while(true) {
 
 				String cmd = InputManager.enterString("Action: ADDROLE, DELROLE, ADDCONTACT, DELCONTACT, BACK", "EMPTY_NOT_ALLOWED");
-				try {
+				//try {
 					switch(cmd) {
 						case "ADDROLE":
 							employee = FactoryService.addEmployeeRole(empService, employee);
@@ -34,9 +34,9 @@ public class UpdateEmployeeScreen {
 						case "BACK":
 							return;
 					}
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
+			//	} catch (Exception ex) {
+			//		ex.printStackTrace();
+			//	}
 				empService.saveElement(employee);
 				showEmployeeDetails(empService,employee);
 			
@@ -62,7 +62,7 @@ public class UpdateEmployeeScreen {
 			System.out.println("Currently hired: " + employee.getCurrentlyHired());
 			System.out.println("Contacts: " + empService.getData(employee.getContact().getContactId(),
 											new Contact()));
-			System.out.println("Roles: " + empService.getData(employee.getEmployeeId(), new Role()));
+			System.out.println("Roles: " + empService.listEmployeeRoles(employee));
 			
 			//return employee;
 
