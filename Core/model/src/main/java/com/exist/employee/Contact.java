@@ -49,4 +49,22 @@ public class Contact {
 		sb.append(" Email : ").append(email);
 		return sb.toString();
 	}
+
+	@Override
+   public boolean equals(Object obj) {
+       if(obj == null || getClass() != obj.getClass())
+         return false;
+
+        Contact add2 = (Contact) obj;
+
+         return this.landline.equals(add2.getLandline()) && 
+         		this.mobile.equals(add2.getMobile()) && this.email.equals(add2.getEmail());
+        
+   }
+
+   @Override
+   public int hashCode() {
+        return java.util.Objects.hash(landline,mobile,email);
+    }
+
 }

@@ -21,7 +21,8 @@ public class EmployeeService {
 
 	public Session beginTransaction() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
+		if(!session.getTransaction().isActive())
+			session.beginTransaction();
 		return session;
 	}
 
@@ -31,10 +32,10 @@ public class EmployeeService {
 		session.getTransaction().commit();
 	}
 
-	public <E> E getData(long id, E e) throws Exception{
+	public <E> E getData(long id, E e) {
 		
 		Session session = beginTransaction();
-		Criteria cri = session.createCriteria(e.getClass());
+		/*Criteria cri = session.createCriteria(e.getClass());
 		String s = e.getClass().getName().toLowerCase() + "Id".trim();
 		s = s.replace("com.exist.employee.", "");
 		try {
@@ -45,9 +46,22 @@ public class EmployeeService {
 		} catch(Exception ex) {
 			System.err.println(s + " not found. Please enter the correct id");
 			throw new Exception("Data not found");
+		}*/
+		e = (E) session.get(e.getClass(),id);
+		session.getTransaction().commit();
+		return e;
+		
+	}
+
+	public <E> E getData(E e) {
+		try {
+			Session session = beginTransaction();
+			List<E> list = session.createCriteria(e.getClass()).list();
+			return (E) list.get(list.indexOf((E)e));
+		} catch(Exception ex) {
+			//ex.printStackTrace();
+			return null;
 		}
-		
-		
 	}
 
 	public boolean isRoleDeletable(Role role) {

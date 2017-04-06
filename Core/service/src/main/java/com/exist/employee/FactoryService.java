@@ -42,8 +42,10 @@ public class FactoryService {
 			ex.printStackTrace();
 			
 		}
-		empService.saveElement(address);
-		return address;
+		if(empService.getData(address) == null)
+			empService.saveElement(address);
+			
+		return empService.getData(address);
 	}
 	
 	private static Contact createContact(EmployeeService empService) {
@@ -56,9 +58,9 @@ public class FactoryService {
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		
-		empService.saveElement(contact);
-		return contact;
+		if(empService.getData(contact) == null)
+			empService.saveElement(contact);
+		return empService.getData(contact);
 	}
 
 	private static Role setRoleToEmployee(EmployeeService empService) {

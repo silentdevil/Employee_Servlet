@@ -57,5 +57,24 @@ public class Address{
 		sb.append(city).append(" " + zipcode);
 		return sb.toString();
    }
+
+   @Override
+   public boolean equals(Object obj) {
+       if(obj == null || getClass() != obj.getClass())
+         return false;
+
+         Address add2 = (Address) obj;
+
+         return this.streetno == add2.getStreetno() && this.street.equals(add2.getStreet()) && this.brgy.equals(add2.getBrgy())
+            && this.city.equals(add2.getCity());
+         //return this.toString().equals(obj.toString());
+   }
+
+   @Override
+   public int hashCode() {
+        return java.util.Objects.hash(streetno,street,brgy,city);
+    }
+   
+
    
 }

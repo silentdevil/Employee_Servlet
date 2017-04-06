@@ -7,11 +7,12 @@
 	<session-factory>
 
 		<!-- Database connection settings -->
-		<property name="connection.url">jdbc:postgresql://localhost:5432/postgres</property>
-		<property name="connection.driver_class">org.postgresql.Driver</property>
+		<property name="connection.url">jdbc:p6spy:postgresql://localhost:5432/postgres</property>
+		<property name="connection.driver_class">com.p6spy.engine.spy.P6SpyDriver</property>
 		<property name="connection.username">postgres</property>
 		<property name="connection.password">Mani007</property>
 		<property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+
 		
 		<!-- SQL dialect -->
 		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
@@ -22,7 +23,7 @@
 		<!-- Enable Hibernate's automatic session context management -->
 		<property name="current_session_context_class">thread</property>
 
-		<!-- Drop and re-create the database schema on startup -->
+		<property name="show_sql">true</property>
 
 		
 		<mapping resource="employee.hbm.xml"/>

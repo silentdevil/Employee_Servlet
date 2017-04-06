@@ -3,6 +3,7 @@ import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Collection;
+import java.util.stream.Collectors;
 public class UpdateEmployeeScreen {
 	
 	public static void updateEmployee(EmployeeService empService) {
@@ -61,9 +62,11 @@ public class UpdateEmployeeScreen {
 			System.out.println("Currently hired: " + employee.getCurrentlyHired());
 			System.out.println("Contacts: " + empService.getData(employee.getContact().getContactId(),
 											new Contact()));
-			System.out.println("Roles: " + empService.listEmployeeRoles(employee));
+			System.out.println("Roles: " + empService.getData(employee.getEmployeeId(), new Role()));
 			
 			//return employee;
+
+		//employee.getRoles().stream().map(role -> empService.getData(role.getRoleId(), ))
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}

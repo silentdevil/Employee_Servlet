@@ -11,6 +11,8 @@
 		<property name="firstname" type="string" column="firstname"/>
 		<property name="lastname" type="string" column="lastname"/>
 		<property name="middlename" type="string" column="middlename"/>
+      <property name="suffix" type="string" column="suffix"/>
+      <property name="title" type="string" column="title"/>
 		<many-to-one name="address" column="address" class="com.exist.employee.Address" cascade="all"/>
 		<property name="birthday" type="date" column="birthday"/>
 		<property name="datehired" type="date" column="datehired"/>
