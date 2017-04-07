@@ -5,14 +5,13 @@ import java.util.Scanner;
 //import com.exist.employee.InputManager;
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
 		EmployeeService empServ = new EmployeeService();
 		String order = "";
 		while(true) {
 			System.out.print("\033\143");
 			empServ.listEmployees(order);
-			//System.out.println("What to do? ADDEMP, DELEMP, EDITEMP");
 			String cmd = InputManager.enterString("Action: ADDEMP, DELEMP, EDITEMP, SORT_GWA, MODIFYROLES",
 			 "EMPTY_NOT_ALLOWED");
 			try {
@@ -43,16 +42,8 @@ public class Main {
 				}
 			} catch (Exception ex) {
 				System.err.println(ex);
-				InputManager.enterString("","");
+				Thread.sleep(2000);
 			}
-			
-			//empServ.listEmployees();
-		
 		}
-		
-		
-		
-		
-		
 	}
 }

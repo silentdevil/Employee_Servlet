@@ -4,28 +4,30 @@ public class FactoryService {
 
 	
 	
-	public static void createEmployee(EmployeeService empService) {
+	public static void createEmployee(EmployeeService empService) throws Exception {
 		System.out.print("\033\143");
 		System.out.println("CREATE NEW EMPLOYEE!\n\n");
 		Employee employee = new Employee();
+		String id = "EMPTY_NOT_ALLOWED";
 		try {
-		employee.setLastname(InputManager.enterString("Lastname", "EMPTY_NOT_ALLOWED").toUpperCase());
-		employee.setFirstname(InputManager.enterString("Firstname", "EMPTY_NOT_ALLOWED").toUpperCase());
-		employee.setMiddlename(InputManager.enterString("Middlename", "EMPTY_NOT_ALLOWED").toUpperCase());
-		employee.setSuffix(InputManager.enterString("Suffix","").toUpperCase());
-		employee.setTitle(InputManager.enterString("Title","").toUpperCase());
-		employee.setAddress(createAddress(empService));
-		employee.setBirthday(DatePicker.parseDate(InputManager.enterString("BirthDate [YYYY-MM-DD]", "EMPTY_NOT_ALLOWED")));
-		employee.setGwa(InputManager.getPositiveFloat("GWA","EMPTY_NOT_ALLOWED"));
-		employee.setDatehired(DatePicker.parseDate(InputManager.enterString("Hire Date [YYYY-MM-DD]", "EMPTY_NOT_ALLOWED")));
-		employee.setCurrentlyHired(InputManager.getBoolean("CURRENTLY HIRED"));
-		employee.setContact(createContact(empService));
-		employee.setRoles(new HashSet<Role>());
-		employee.getRoles().add(setRoleToEmployee(empService));
-		} catch(Exception ex) {
-			ex.printStackTrace();
-		}
+			employee.setLastname(InputManager.enterString("Lastname", id).toUpperCase());
+			employee.setFirstname(InputManager.enterString("Firstname", id).toUpperCase());
+			employee.setMiddlename(InputManager.enterString("Middlename", id).toUpperCase());
+			employee.setSuffix(InputManager.enterString("Suffix","").toUpperCase());
+			employee.setTitle(InputManager.enterString("Title","").toUpperCase());
+			employee.setAddress(createAddress(empService));
+			employee.setBirthday(DatePicker.parseDate(InputManager.enterString("Date YYYY-MM-DD", id),id));
+			employee.setGwa(InputManager.getPositiveFloat("GWA",id));
+			employee.setDatehired(DatePicker.parseDate(InputManager.enterString("Hire Date [YYYY-MM-DD]", id),id));
+			employee.setCurrentlyHired(InputManager.getBoolean("CURRENTLY HIRED"));
+			employee.setContact(createContact(empService));
+			employee.setRoles(new HashSet<Role>());
+			employee.getRoles().add(setRoleToEmployee(empService));
+		
 		empService.saveElement(employee);
+		} catch(Exception ex) {
+			throw new Exception("Cannot create employee");
+		}
 		//empService.listEmployees("");
 	}
 	
@@ -38,49 +40,55 @@ public class FactoryService {
 			address.setBrgy(InputManager.enterString("Brgy", "EMPTY_NOT_ALLOWED").toUpperCase());
 			address.setCity(InputManager.enterString("City", "EMPTY_NOT_ALLOWED").toUpperCase());
 			address.setZipcode(InputManager.enterString("Zipcode","EMPTY_NOT_ALLOWED").toUpperCase());
+		
+			return empService.getData(address);
 		} catch(Exception ex) {
-			ex.printStackTrace();
-			
-		}
-		if(empService.getData(address) == null)
 			empService.saveElement(address);
-			
-		return empService.getData(address);
+			return empService.getData(address);
+		}
 	}
 	
 	private static Contact createContact(EmployeeService empService) throws Exception {
 		Contact contact = new Contact();
 		try {
-			contact.setLandline(InputManager.enterString("Landline",""));
-			contact.setMobile(InputManager.enterString("Mobile",""));
-			contact.setEmail(InputManager.enterString("Email",
-				(contact.getLandline().equals("") && contact.getMobile().equals("")) ? "EMPTY_NOT_ALLOWED":""));
+			String string = InputManager.enterString("Landline [xxx-xxxx]","");
+			contact.setLandline(RegexUtils.isValidLandline(string) ? string : "");
+			System.out.print((RegexUtils.isValidLandline(string)) ? "":"Not a valid landline\n");
+
+			string = InputManager.enterString("Mobile [xxxx-xxx-xxxx]","");
+			contact.setMobile(RegexUtils.isValidMobile(string) ? string : "");
+			System.out.print((RegexUtils.isValidMobile(string)) ? "":"Not a valid mobile\n");
+			string = "";
+			while(!RegexUtils.isValidEmail(string)) {
+				string = InputManager.enterString("Email",
+					(contact.getLandline().equals("") && contact.getMobile().equals("")) ? "EMPTY_NOT_ALLOWED":"");
+				contact.setEmail(RegexUtils.isValidEmail(string) ? string : "");
+				System.out.print((RegexUtils.isValidEmail(string)) ? "":"Not a valid email\n");
+			}
+			return empService.getData(contact);
+
 		} catch(Exception ex) {
-			ex.printStackTrace();
-		}
-		if(empService.getData(contact) == null)
 			empService.saveElement(contact);
-		return empService.getData(contact);
+			return empService.getData(contact);
+		}
 	}
 
 	private static Role setRoleToEmployee(EmployeeService empService) throws Exception {
 		System.out.println("What role: ");
 		empService.listRoles();
-		try {
-			Role role = empService.getData(Long.valueOf(InputManager.getPositiveNumber("ROLE","EMPTY_NOT_ALLOWED")),new Role());
-			return role;
-		} catch(Exception ex){
-			//ex.printStackTrace();
-				return null;
-		}
-	
+		Role role = empService.getData(Long.valueOf(InputManager.getPositiveNumber("ROLE","EMPTY_NOT_ALLOWED")),new Role());
+		return role;
 	}
 
 	public static Employee addEmployeeRole(EmployeeService empService, Employee employee) throws Exception {
-		Set<Role> roles = empService.listEmployeeRoles(employee);
-		roles.add(setRoleToEmployee(empService));	
-		employee.setRoles(roles);
-		return employee;
+		try {
+			Set<Role> roles = empService.listEmployeeRoles(employee);
+			roles.add(setRoleToEmployee(empService));	
+			employee.setRoles(roles);
+			return employee;
+		} catch(Exception ex) {
+			throw new Exception("Can't find role");
+		}
 	}
 
 	public static Employee deleteEmployeeRole(EmployeeService empService, Employee employee) throws Exception {

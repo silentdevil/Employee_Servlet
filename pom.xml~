@@ -49,6 +49,13 @@
     </pluginManagement>
     </build>
 
+	 <resources>
+         <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+         </resource>
+      </resources>
+
     <modules>
       <module>Utility</module>
       <module>Infra</module>

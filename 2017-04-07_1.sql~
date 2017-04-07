@@ -1,0 +1,104 @@
+
+CREATE TABLE employees (employeeid int primary key,lastname varchar(30),firstname varchar(30),middlename varchar(30),suffix varchar(30),title varchar(30),address int,birthday date,gwa float,datehired date,currentlyhired boolean,contact int,FOREIGN KEY (address) REFERENCES addresses(addressid),FOREIGN KEY (contact) REFERENCES contacts(contactid));
+	
+CREATE TABLE addresses (addressid int primary key,streetno varchar(20),street varchar(20),brgy varchar(30),city varchar(30),zipcode varchar(10));
+	
+CREATE TABLE contacts (contactid int primary key,landline varchar(20),mobile varchar(20),email varchar(40));
+
+CREATE TABLE employee_role (employeeid int,roleid int,primary key(employeeid,roleid));
+
+CREATE TABLE roles (roleid int primary key,role varchar(20));
+
+CREATE SEQUENCE hibernate_sequence;
+
+
+select * from roles;
+
+select nextval ('hibernate_sequence')
+1 = 4
+insert into roles (role, roleid) values ('PROGRAMMER', 4);
+
+select * from roles;
+roleid = 4, role = PROGRAMMER
+
+select * from roles;
+roleid = 4, role = PROGRAMMER
+
+select nextval ('hibernate_sequence')
+1 = 5
+insert into roles (role, roleid) values ('CEO', 5);
+
+select * from roles;
+roleid = 4, role = PROGRAMMER
+roleid = 5, role = CEO
+
+select * from roles;
+roleid = 4, role = PROGRAMMER
+roleid = 5, role = CEO
+
+select nextval ('hibernate_sequence')
+1 = 6
+insert into roles (role, roleid) values ('DESIGNER', 6);
+
+select * from roles;
+roleid = 4, role = PROGRAMMER
+roleid = 5, role = CEO
+roleid = 6, role = DESIGNER
+
+select * from employees;
+
+select * from employees ;
+employeeid = 8, firstname = JIM, lastname = CARPIO, middlename = ROXAS, suffix = II, title = PRESIDENT, address = 1, birthday = 1996-05-21, datehired = 2017-01-23, gwa = 4.0, currentlyhired = true, contact = 7;
+;
+select * from employees ;
+;
+select * from roles;
+;
+select * from roles;
+;
+select nextval ('hibernate_sequence');
+1 = 1;
+insert into roles (role, roleid) values ('CEO', 1);
+;
+select * from roles;
+roleid = 1, role = CEO;
+;
+select * from roles;
+roleid = 1, role = CEO;
+;
+select nextval ('hibernate_sequence');
+1 = 2;
+insert into roles (role, roleid) values ('DEV', 2);
+;
+select * from roles;
+roleid = 1, role = CEO;
+roleid = 2, role = DEV;
+;
+select * from roles;
+roleid = 1, role = CEO;
+roleid = 2, role = DEV;
+;
+select nextval ('hibernate_sequence');
+1 = 3;
+insert into roles (role, roleid) values ('ECC', 3);
+;
+select * from roles;
+roleid = 1, role = CEO;
+roleid = 2, role = DEV;
+roleid = 3, role = ECC;
+;
+select * from roles;
+roleid = 1, role = CEO;
+roleid = 2, role = DEV;
+roleid = 3, role = ECC;
+;
+select * from employees ;
+;
+select this_.addressid as addressi1_0_0_, this_.streetno as streetno2_0_0_, this_.street as street3_0_0_, this_.city as city4_0_0_, this_.brgy as brgy5_0_0_, this_.zipcode as zipcode6_0_0_ from addresses this_;
+select * from employees ;
+;
+select * from employees ;
+;
+select this_.addressid as addressi1_0_0_, this_.streetno as streetno2_0_0_, this_.street as street3_0_0_, this_.city as city4_0_0_, this_.brgy as brgy5_0_0_, this_.zipcode as zipcode6_0_0_ from addresses this_;
+select * from employees ;
+;

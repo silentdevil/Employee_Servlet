@@ -26,10 +26,14 @@ public class EmployeeService {
 		return session;
 	}
 
-	public <E> void deleteElement (E e) {
-		Session session = beginTransaction();
-		session.delete(e);
-		session.getTransaction().commit();
+	public <E> void deleteElement (E e) throws Exception {
+		try {
+			Session session = beginTransaction();
+			session.delete(e);
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			throw new Exception("Can't find " + e.getClass().getName());
+		}
 	}
 
 	public <E> E getData(long id, E e) throws Exception {
@@ -51,7 +55,8 @@ public class EmployeeService {
 		e = (E) session.get(e.getClass(),id);
 		session.getTransaction().commit();
 		} catch(Exception ex) {
-			throw new Exception("Data not found");
+			System.err.println("Data not found");
+			Thread.sleep(2000);
 		}
 		
 		return e;
@@ -65,7 +70,7 @@ public class EmployeeService {
 			return (E) list.get(list.indexOf((E)e));
 		} catch(Exception ex) {
 			//ex.printStackTrace();
-			return null;
+			throw new Exception("DATA NOT FOUND");
 		}
 	}
 

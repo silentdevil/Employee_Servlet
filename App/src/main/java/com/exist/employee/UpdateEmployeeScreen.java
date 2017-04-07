@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 public class UpdateEmployeeScreen {
 	
-	public static void updateEmployee(EmployeeService empService) {
+	public static void updateEmployee(EmployeeService empService) throws Exception {
 		System.out.print("\033\143");
 		try {
 			empService.listEmployees("");
@@ -42,11 +42,13 @@ public class UpdateEmployeeScreen {
 			
 			}
 		} catch(Exception ex) {
-			ex.printStackTrace();
+			System.out.println(ex.getMessage());
+			Thread.sleep(2000);
+			
 		}	
 	}
 	
-	public static void showEmployeeDetails(EmployeeService empService, Employee employee) {
+	public static void showEmployeeDetails(EmployeeService empService, Employee employee) throws Exception {
 		try {
 			System.out.print("\033\143");
 			//Employee employee = empService.searchEmployee(InputManager.getPositiveNumber("Employee ID"));
@@ -68,7 +70,7 @@ public class UpdateEmployeeScreen {
 
 		//employee.getRoles().stream().map(role -> empService.getData(role.getRoleId(), ))
 		} catch(Exception ex) {
-			ex.printStackTrace();
+			throw new Exception("Cannot find employee");
 		}
 		//return null;
 	}

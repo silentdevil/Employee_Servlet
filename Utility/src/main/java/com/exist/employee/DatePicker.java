@@ -6,12 +6,13 @@ import java.text.SimpleDateFormat;
 
 public class DatePicker {
 
-	 public static Date parseDate(String date) {
-     try {
-         return new SimpleDateFormat("yyyy-MM-dd").parse(date);
-     } catch (Exception e) {
-         return null;
-     }
+	public static Date parseDate(String date, String id) throws Exception {
+		
+		while(!RegexUtils.isValidDate(date) && id.equals("EMPTY_NOT_ALLOWED")) {
+			System.out.println("Not valid date format");
+			date = InputManager.enterString("BirthDate [YYYY-MM-DD]", "EMPTY_NOT_ALLOWED");
+		}
 
-  }
+        return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+	}
 }

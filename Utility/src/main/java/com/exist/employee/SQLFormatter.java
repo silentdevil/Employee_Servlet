@@ -11,7 +11,7 @@ public class SQLFormatter implements MessageFormattingStrategy {
 
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql) {
-        return sql;//formatter.format(sql); 
+        return sql + ";";//formatter.format(sql); 
         
     }
 

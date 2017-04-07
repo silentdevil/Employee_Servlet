@@ -11,7 +11,6 @@ public class InputManager {
 			System.out.print("Enter a non-negative integer for "+str+" : ");
 			X = scan.nextLine();
 			
-			
 			if(isNumeric(X) && !X.isEmpty() && Integer.parseInt(X) >= 0) {
 				i = Integer.parseInt(X);
 			}
@@ -42,18 +41,17 @@ public class InputManager {
 	}
 	
 	public static float getPositiveFloat(String str, String identifier) throws Exception {
-		String X;
+		String X = null;
 		float i = 0;
+		
 		do {
-			System.out.print("Enter a non-negative float for "+str+" : ");
-			X = scan.nextLine();
-			
-			
-			if(Float.parseFloat(X) >= 0) {
-				i =Float.parseFloat(X);
-			}
-			else {
-				i = 0;
+			try {
+				System.out.print("Enter a float for "+str+" : ");
+				X = scan.nextLine();
+				i = (Float.parseFloat(X) >= 0) ? Float.parseFloat(X) : 0;
+
+			} catch(Exception ex){
+				System.err.println("Not valid float");
 			}
 		} while((X == null || X.isEmpty()) && identifier.equals("EMPTY_NOT_ALLOWED"));		
 		return i;
@@ -61,7 +59,7 @@ public class InputManager {
 	
 	public static boolean getBoolean(String str) throws Exception {
 		System.out.print("IS "+str+" : ");
-		String bool = scan.next().toUpperCase();
-		return (bool.equals("Y") || bool.equals("YES"));
+		String bool = scan.nextLine().toUpperCase();
+		return (bool.toUpperCase().matches("Y|YES|T|TRUE"));
 	}
 }	
