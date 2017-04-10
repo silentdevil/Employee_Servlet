@@ -6,7 +6,7 @@
 <hibernate-mapping package="com.exist.employee">
 	<class name="com.exist.employee.Employee" table="Employees">
 		<id name="employeeId" column="employeeid" type="long">
-			<generator class="native"/>
+			<generator class="increment"/>
 		</id>
 		<property name="firstname" type="string" column="firstname"/>
 		<property name="lastname" type="string" column="lastname"/>
@@ -28,14 +28,14 @@
 	
 	<class name="com.exist.employee.Role" table="roles">
       <id name="roleId" type="long" column="roleid">
-         <generator class="native"/>
+         <generator class="increment"/>
       </id>
       <property name="role" column="role" type="string"/>
    </class>
 
 	 <class name="com.exist.employee.Address" table="addresses">
       <id name="addressId" column="addressid" type="long" unsaved-value="0">
-         <generator class="native"/>
+         <generator class="increment"/>
       </id>
        <property name="streetno" column="streetno" type="int"/>
       <property name="street" column="street" type="string"/>
@@ -46,7 +46,7 @@
    
    <class name="com.exist.employee.Contact" table="contacts">
       <id name="contactId" column="contactid" type="long" unsaved-value="0">
-         <generator class="native"/>
+         <generator class="increment"/>
       </id>
        <property name="landline" column="landline" type="string"/>
       <property name="mobile" column="mobile" type="string"/>

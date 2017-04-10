@@ -1,12 +1,12 @@
 package com.exist.employee;
 
 import java.util.List;
-import java.util.Iterator;
+
 import org.hibernate.Session;
 import org.hibernate.Query;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.Transaction;
+
 import java.util.Set;
 import java.util.Date;
 import java.util.HashSet;
@@ -39,24 +39,11 @@ public class EmployeeService {
 	public <E> E getData(long id, E e) throws Exception {
 		
 		Session session = beginTransaction();
-		/*Criteria cri = session.createCriteria(e.getClass());
-		String s = e.getClass().getName().toLowerCase() + "Id".trim();
-		s = s.replace("com.exist.employee.", "");
 		try {
-			cri = cri.add(Restrictions.eq(s, Long.valueOf(id)));
-			E obj = (E) cri.uniqueResult();
+			e = (E) session.get(e.getClass(),id);
 			session.getTransaction().commit();
-			return obj;
 		} catch(Exception ex) {
-			System.err.println(s + " not found. Please enter the correct id");
-			throw new Exception("Data not found");
-		}*/
-		try {
-		e = (E) session.get(e.getClass(),id);
-		session.getTransaction().commit();
-		} catch(Exception ex) {
-			System.err.println("Data not found");
-			Thread.sleep(2000);
+			InputManager.output("Data not found");
 		}
 		
 		return e;
@@ -69,8 +56,7 @@ public class EmployeeService {
 			List<E> list = session.createCriteria(e.getClass()).list();
 			return (E) list.get(list.indexOf((E)e));
 		} catch(Exception ex) {
-			//ex.printStackTrace();
-			throw new Exception("DATA NOT FOUND");
+			throw new Exception();
 		}
 	}
 
@@ -86,9 +72,13 @@ public class EmployeeService {
 		List<Employee> list = session.createSQLQuery("select * from employees " + order).addEntity(Employee.class).list();
 		switch(order) {
 			case "ORDER BY gwa":
-				list.forEach(emp -> System.out.printf("%d\t%s, %s %s %f\n",emp.getEmployeeId(),emp.getLastname(),emp.getFirstname(),emp.getMiddlename(),emp.getGwa()));
+				list = session.createCriteria(Employee.class).list();
+				list.stream().sorted((e1,e2) -> Float.compare(e1.getGwa(), e2.getGwa()))
+					.collect(java.util.stream.Collectors.toList()).
+					forEach(emp -> System.out.printf("%d\t%s, %s %s %.2f\n",emp.getEmployeeId(),emp.getLastname(),emp.getFirstname(),emp.getMiddlename(),emp.getGwa()));
 				break;
 			case "ORDER BY datehired":
+				list = session.createQuery("FROM com.exist.employee.Employee e ORDER BY e.datehired").list();
 				list.forEach(emp -> System.out.printf("%d\t%s, %s %s %s\n",emp.getEmployeeId(),emp.getLastname(),emp.getFirstname(),emp.getMiddlename(),emp.getDatehired()));
 				break;
 			case "ORDER BY lastname":
@@ -102,7 +92,7 @@ public class EmployeeService {
 	
 	public void listRoles() {
 		Session session = beginTransaction();	
-		List<Role> list = session.createSQLQuery("select * from roles").addEntity(Role.class).list();
+		List<Role> list = session.createCriteria(Role.class).list();
 		list.forEach(System.out::println);
 		System.out.println();
 		session.getTransaction().commit();

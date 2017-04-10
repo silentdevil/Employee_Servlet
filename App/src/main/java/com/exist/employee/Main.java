@@ -1,22 +1,21 @@
 package com.exist.employee;
-import java.util.HashSet;
+
 import java.util.logging.Level;
-import java.util.Scanner;
-//import com.exist.employee.InputManager;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
 		EmployeeService empServ = new EmployeeService();
 		String order = "";
+		OUTER:
 		while(true) {
 			System.out.print("\033\143");
 			empServ.listEmployees(order);
 			String cmd = InputManager.enterString("Action: ADDEMP, DELEMP, EDITEMP, SORT_GWA, MODIFYROLES",
 			 "EMPTY_NOT_ALLOWED");
 			try {
-				switch(cmd) {
-					case "ADD":
+				switch(cmd.toUpperCase()) {
+					case "ADDEMP":
 						FactoryService.createEmployee(empServ);
 						break;
 						
@@ -39,10 +38,11 @@ public class Main {
 					case "SORT_LASTNAME":
 						order = "ORDER BY lastname";
 						break;
+					case "EXIT":
+						break OUTER;
 				}
 			} catch (Exception ex) {
-				System.err.println(ex);
-				Thread.sleep(2000);
+				InputManager.output(ex.toString());
 			}
 		}
 	}

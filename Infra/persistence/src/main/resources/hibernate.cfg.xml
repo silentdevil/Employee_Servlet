@@ -6,27 +6,14 @@
 
 	<session-factory>
 
-		<!-- Database connection settings -->
 		<property name="connection.url">jdbc:p6spy:postgresql://localhost:5432/mydatabase</property>
 		<property name="connection.driver_class">com.p6spy.engine.spy.P6SpyDriver</property>
-		<property name="connection.username">postgres</property>
-		<property name="connection.password">Mani007</property>
+		<property name="connection.username">jim</property>
+		<property name="connection.password">ex1stgl0bal</property>
 		<property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
-
-		
-		<!-- SQL dialect -->
 		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-
-		<!-- Echo all executed SQL to stdout 
-		<property name="show_sql">true</property>-->
-
-		<!-- Enable Hibernate's automatic session context management -->
 		<property name="current_session_context_class">thread</property>
 
-		<property name="show_sql">false</property>
-		
-
-		
 		<mapping resource="employee.hbm.xml"/>
 
 	</session-factory>

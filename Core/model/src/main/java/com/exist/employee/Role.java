@@ -30,11 +30,7 @@ public class Role {
       if (!this.getClass().equals(obj.getClass())) return false;
 
       Role obj2 = (Role)obj;
-      if((this.roleId == obj2.getRoleId()) && (this.role.equals(obj2.getRole())))
-      {
-         return true;
-      }
-      return false;
+      return this.role.equals(obj2.getRole());
    }
    public int hashCode() {
       int tmp = 0;

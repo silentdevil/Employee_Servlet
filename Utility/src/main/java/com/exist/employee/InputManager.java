@@ -62,4 +62,9 @@ public class InputManager {
 		String bool = scan.nextLine().toUpperCase();
 		return (bool.toUpperCase().matches("Y|YES|T|TRUE"));
 	}
+
+	public static void output(String display) {
+		System.out.println(display);
+		scan.nextLine();
+	}
 }	

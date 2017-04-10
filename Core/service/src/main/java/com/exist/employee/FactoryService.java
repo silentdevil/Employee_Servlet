@@ -53,7 +53,7 @@ public class FactoryService {
 		try {
 			String string = InputManager.enterString("Landline [xxx-xxxx]","");
 			contact.setLandline(RegexUtils.isValidLandline(string) ? string : "");
-			System.out.print((RegexUtils.isValidLandline(string)) ? "":"Not a valid landline\n");
+			InputManager.output((RegexUtils.isValidLandline(string)) ? "":"Not a valid landline\n");
 
 			string = InputManager.enterString("Mobile [xxxx-xxx-xxxx]","");
 			contact.setMobile(RegexUtils.isValidMobile(string) ? string : "");
@@ -109,19 +109,24 @@ public class FactoryService {
 		try {
 			switch(command.toUpperCase()) {
 				case "LANDLINE":
-					contact.setLandline(!id.equals("DEL") ? InputManager.enterString("Landline","EMPTY_IS_ALLOWED") : "");
+					contact.setLandline(!id.equals("DEL") ? 
+						InputManager.enterString("Landline","EMPTY_IS_ALLOWED") : "");
 					break;
 				case "MOBILE":
-					contact.setMobile(!id.equals("DEL") ? InputManager.enterString("Mobile","EMPTY_IS_ALLOWED"):"");
+					contact.setMobile(!id.equals("DEL") ? 
+						InputManager.enterString("Mobile","EMPTY_IS_ALLOWED"):"");
 					break;
 				case "EMAIL":
-					contact.setEmail(!id.equals("DEL") ? InputManager.enterString("Email","EMPTY_IS_ALLOWED"): "");
+					contact.setEmail(!id.equals("DEL") ? 
+						InputManager.enterString("Email","EMPTY_IS_ALLOWED"): "");
 					break;
 
 			}
 			empService.saveElement(contact);
 			employee.setContact(contact);
-		} catch(Exception ex){ex.printStackTrace();}
+		} catch(Exception ex){
+			ex.printStackTrace();
+		}
 		return employee;
 	}
 
@@ -130,19 +135,25 @@ public class FactoryService {
 		empService.listRoles();
 		Role role = new Role();
 		role.setRole(InputManager.enterString("NEW ROLE","EMPTY_NOT_ALLOWED").toUpperCase());
-		empService.saveElement(role);
+		try {
+			empService.getData(role);
+			InputManager.output("Role " + role.getRole() + " is existing.");
+		} catch(Exception ex) {
+			empService.saveElement(role);
+			InputManager.output("Role " + role.getRole() + " is created.");
+		}
 	}
 
 	public static void deleteRole(EmployeeService empService) throws Exception {
 		System.out.print("\033\143");
 		empService.listRoles();
 		Role role = empService.getData(Long.valueOf(InputManager.getPositiveNumber("ROLE ID","EMPTY_NOT_ALLOWED")), new Role());
-		if(empService.isRoleDeletable(role))
+		if(empService.isRoleDeletable(role)){
 			empService.deleteElement(role);
-		else {
-			System.out.println("Role " + role + " is sucessfully deleted");
+			InputManager.output("Role " + role + " is sucessfully deleted");
+		} else {
+			InputManager.output("Role " + role + " is cannot be deleted");
 		}
-		
 	}
 
 }

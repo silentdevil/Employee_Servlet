@@ -44,5 +44,7 @@ CREATE TABLE roles (
 	role varchar(20)
 );
 
+CREATE SEQUENCE hibernate_sequence;
+
 
 
