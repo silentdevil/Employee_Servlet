@@ -8,18 +8,5 @@
   <packaging>jar</packaging>
 
   <name>Utility</name>
-  <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-
-  <dependencies>
-     <dependency>
-      <groupId>p6spy</groupId>
-      <artifactId>p6spy</artifactId>
-      <version>3.0.0</version>
-    </dependency>
-  </dependencies>
-  
 </project>

@@ -1,38 +1,28 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
-
   
-
   <groupId>com.exist.employee</groupId>
   <artifactId>Infra</artifactId>
   <version>1.0</version>
   <packaging>pom</packaging>
 
-
-
   <name>Infra</name>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
-  </properties>
+  <dependencyManagement>
+    <dependencies>
+     <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.0.0</version>
+     </dependency>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.exist.employee</groupId>
-      <artifactId>persistence</artifactId>
-      <version>1.0</version>
-    </dependency>
-  </dependencies>
-
-	<build>
-	   <resources>
-		 <resource>
-		    <directory>src/main/resources</directory>
-		    <filtering>true</filtering>
-		 </resource>
-	   </resources>
-	</build>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>5.2.9.Final</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <modules>
     <module>persistence</module>

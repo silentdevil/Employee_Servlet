@@ -1,3 +1,4 @@
+CREATE DATABASE mydatabase;
 
 CREATE TABLE employees (
 	employeeid int primary key,
@@ -43,6 +44,3 @@ CREATE TABLE roles (
 	roleid int primary key,
 	role varchar(20)
 );
-
-
-

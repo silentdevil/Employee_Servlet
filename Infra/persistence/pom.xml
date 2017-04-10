@@ -1,6 +1,12 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
 
+  <parent>
+    <groupId>com.exist.employee</groupId>
+    <artifactId>Infra</artifactId>
+    <version>1.0</version>
+  </parent>
+
   <groupId>com.exist.employee</groupId>
   <artifactId>persistence</artifactId>
   <version>1.0</version>
@@ -8,30 +14,16 @@
 
   <name>persistence</name>
 
-  <properties>
-    <RESOURCE_PATH>${project.basedir}/src/main/resources</RESOURCE_PATH>
-    <timestamp>${maven.build.timestamp}</timestamp>
-    <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
-
-  </properties>
-
   <dependencies>
+     <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+    </dependency>
+
     <dependency>
-      <groupId>p6spy</groupId>
-      <artifactId>p6spy</artifactId>
-      <version>3.0.0</version>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
     </dependency>
   </dependencies>
-
-<build>
-  <resources>
-    <resource>
-      <directory>${RESOURCE_PATH}</directory>
-      <filtering>true</filtering>
-    </resource>
-  </resources>
 	
-</build>
-
-
 </project>

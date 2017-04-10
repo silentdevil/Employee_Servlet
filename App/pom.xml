@@ -14,18 +14,12 @@
   <packaging>jar</packaging>
 
   <name>App</name>
-  <url>http://maven.apache.org</url>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
 
   <dependencies>
     <dependency>
       <groupId>com.exist.employee</groupId>
-      <artifactId>Core</artifactId>
+      <artifactId>service</artifactId>
       <version>1.0</version>
-      <type>pom</type>
     </dependency>
   </dependencies>
 
@@ -35,6 +29,6 @@
             <artifactId>maven-assembly-plugin</artifactId>
         </plugin>
     </plugins>
-
-    </build>
+  </build>
+  
 </project>

@@ -11,7 +11,7 @@ public class Main {
 		while(true) {
 			System.out.print("\033\143");
 			empServ.listEmployees(order);
-			String cmd = InputManager.enterString("Action: ADDEMP, DELEMP, EDITEMP, SORT_GWA, MODIFYROLES",
+			String cmd = InputManager.enterString("Action: ADDEMP, DELEMP, EDITEMP, MODIFYROLES\n SORT_GWA, SORT_HIREDATE, SORT_LASTNAME",
 			 "EMPTY_NOT_ALLOWED");
 			try {
 				switch(cmd.toUpperCase()) {
