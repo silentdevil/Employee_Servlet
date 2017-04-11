@@ -34,6 +34,10 @@ public class EmployeeService {
 	public <E> void deleteElement(E e) {
 		dao.delete(e);
 	}
+	
+	public <E> void updateElement(E e) {
+		dao.saveOrUpdate(e);
+	}
 
 /*
 	public boolean isRoleDeletable(Role role) {

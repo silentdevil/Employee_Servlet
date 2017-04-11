@@ -26,16 +26,16 @@ public class UpdateEmployeeScreen {
 						case "DELROLE":
 							employee = FactoryService.deleteEmployeeRole(employee);
 							break;
-						/*case "ADDCONTACT":
+						case "ADDCONTACT":
 							employee = FactoryService.addEmployeeContact(empService,employee,"");
 							break;
 						case "DELCONTACT":
-							employee = FactoryService.addEmployeeContact(empService,employee,"DEL");*/
+							employee = FactoryService.addEmployeeContact(empService,employee,"DEL");
 						case "BACK":
 							return;
 					}
 
-				empService.saveElement(employee);
+				empService.updateElement(employee);
 				showEmployeeDetails(empService,employee);
 			}
 		} catch(Exception ex) {
@@ -52,18 +52,17 @@ public class UpdateEmployeeScreen {
 			System.out.printf("Name: %s, %s %s %s\n", employee.getLastname(), employee.getFirstname(), 
 				employee.getMiddlename(), employee.getSuffix());
 			
-			/*System.out.println("Address: " + empService.getData(employee.getAddress().getAddressId(),
-											new Address()));*/
+			System.out.println("Address: " + employee.getAddress());
 			System.out.println("Birthday: " + employee.getBirthday());
 			System.out.println("GWA: " + employee.getGwa());
 			System.out.println("Date hired: " + employee.getDatehired());
 			System.out.println("Currently hired: " + employee.getCurrentlyHired());
-			/*System.out.println("Contacts: " + empService.getData(employee.getContact().getEmployeeId(),
-											new Contact()));*/
-			//System.out.println("Roles: " + empService.listEmployeeRoles(employee));
+			System.out.println("Contacts: " + employee.getContact());
+			System.out.println("Roles: " + employee.getRoles());
 		
 		} catch(Exception ex) {
-			throw new Exception("Cannot find employee");
+			ex.printStackTrace();
+			//throw new Exception("Cannot find employee");
 		}
 	}
 

@@ -97,11 +97,11 @@ public class FactoryService {
 		employee.setRoles(roles);
 		return employee;
 	}
-	/*
+	
 	public static Employee addEmployeeContact(EmployeeService empService, Employee employee, String id) throws Exception {
 		System.out.print("\033\143");
 		String command = InputManager.enterString("Contact info: [LANDLINE, MOBILE, EMAIL","EMPTY_NOT_ALLOWED");
-		Contact contact = empService.getData(employee.getContact().getEmployeeId(), new Contact());
+		Contact contact = empService.getElement(Contact.class, employee.getContact().getEmployeeId());
 		if(contact == null) {
 			contact = new Contact();
 		}
@@ -127,7 +127,7 @@ public class FactoryService {
 			ex.printStackTrace();
 		}
 		return employee;
-	}*/
+	}
 
 	public static void createRole(EmployeeService empService) {
 		System.out.print("\033\143");

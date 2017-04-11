@@ -26,10 +26,11 @@ CREATE TABLE addresses (
 	);
 	
 CREATE TABLE contacts (
-	employeeid int primary key,
+	employeeid int,
 	landline varchar(20),
 	mobile varchar(20),
-	email varchar(40)
+	email varchar(40),
+	foreign key (employeeid) references employees(employeeid)
 );
 
 CREATE TABLE employee_role (

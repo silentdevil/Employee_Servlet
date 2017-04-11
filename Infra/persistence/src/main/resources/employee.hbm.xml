@@ -19,7 +19,7 @@
 		<property name="gwa" type="float" column="gwa"/>
 		<property name="currentlyHired" type="boolean" column="currentlyhired"/>
 		<one-to-one name="contact" class="Contact" cascade="all" lazy="false"/>
-		<set name="roles" cascade="all" table="employee_role">
+		<set name="roles" cascade="all" table="employee_role" lazy="false">
          <key column="employeeid"/>
          <many-to-many column="roleid" class="Role" lazy="false"/>
 		</set>
