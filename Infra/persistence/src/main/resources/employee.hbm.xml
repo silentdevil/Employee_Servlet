@@ -13,15 +13,15 @@
 		<property name="middlename" type="string" column="middlename"/>
       <property name="suffix" type="string" column="suffix"/>
       <property name="title" type="string" column="title"/>
-		<many-to-one name="address" column="address" class="Address" cascade="delete-orphan"/>
+		<many-to-one name="address" column="address" class="Address" cascade="save-update" lazy="false"/>
 		<property name="birthday" type="date" column="birthday"/>
 		<property name="datehired" type="date" column="datehired"/>
 		<property name="gwa" type="float" column="gwa"/>
 		<property name="currentlyHired" type="boolean" column="currentlyhired"/>
-		<one-to-one name="contact" class="Contact" cascade="all"/>
-		<set name="roles" cascade="save-update" table="employee_role">
+		<one-to-one name="contact" class="Contact" cascade="all" lazy="false"/>
+		<set name="roles" cascade="all" table="employee_role">
          <key column="employeeid"/>
-         <many-to-many column="roleid" class="Role"/>
+         <many-to-many column="roleid" class="Role" lazy="false"/>
 		</set>
 		
 	</class>

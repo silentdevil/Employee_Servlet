@@ -7,11 +7,12 @@ import java.util.stream.Collectors;
 public class UpdateEmployeeScreen {
 	
 	public static void updateEmployee(EmployeeService empService) throws Exception {
-		System.out.print("\033\143");
+		System.out.print("\033\143\n");
+		System.out.println("Edit Employee! Input the ID\n");
 		try {
-			empService.listEmployees("");
+			empService.getAllElements(Employee.class).forEach(System.out::println);
 
-			Employee employee = empService.getData(Long.valueOf(InputManager.getPositiveNumber("Employee ID","EMPTY_NOT_ALLOWED")),new Employee());
+			Employee employee = empService.getElement(Employee.class, Long.valueOf(InputManager.getPositiveNumber("Employee ID","EMPTY_NOT_ALLOWED")));
 			
 			showEmployeeDetails(empService,employee);
 			OUTER:
@@ -20,16 +21,16 @@ public class UpdateEmployeeScreen {
 				String cmd = InputManager.enterString("Action: ADDROLE, DELROLE, ADDCONTACT, DELCONTACT, BACK", "EMPTY_NOT_ALLOWED");
 					switch(cmd) {
 						case "ADDROLE":
-							employee = FactoryService.addEmployeeRole(empService, employee);
+							employee = FactoryService.addEmployeeRole(employee);
 							break;
 						case "DELROLE":
-							employee = FactoryService.deleteEmployeeRole(empService, employee);
+							employee = FactoryService.deleteEmployeeRole(employee);
 							break;
-						case "ADDCONTACT":
+						/*case "ADDCONTACT":
 							employee = FactoryService.addEmployeeContact(empService,employee,"");
 							break;
 						case "DELCONTACT":
-							employee = FactoryService.addEmployeeContact(empService,employee,"DEL");
+							employee = FactoryService.addEmployeeContact(empService,employee,"DEL");*/
 						case "BACK":
 							return;
 					}
@@ -51,15 +52,15 @@ public class UpdateEmployeeScreen {
 			System.out.printf("Name: %s, %s %s %s\n", employee.getLastname(), employee.getFirstname(), 
 				employee.getMiddlename(), employee.getSuffix());
 			
-			System.out.println("Address: " + empService.getData(employee.getAddress().getAddressId(),
-											new Address()));
+			/*System.out.println("Address: " + empService.getData(employee.getAddress().getAddressId(),
+											new Address()));*/
 			System.out.println("Birthday: " + employee.getBirthday());
 			System.out.println("GWA: " + employee.getGwa());
 			System.out.println("Date hired: " + employee.getDatehired());
 			System.out.println("Currently hired: " + employee.getCurrentlyHired());
-			System.out.println("Contacts: " + empService.getData(employee.getContact().getEmployeeId(),
-											new Contact()));
-			System.out.println("Roles: " + empService.listEmployeeRoles(employee));
+			/*System.out.println("Contacts: " + empService.getData(employee.getContact().getEmployeeId(),
+											new Contact()));*/
+			//System.out.println("Roles: " + empService.listEmployeeRoles(employee));
 		
 		} catch(Exception ex) {
 			throw new Exception("Cannot find employee");
@@ -72,7 +73,7 @@ public class UpdateEmployeeScreen {
 		OUTER:
 		while(true) {
 			System.out.print("\033\143");
-			empService.listRoles();
+			empService.getAllElements(Role.class).forEach(System.out::println);
 
 			System.out.println("\nWHAT TO DO [ADDROLE,[DELETEROLE,BACK]");
 			String action = InputManager.enterString("Action","EMPTY_NOT_ALLOWED");

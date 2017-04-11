@@ -10,17 +10,17 @@ public class Main {
 		OUTER:
 		while(true) {
 			System.out.print("\033\143\n\n");
-			empServ.listEmployees(order);
+			empServ.getAllElements(Employee.class).forEach(System.out::println);
 			String cmd = InputManager.enterString("Action: ADDEMP, DELEMP, EDITEMP, MODIFYROLES\n SORT_GWA, SORT_HIREDATE, SORT_LASTNAME",
 			 "EMPTY_NOT_ALLOWED");
 			try {
 				switch(cmd.toUpperCase()) {
 					case "ADDEMP":
-						FactoryService.createEmployee(empServ);
+						FactoryService.createEmployee();
 						break;
 						
 					case "DELEMP":
-						empServ.deleteElement(empServ.getData(InputManager.getPositiveNumber("Employee ID","EMPTY_NOT_ALLOWED"),new Employee()));
+						empServ.deleteElement(empServ.getElement(Employee.class,Long.valueOf(InputManager.getPositiveNumber("Employee ID","EMPTY_NOT_ALLOWED"))));
 						break;
 						
 					case "EDITEMP":
