@@ -18,7 +18,6 @@ public class UpdateEmployeeScreen {
 			while(true) {
 
 				String cmd = InputManager.enterString("Action: ADDROLE, DELROLE, ADDCONTACT, DELCONTACT, BACK", "EMPTY_NOT_ALLOWED");
-				//try {
 					switch(cmd) {
 						case "ADDROLE":
 							employee = FactoryService.addEmployeeRole(empService, employee);
@@ -34,12 +33,9 @@ public class UpdateEmployeeScreen {
 						case "BACK":
 							return;
 					}
-			//	} catch (Exception ex) {
-			//		ex.printStackTrace();
-			//	}
+
 				empService.saveElement(employee);
 				showEmployeeDetails(empService,employee);
-			
 			}
 		} catch(Exception ex) {
 			System.out.println(ex.getMessage());
@@ -51,7 +47,6 @@ public class UpdateEmployeeScreen {
 	public static void showEmployeeDetails(EmployeeService empService, Employee employee) throws Exception {
 		try {
 			System.out.print("\033\143");
-			//Employee employee = empService.searchEmployee(InputManager.getPositiveNumber("Employee ID"));
 			
 			System.out.printf("Name: %s, %s %s %s\n", employee.getLastname(), employee.getFirstname(), 
 				employee.getMiddlename(), employee.getSuffix());
@@ -62,17 +57,13 @@ public class UpdateEmployeeScreen {
 			System.out.println("GWA: " + employee.getGwa());
 			System.out.println("Date hired: " + employee.getDatehired());
 			System.out.println("Currently hired: " + employee.getCurrentlyHired());
-			System.out.println("Contacts: " + empService.getData(employee.getContact().getContactId(),
+			System.out.println("Contacts: " + empService.getData(employee.getContact().getEmployeeId(),
 											new Contact()));
 			System.out.println("Roles: " + empService.listEmployeeRoles(employee));
-			
-			//return employee;
-
-		//employee.getRoles().stream().map(role -> empService.getData(role.getRoleId(), ))
+		
 		} catch(Exception ex) {
 			throw new Exception("Cannot find employee");
 		}
-		//return null;
 	}
 
 	public static void roleScreen(EmployeeService empService) throws Exception {

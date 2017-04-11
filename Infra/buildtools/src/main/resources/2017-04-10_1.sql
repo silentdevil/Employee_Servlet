@@ -12,10 +12,8 @@ CREATE TABLE employees (
 	gwa float,
 	datehired date,
 	currentlyhired boolean,
-	contact int,
 	
-	FOREIGN KEY (address) REFERENCES addresses(addressid),
-	FOREIGN KEY (contact) REFERENCES contacts(contactid)
+	FOREIGN KEY (address) REFERENCES addresses(addressid)
 );
 	
 CREATE TABLE addresses (
@@ -28,7 +26,7 @@ CREATE TABLE addresses (
 	);
 	
 CREATE TABLE contacts (
-	contactid int primary key,
+	employeeid int primary key,
 	landline varchar(20),
 	mobile varchar(20),
 	email varchar(40)

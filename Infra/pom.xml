@@ -1,6 +1,11 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
-  
+   <parent>
+    <groupId>com.exist.employee</groupId>
+    <artifactId>Employee</artifactId>
+    <version>1.0</version>
+  </parent>
+    
   <groupId>com.exist.employee</groupId>
   <artifactId>Infra</artifactId>
   <version>1.0</version>

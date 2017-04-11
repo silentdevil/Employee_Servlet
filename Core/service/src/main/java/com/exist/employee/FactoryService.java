@@ -28,7 +28,6 @@ public class FactoryService {
 		} catch(Exception ex) {
 			throw new Exception("Cannot create employee");
 		}
-		//empService.listEmployees("");
 	}
 	
 	private static Address createAddress(EmployeeService empService) throws Exception {
@@ -102,7 +101,7 @@ public class FactoryService {
 	public static Employee addEmployeeContact(EmployeeService empService, Employee employee, String id) throws Exception {
 		System.out.print("\033\143");
 		String command = InputManager.enterString("Contact info: [LANDLINE, MOBILE, EMAIL","EMPTY_NOT_ALLOWED");
-		Contact contact = empService.getData(employee.getContact().getContactId(), new Contact());
+		Contact contact = empService.getData(employee.getContact().getEmployeeId(), new Contact());
 		if(contact == null) {
 			contact = new Contact();
 		}

@@ -9,7 +9,7 @@ public class Main {
 		String order = "";
 		OUTER:
 		while(true) {
-			System.out.print("\033\143");
+			System.out.print("\033\143\n\n");
 			empServ.listEmployees(order);
 			String cmd = InputManager.enterString("Action: ADDEMP, DELEMP, EDITEMP, MODIFYROLES\n SORT_GWA, SORT_HIREDATE, SORT_LASTNAME",
 			 "EMPTY_NOT_ALLOWED");

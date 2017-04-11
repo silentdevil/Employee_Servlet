@@ -29,10 +29,14 @@ public class EmployeeService {
 	public <E> void deleteElement (E e) throws Exception {
 		try {
 			Session session = beginTransaction();
+			if(e.getClass() == Employee.class)
+				System.out.println(((Employee) e).getLastname());
 			session.delete(e);
 			session.getTransaction().commit();
 		} catch (Exception ex) {
-			throw new Exception("Can't find " + e.getClass().getName());
+			ex.printStackTrace();
+			InputManager.output("");
+			//throw new Exception("Can't find " + e.getClass().getName());
 		}
 	}
 
@@ -78,7 +82,7 @@ public class EmployeeService {
 					forEach(emp -> System.out.printf("%d\t%s, %s %s %.2f\n",emp.getEmployeeId(),emp.getLastname(),emp.getFirstname(),emp.getMiddlename(),emp.getGwa()));
 				break;
 			case "ORDER BY datehired":
-				list = session.createQuery("FROM com.exist.employee.Employee e ORDER BY e.datehired").list();
+				list = session.createQuery("FROM Employee e ORDER BY e.datehired").list();
 				list.forEach(emp -> System.out.printf("%d\t%s, %s %s %s\n",emp.getEmployeeId(),emp.getLastname(),emp.getFirstname(),emp.getMiddlename(),emp.getDatehired()));
 				break;
 			case "ORDER BY lastname":

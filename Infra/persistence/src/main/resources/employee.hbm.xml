@@ -4,7 +4,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.exist.employee">
-	<class name="com.exist.employee.Employee" table="Employees">
+	<class name="Employee" table="Employees">
 		<id name="employeeId" column="employeeid" type="long">
 			<generator class="increment"/>
 		</id>
@@ -13,27 +13,27 @@
 		<property name="middlename" type="string" column="middlename"/>
       <property name="suffix" type="string" column="suffix"/>
       <property name="title" type="string" column="title"/>
-		<many-to-one name="address" column="address" class="com.exist.employee.Address" cascade="all"/>
+		<many-to-one name="address" column="address" class="Address" cascade="delete-orphan"/>
 		<property name="birthday" type="date" column="birthday"/>
 		<property name="datehired" type="date" column="datehired"/>
 		<property name="gwa" type="float" column="gwa"/>
 		<property name="currentlyHired" type="boolean" column="currentlyhired"/>
-		<many-to-one name="contact" column="contact" class="com.exist.employee.Contact" cascade="all"/>
+		<one-to-one name="contact" class="Contact" cascade="all"/>
 		<set name="roles" cascade="save-update" table="employee_role">
          <key column="employeeid"/>
-         <many-to-many column="roleid" class="com.exist.employee.Role"/>
+         <many-to-many column="roleid" class="Role"/>
 		</set>
 		
 	</class>
 	
-	<class name="com.exist.employee.Role" table="roles">
+	<class name="Role" table="roles">
       <id name="roleId" type="long" column="roleid">
          <generator class="increment"/>
       </id>
       <property name="role" column="role" type="string"/>
    </class>
 
-	 <class name="com.exist.employee.Address" table="addresses">
+	<class name="Address" table="addresses">
       <id name="addressId" column="addressid" type="long" unsaved-value="0">
          <generator class="increment"/>
       </id>
@@ -44,10 +44,11 @@
       <property name="zipcode" column="zipcode" type="string"/>
    </class>
    
-   <class name="com.exist.employee.Contact" table="contacts">
-      <id name="contactId" column="contactid" type="long" unsaved-value="0">
+   <class name="Contact" table="contacts">
+      <id name="employeeId" column="employeeid" type="long" unsaved-value="0">
          <generator class="increment"/>
       </id>
+      <one-to-one name="employee" class="Employee" cascade="all"/>
        <property name="landline" column="landline" type="string"/>
       <property name="mobile" column="mobile" type="string"/>
       <property name="email" column="email" type="string"/>

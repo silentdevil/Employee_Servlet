@@ -1,21 +1,26 @@
 package com.exist.employee;
 
 public class Contact {
-	private long contactId;
+	private long employeeId;
+	private Employee employee;
 	private String landline;
 	private String mobile;
 	private String email;
 	
-	/*public Contact(String landline) {
-		this.landline = landline;
-	}*/
-	
-	public long getContactId() {
-		return contactId;
+	public long getEmployeeId() {
+		return employeeId;
 	}
 	
-	public void setContactId(long contactId) {
-		this.contactId = contactId;
+	public void setEmployeeId(long employeeId) {
+		this.employeeId = employeeId;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 	
 	public String getLandline() {
