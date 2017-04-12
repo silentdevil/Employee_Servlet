@@ -61,8 +61,7 @@ public class UpdateEmployeeScreen {
 			System.out.println("Roles: " + employee.getRoles());
 		
 		} catch(Exception ex) {
-			ex.printStackTrace();
-			//throw new Exception("Cannot find employee");
+			throw new Exception("Cannot find employee");
 		}
 	}
 
@@ -74,7 +73,7 @@ public class UpdateEmployeeScreen {
 			System.out.print("\033\143");
 			empService.getAllElements(Role.class).forEach(System.out::println);
 
-			System.out.println("\nWHAT TO DO [ADDROLE,[DELETEROLE,BACK]");
+			System.out.println("\nWHAT TO DO [ADDROLE,DELETEROLE,BACK]");
 			String action = InputManager.enterString("Action","EMPTY_NOT_ALLOWED");
 
 			switch(action.toUpperCase()) {
@@ -89,6 +88,4 @@ public class UpdateEmployeeScreen {
 			} 
 		}
 	}
-	
-	
 }

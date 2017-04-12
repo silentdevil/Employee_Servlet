@@ -19,6 +19,10 @@ public class EmployeeService {
 		return dao.getAll(type);	
 	}
 
+	public <T> List<T> getAllElements(final Class<T> type, String query) {
+      return dao.getAll(type, query);
+    }
+
 	public <T> T getElement(final Class<T> type, final Long id){
       	return dao.get(type,id);
     }
@@ -38,6 +42,9 @@ public class EmployeeService {
 	public <E> void updateElement(E e) {
 		dao.saveOrUpdate(e);
 	}
+
+
+
 
 /*
 	public boolean isRoleDeletable(Role role) {

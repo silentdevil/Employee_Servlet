@@ -22,7 +22,7 @@ public class FactoryService {
 			employee.setCurrentlyHired(InputManager.getBoolean("CURRENTLY HIRED"));
 			employee.setContact(createContact());
 			employee.setRoles(new HashSet<Role>());
-			employee.getRoles().add(setRoleToEmployee());
+			employee.getRoles().add(setRoleToEmployee(employee));
 		
 		empService.saveElement(employee);
 		} catch(Exception ex) {
@@ -72,9 +72,9 @@ public class FactoryService {
 		}
 	}
 
-	private static Role setRoleToEmployee() throws Exception {
+	private static Role setRoleToEmployee(Employee employee) throws Exception {
 		System.out.println("What role: ");
-		empService.getAllElements(Role.class).forEach(System.out::println);
+		empService.getAllElements(Role.class).stream().filter(r -> !employee.getRoles().contains(r)).forEach(System.out::println);
 		Role role = empService.getElement(Role.class, Long.valueOf(InputManager.getPositiveNumber("ROLE","EMPTY_NOT_ALLOWED")));
 		return role;
 	}
@@ -82,7 +82,7 @@ public class FactoryService {
 	public static Employee addEmployeeRole(Employee employee) throws Exception {
 		try {
 			Set<Role> roles = employee.getRoles();
-			roles.add(setRoleToEmployee());	
+			roles.add(setRoleToEmployee(employee));	
 			employee.setRoles(roles);
 			return employee;
 		} catch(Exception ex) {
@@ -147,12 +147,12 @@ public class FactoryService {
 		System.out.print("\033\143");
 		empService.getAllElements(Role.class).forEach(System.out::println);
 		Role role = empService.getElement(Role.class, Long.valueOf(InputManager.getPositiveNumber("ROLE ID","EMPTY_NOT_ALLOWED")));
-		//if(empService.isRoleDeletable(role)){
+		
+		if(role.getEmployees().size()==0) {
 			empService.deleteElement(role);
-		//	InputManager.output("Role " + role + " is sucessfully deleted");
-		//} else {
-		//	InputManager.output("Role " + role + " is cannot be deleted");
-		//}
+			InputManager.output("Role " + role + " is sucessfully deleted");
+		 } else 
+			InputManager.output("Role " + role + " is cannot be deleted");
 	}
 
 }

@@ -1,10 +1,11 @@
 package com.exist.employee;
-
+import java.util.Set;
+import java.util.HashSet;
 public class Role {
 	
 	private long roleId;
 	private String role;
-	
+	private Set<Employee> employees = new HashSet<>();
 	
 	public Role() {
 	}
@@ -23,6 +24,14 @@ public class Role {
 	
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public Set<Employee> getEmployees() {
+		return employees;
+	}
+
+	public void setEmployees(Set<Employee> employees) {
+		this.employees = employees;
 	}
 	
 	public boolean equals(Object obj) {

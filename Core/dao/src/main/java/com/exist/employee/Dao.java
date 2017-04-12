@@ -13,7 +13,7 @@ public class Dao {
   //private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     public Session beginTransaction() {
-    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    Session session = HibernateUtil.getSessionFactory().openSession();
       if(!session.getTransaction().isActive())
         session.beginTransaction();
       return session;
@@ -23,48 +23,50 @@ public class Dao {
     public <T> void save(final T o){
       Session session = beginTransaction();
       session.save(o);
-	  session.getTransaction().commit();
+	    session.getTransaction().commit();
+      session.close();
     }
-
 
     public void delete(final Object object){
-
       Session session = beginTransaction();
       session.delete(object);
-	  session.getTransaction().commit();
+	    session.getTransaction().commit();
+      session.close();
     }
 
-    /***/
     public <T> T get(final Class<T> type, final Long id){
       Session session = beginTransaction();
-	  T t = (T) session.get(type, id);
-	  session.getTransaction().commit();
+	    T t = (T) session.get(type, id);
+      session.close();
       return t;
     }
 
     public <T> T get(T t) {
       Session session = beginTransaction();
       List<T> list = session.createCriteria(t.getClass()).list();
-	  session.getTransaction().commit();
+  	  session.getTransaction().commit();
+      session.close();
       return (T) list.get(list.indexOf((T)t));
     }
 
-    /***/
-    public <T> T merge(final T o)   {
-      Session session = beginTransaction();
-      return (T) session.merge(o);
-    }
-
-    /***/
     public <T> void saveOrUpdate(final T o){
       Session session = beginTransaction();
       session.saveOrUpdate(o);
-	  session.getTransaction().commit();
+	     session.getTransaction().commit();
+      session.close();
     }
 
     public <T> List<T> getAll(final Class<T> type) {
       Session session = beginTransaction();
-      final Criteria crit = session.createCriteria(type);
-      return crit.list();
+      List<T> list = session.createCriteria(type).list();
+      session.close();
+      return list;
+    }
+
+    public <T> List<T> getAll(final Class<T> type, String query) {
+      Session session = beginTransaction();
+      List<T> list = session.createQuery(query).list();
+      session.close();
+      return list;
     }
   }

@@ -31,6 +31,11 @@
          <generator class="increment"/>
       </id>
       <property name="role" column="role" type="string"/>
+      <set name="employees" table="employee_role" lazy="false" fetch="select" cascade="all">
+         <key column="roleid"/>
+         <many-to-many column="employeeid" class="Employee"/>
+      </set>
+         
    </class>
 
 	<class name="Address" table="addresses">
