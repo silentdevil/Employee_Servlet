@@ -51,7 +51,7 @@ public class Dao {
 
     public <T> void saveOrUpdate(final T o){
       Session session = beginTransaction();
-      session.saveOrUpdate(o);
+      session.update(o);
 	     session.getTransaction().commit();
       session.close();
     }
@@ -66,6 +66,7 @@ public class Dao {
     public <T> List<T> getAll(final Class<T> type, String query) {
       Session session = beginTransaction();
       List<T> list = session.createQuery(query).list();
+	  session.flush();
       session.close();
       return list;
     }

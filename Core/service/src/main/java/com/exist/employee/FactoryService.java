@@ -20,12 +20,13 @@ public class FactoryService {
 			employee.setGwa(InputManager.getPositiveFloat("GWA",id));
 			employee.setDatehired(DatePicker.parseDate(InputManager.enterString("Hire Date [YYYY-MM-DD]", id),id));
 			employee.setCurrentlyHired(InputManager.getBoolean("CURRENTLY HIRED"));
-			employee.setContact(createContact());
+			employee.setContact(createContact(employee));
 			employee.setRoles(new HashSet<Role>());
 			employee.getRoles().add(setRoleToEmployee(employee));
 		
 		empService.saveElement(employee);
 		} catch(Exception ex) {
+			ex.printStackTrace();
 			throw new Exception("Cannot create employee");
 		}
 	}
@@ -47,8 +48,9 @@ public class FactoryService {
 		}
 	}
 	
-	private static Contact createContact() throws Exception {
+	private static Contact createContact(Employee employee) throws Exception {
 		Contact contact = new Contact();
+		contact.setEmployee(employee);
 		try {
 			String string = InputManager.enterString("Landline [xxx-xxxx]","");
 			contact.setLandline(RegexUtils.isValidLandline(string) ? string : "");
@@ -121,7 +123,7 @@ public class FactoryService {
 					break;
 
 			}
-			empService.saveElement(contact);
+			empService.updateElement(contact);
 			employee.setContact(contact);
 		} catch(Exception ex){
 			ex.printStackTrace();

@@ -1,20 +1,61 @@
 package com.exist.employee;
 import java.util.Date;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.Transient;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.FetchType;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.util.HashSet;
+@Entity
+@Table(name = "employees")
 public class Employee {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	
+	@Column(name = "employeeid")
 	private long employeeId;
+	
+	@Column(name = "lastname")
 	private String lastname = "";
 	private String firstname = "";
 	private String middlename = "";
 	private String suffix = "";
 	private String title = "";
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "address")
 	private Address address;
+	
+	@Temporal(TemporalType.DATE)
 	private Date birthday;
 	private Float gwa;
+	
+	@Temporal(TemporalType.DATE)
 	private Date datehired;
 	private Boolean currentlyHired;
+	
+	@OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private Contact contact;
-	private Set<Role> roles;
+	
+	@ManyToMany(cascade = CascadeType.ALL,  fetch=FetchType.EAGER)
+	@JoinTable(name = "employee_role", 
+	joinColumns = { @JoinColumn(name = "employeeid")}, 
+		inverseJoinColumns = { @JoinColumn(name = "roleid")})
+	private Set<Role> roles = new HashSet<>();
 
 	public long getEmployeeId() {
 		return employeeId;

@@ -12,6 +12,7 @@
 
   <name>Core</name>
   <url>http://maven.apache.org</url>
+  
 
   <modules>
     <module>model</module>

@@ -1,7 +1,31 @@
 package com.exist.employee;
-
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import javax.persistence.GeneratedValue;
+import javax.persistence.FetchType;
+@Entity
+@Table(name = "contacts")
 public class Contact {
+	
+	@Id
+	@Column(name="employeeid")
+	@GeneratedValue(generator="gen")
+	@GenericGenerator(name="gen", strategy="foreign", 
+		parameters={@Parameter(name = "property", value="employee")})
 	private long employeeId;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@PrimaryKeyJoinColumn
 	private Employee employee;
 	private String landline;
 	private String mobile;

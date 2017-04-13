@@ -20,13 +20,7 @@
       <artifactId>model</artifactId>
       <version>1.0</version>
     </dependency>
-
-    <dependency>
-      <groupId>com.exist.employee</groupId>
-      <artifactId>dao</artifactId>
-      <version>1.0</version>
-    </dependency>
-
+	
     <dependency>
       <groupId>com.exist.employee</groupId>
       <artifactId>Utility</artifactId>

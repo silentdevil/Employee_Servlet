@@ -1,6 +1,21 @@
 package com.exist.employee;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.OneToOne;
+import javax.persistence.GeneratedValue;
 
-public class Address{
+@Entity
+@Table(name = "addresses")
+public class Address {
+	@Id
+	@GeneratedValue
+   @Column(name = "addressid")
    private long addressId;
    private int streetno;
    private String street; 
