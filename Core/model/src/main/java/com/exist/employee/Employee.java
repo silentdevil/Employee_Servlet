@@ -1,7 +1,8 @@
 package com.exist.employee;
 import java.util.Date;
 import java.util.Set;
-import javax.persistence.CascadeType;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Cascade;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,8 +22,15 @@ import javax.persistence.FetchType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.HashSet;
+
+import javax.persistence.Cacheable;
+import org.hibernate.annotations.*;
+//import org.hibernate.cache.CacheConcurrencyStrategy;
+
 @Entity
 @Table(name = "employees")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,7 +44,8 @@ public class Employee {
 	private String middlename = "";
 	private String suffix = "";
 	private String title = "";
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
+	@Cascade({CascadeType.SAVE_UPDATE})
 	@JoinColumn(name = "address")
 	private Address address;
 	
@@ -48,10 +57,12 @@ public class Employee {
 	private Date datehired;
 	private Boolean currentlyHired;
 	
-	@OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToOne(mappedBy = "employee", fetch=FetchType.EAGER)
+	@Cascade({CascadeType.ALL})
 	private Contact contact;
 	
-	@ManyToMany(cascade = CascadeType.ALL,  fetch=FetchType.EAGER)
+	@ManyToMany(fetch=FetchType.EAGER)
+	@Cascade({CascadeType.SAVE_UPDATE})
 	@JoinTable(name = "employee_role", 
 	joinColumns = { @JoinColumn(name = "employeeid")}, 
 		inverseJoinColumns = { @JoinColumn(name = "roleid")})

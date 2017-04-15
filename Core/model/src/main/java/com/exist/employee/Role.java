@@ -16,9 +16,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
+import javax.persistence.Cacheable;
+import org.hibernate.annotations.*;
+
 
 @Entity
 @Table(name = "roles")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Role {
 	
 	

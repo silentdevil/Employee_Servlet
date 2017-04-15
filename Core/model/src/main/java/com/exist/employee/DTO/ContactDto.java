@@ -1,37 +1,11 @@
 package com.exist.employee;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import javax.persistence.GeneratedValue;
-import javax.persistence.FetchType;
 
-import javax.persistence.Cacheable;
-import org.hibernate.annotations.*;
-@Entity
-@Table(name = "contacts")
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Contact {
+public class ContactDto {
 	
-	@Id
-	@Column(name="employeeid")
-	@GeneratedValue(generator="gen")
-	@GenericGenerator(name="gen", strategy="foreign", 
-		parameters={@Parameter(name = "property", value="employee")})
+
 	private long employeeId;
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	@PrimaryKeyJoinColumn
-	private Employee employee;
+	private EmployeeDto employee;
 	private String landline;
 	private String mobile;
 	private String email;
@@ -44,11 +18,11 @@ public class Contact {
 		this.employeeId = employeeId;
 	}
 
-	public Employee getEmployee() {
+	public EmployeeDto getEmployee() {
 		return employee;
 	}
 
-	public void setEmployee(Employee employee) {
+	public void setEmployee(EmployeeDto employee) {
 		this.employee = employee;
 	}
 	
@@ -89,7 +63,7 @@ public class Contact {
        if(obj == null || getClass() != obj.getClass())
          return false;
 
-        Contact add2 = (Contact) obj;
+        ContactDto add2 = (ContactDto) obj;
 
          return this.landline.equals(add2.getLandline()) && 
          		this.mobile.equals(add2.getMobile()) && this.email.equals(add2.getEmail());

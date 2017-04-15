@@ -6,13 +6,17 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 public class UpdateEmployeeScreen {
 	
-	public static void updateEmployee(EmployeeService empService) throws Exception {
+	DtoMapper mapper = new DtoMapper();
+	FactoryService factoryService = new FactoryService();
+	
+	public  void updateEmployee(EmployeeService empService) throws Exception {
 		System.out.print("\033\143\n");
 		System.out.println("Edit Employee! Input the ID\n");
 		try {
 			empService.getAllElements(Employee.class).forEach(System.out::println);
 
-			Employee employee = empService.getElement(Employee.class, Long.valueOf(InputManager.getPositiveNumber("Employee ID","EMPTY_NOT_ALLOWED")));
+			EmployeeDto employee = mapper.mapEmployeeDto(empService.getElement(Employee.class, 
+							Long.valueOf(InputManager.getPositiveNumber("Employee ID","EMPTY_NOT_ALLOWED"))));
 			
 			showEmployeeDetails(empService,employee);
 			OUTER:
@@ -21,21 +25,21 @@ public class UpdateEmployeeScreen {
 				String cmd = InputManager.enterString("Action: ADDROLE, DELROLE, ADDCONTACT, DELCONTACT, BACK", "EMPTY_NOT_ALLOWED");
 					switch(cmd) {
 						case "ADDROLE":
-							employee = FactoryService.addEmployeeRole(employee);
+							employee = CreateUI.addEmployeeRole(employee);
 							break;
 						case "DELROLE":
-							employee = FactoryService.deleteEmployeeRole(employee);
+							employee = CreateUI.deleteEmployeeRole(employee);
 							break;
 						case "ADDCONTACT":
-							employee = FactoryService.addEmployeeContact(empService,employee,"");
+							employee = CreateUI.addEmployeeContact(empService,employee,"");
 							break;
 						case "DELCONTACT":
-							employee = FactoryService.addEmployeeContact(empService,employee,"DEL");
+							employee = CreateUI.addEmployeeContact(empService,employee,"DEL");
 						case "BACK":
 							return;
 					}
 
-				empService.updateElement(employee);
+				factoryService.updateDto(factoryService.createEmployee(employee));
 				showEmployeeDetails(empService,employee);
 			}
 		} catch(Exception ex) {
@@ -45,7 +49,7 @@ public class UpdateEmployeeScreen {
 		}	
 	}
 	
-	public static void showEmployeeDetails(EmployeeService empService, Employee employee) throws Exception {
+	public void showEmployeeDetails(EmployeeService empService, EmployeeDto employee) throws Exception {
 		try {
 			System.out.print("\033\143");
 			
@@ -65,7 +69,7 @@ public class UpdateEmployeeScreen {
 		}
 	}
 
-	public static void roleScreen(EmployeeService empService) throws Exception {
+	public void roleScreen(EmployeeService empService) throws Exception {
 		System.out.print("\033\143");
 
 		OUTER:
@@ -78,10 +82,10 @@ public class UpdateEmployeeScreen {
 
 			switch(action.toUpperCase()) {
 				case "ADDROLE":
-					FactoryService.createRole(empService);
+					CreateUI.createRole(empService);
 					break;
 				case "DELETEROLE":
-					FactoryService.deleteRole(empService);
+					CreateUI.deleteRole(empService);
 					break;
 				case "BACK": 
 					break OUTER;

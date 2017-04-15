@@ -19,8 +19,8 @@ public class EmployeeService {
 		return dao.getAll(type);	
 	}
 
-	public <T> List<T> getAllElements(final Class<T> type, String query) {
-      return dao.getAll(type, query);
+	public <T> List<T> getAllElements(final Class<T> type, String order) {
+      return dao.getAll(type, order);
     }
 
 	public <T> T getElement(final Class<T> type, final Long id){
@@ -40,7 +40,7 @@ public class EmployeeService {
 	}
 	
 	public <E> void updateElement(E e) {
-		dao.saveOrUpdate(e);
+		dao.update(e);
 	}
 
 

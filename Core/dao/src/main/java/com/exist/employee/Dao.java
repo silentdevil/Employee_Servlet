@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 
 public class Dao {
   //private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -49,7 +50,7 @@ public class Dao {
       return (T) list.get(list.indexOf((T)t));
     }
 
-    public <T> void saveOrUpdate(final T o){
+    public <T> void update(final T o){
       Session session = beginTransaction();
       session.update(o);
 	     session.getTransaction().commit();
@@ -58,15 +59,18 @@ public class Dao {
 
     public <T> List<T> getAll(final Class<T> type) {
       Session session = beginTransaction();
-      List<T> list = session.createCriteria(type).list();
+	  Criteria criteria = session.createCriteria(type);
+	  criteria.setCacheable(true);
+      List<T> list = criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
       session.close();
       return list;
     }
 
-    public <T> List<T> getAll(final Class<T> type, String query) {
+    public <T> List<T> getAll(final Class<T> type, String order) {
       Session session = beginTransaction();
-      List<T> list = session.createQuery(query).list();
-	  session.flush();
+	  Criteria criteria = session.createCriteria(type);
+	  criteria.setCacheable(true);
+      List<T> list = criteria.addOrder(Order.asc(order)).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
       session.close();
       return list;
     }

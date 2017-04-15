@@ -36,9 +36,9 @@ CREATE TABLE contacts (
 CREATE TABLE employee_role (
 	employeeid int,
 	roleid int,
-	primary key(employeeid,roleid)
-	foreign key(employeeid) references employees(employeeid),
-	foreign key(roleid) references roles(roleid)
+	primary key(employeeid,roleid),
+	constraint fk_employeeid foreign key(employeeid) references employees(employeeid),
+	constraint fk_roleid foreign key(roleid) references roles(roleid)
 );
 
 CREATE TABLE roles (

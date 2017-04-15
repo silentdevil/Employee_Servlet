@@ -1,25 +1,7 @@
 package com.exist.employee;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.OneToOne;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Cacheable;
-import org.hibernate.annotations.*;
 
-@Entity
-@Table(name = "addresses")
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Address {
-	@Id
-	@GeneratedValue
-   @Column(name = "addressid")
+public class AddressDto {
+
    private long addressId;
    private int streetno;
    private String street; 
@@ -82,7 +64,7 @@ public class Address {
        if(obj == null || getClass() != obj.getClass())
          return false;
 
-         Address add2 = (Address) obj;
+         AddressDto add2 = (AddressDto) obj;
 
          return this.streetno == add2.getStreetno() && this.street.equals(add2.getStreet()) && this.brgy.equals(add2.getBrgy())
             && this.city.equals(add2.getCity());
