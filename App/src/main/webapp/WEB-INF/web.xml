@@ -5,8 +5,8 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
-	<servlet-name>HelloWorld</servlet-name>
-	<servlet-class>com.exist.employee.HelloWorld</servlet-class>
+	<servlet-name>EmployeeServlet</servlet-name>
+	<servlet-class>com.exist.employee.EmployeeServlet</servlet-class>
 	
 	
 	<init-param>
@@ -21,8 +21,8 @@
   </servlet>
   
   <servlet-mapping>
-	<servlet-name>HelloWorld</servlet-name>
-	<url-pattern>/HelloWorld</url-pattern>
+	<servlet-name>EmployeeServlet</servlet-name>
+	<url-pattern>/Employee</url-pattern>
   </servlet-mapping>
 	
 </web-app>

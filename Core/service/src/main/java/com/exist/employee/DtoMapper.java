@@ -24,7 +24,8 @@ public class DtoMapper {
 			employeeDto.setRoles(mapRoleSetDto(employee.getRoles()));
 		
 		} catch(Exception ex) {
-			return null;
+			ex.printStackTrace();
+			System.out.println("Error");
 		}
 		return employeeDto;
 	}
@@ -51,7 +52,6 @@ public class DtoMapper {
 			addressDto.setCity(address.getCity());
 			addressDto.setZipcode(address.getZipcode());
 		} catch(Exception ex) {
-			return null;
 		}
 		return addressDto;
 	}
@@ -65,7 +65,6 @@ public class DtoMapper {
 			contactDto.setEmail(contact.getEmail());
 		} catch(Exception ex) {
 			System.out.println("Null contact passed");
-			return null;
 		}
 			return contactDto;
 		
@@ -82,7 +81,6 @@ public class DtoMapper {
 		} catch (Exception ex) {
 			System.out.println("Null role passed");
 			ex.printStackTrace();
-			return null;
 		}
 			return roleDto;
 	}
