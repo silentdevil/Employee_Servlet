@@ -9,7 +9,7 @@ public class ContactDto {
 	private String landline;
 	private String mobile;
 	private String email;
-	
+
 	public long getEmployeeId() {
 		return employeeId;
 	}
@@ -22,32 +22,36 @@ public class ContactDto {
 		return employee;
 	}
 
-	public void setEmployee(EmployeeDto employee) {
+	public ContactDto setEmployee(EmployeeDto employee) {
 		this.employee = employee;
+		return this;
 	}
 	
 	public String getLandline() {
 		return landline;
 	}
 	
-	public void setLandline(String landline) {
+	public ContactDto setLandline(String landline) {
 		this.landline = landline;
+		return this;
 	}
 	
 	public String getMobile() {
 		return mobile;
 	}
 	
-	public void setMobile(String mobile) {
+	public ContactDto setMobile(String mobile) {
 		this.mobile = mobile;
+		return this;
 	}
 	
 	public String getEmail() {
 		return email;
 	}
 	
-	public void setEmail(String email) {
+	public ContactDto setEmail(String email) {
 		this.email = email;
+		return this;
 	}
 	
 	public String toString() {

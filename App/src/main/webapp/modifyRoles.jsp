@@ -36,7 +36,23 @@
                 </td>
 
             </TR>
+
             <% }; %>
+
+
+            <TR>
+                <td>
+                    <input type="submit" value="Add Role" name="addnewrole">
+                </td>
+
+                 <td>
+                    <input type="text" placeholder="Add Role" name="newrole">
+                </td>
+
+                <td>
+
+                </td>
+            </TR>
     </TABLE>
 
 </body>

@@ -12,54 +12,53 @@
 	       <form action="Employee" method="post">
             <table style="with: 50%">
                 <tr>
-                    <td>Full Name</td>
+                    <td>*Full Name</td>
                     <td>
-                        <input type="text" name="title" value="Title" />
-                        <input type="text" name="firstname" value="firstname" />
-                        <input type="text" name="middlename" value="middlename" />
-                        <input type="text" name="lastname" value="lastname"/>
-                        <input type="text" name="firstname" value="firstname" />
-                        <input type="text" name="suffix" value="Suffix" />
+                        <input type="text" name="title" placeholder="Title" />
+                        <input type="text" name="firstname" placeholder="*firstname" required/>
+                        <input type="text" name="middlename" placeholder="*middlename" required/>
+                        <input type="text" name="lastname" placeholder="*lastname"required/>
+                        <input type="text" name="suffix" placeholder="Suffix" />
                     </td>
                 </tr>
                 <tr>
-                    <td>Address</td>
+                    <td>*Address</td>
                     <td>
-                        <input type="text" name="streetno" value="Street No." />
-                        <input type="text" name="street" value="Street" />
-                        <input type="text" name="brgy" value="Brgy" />
-                        <input type="text" name="city" value="City"/>
-                        <input type="text" name="zipcode" value="Zipcode" />
+                        <input type="text" name="streetno" placeholder="*Street No." required/>
+                        <input type="text" name="street" placeholder="*Street" required/>
+                        <input type="text" name="brgy" placeholder="*Brgy" required/>
+                        <input type="text" name="city" placeholder="*City" required/>
+                        <input type="text" name="zipcode" placeholder="*Zipcode" required/>
                     </td>
                 </tr>
                 <tr>
-                    <td>Birthday</td>
-                    <td><input type="text" name="birthday" value="YYYY-MM-DD" /></td>
+                    <td>*Birthday</td>
+                    <td><input type="text" name="birthday" placeholder="*YYYY-MM-DD" required/></td>
                 </tr>
                 <tr>
-                    <td>General Weighted Average</td>
-                    <td><input type="text" name="gwa" /></td>
+                    <td>*General Weighted Average</td>
+                    <td><input type="text" name="gwa" required/></td>
                 </tr>
                 <tr>
-                    <td>Currently Hired</td>
+                    <td>*Currently Hired</td>
                     <td>
                          <select name="currentlyhired">
-                          <option value="yes">Yes</option>
-                          <option value="no">No</option>
+                          <option value="TRUE">TRUE</option>
+                          <option value="FALSE">FALSE</option>
                         </select> 
                     </td>
                 </tr>
                <tr>
-                    <td>Date Hired</td>
-                    <td><input type="text" name="datehired" value="YYYY-MM-DD" /></td>
+                    <td>*Date Hired</td>
+                    <td><input type="text" name="datehired" placeholder="*YYYY-MM-DD" required/></td>
                 </tr>
 
                 <tr>
                     <td>Contact</td>
                     <td>
-                        <input type="text" name="landline" value="landline" />
-                        <input type="text" name="mobile" value="mobile" />
-                        <input type="text" name="email" value="email" />
+                        <input type="text" name="landline" placeholder="landline" />
+                        <input type="text" name="mobile" placeholder="mobile" />
+                        <input type="text" name="email" placeholder="*email" required />
                     </td>
                 </tr>
 
@@ -70,14 +69,14 @@
                         <%
                           List<Role> roleList = (List<Role>) request.getAttribute("roleList");%>
                           <%for(Role r: roleList) { %>
-                          <option value=<%= r.getRole() %>><%= r.getRole()%></option>
+                          <option value=<%= r.getRoleId() %>><%= r.getRole()%></option>
                           <%}; %>
                         
                         </select> 
                     </td>
                 </tr>
             </table>
-            <input type="submit" value="addemployee" />
+            <input type="submit" value="Save Employee" name="addemployee" />
         </form>
 
 </body>

@@ -25,8 +25,9 @@ public class RoleDto {
 		return role;
 	}
 	
-	public void setRole(String role) {
+	public RoleDto setRole(String role) {
 		this.role = role;
+		return this;
 	}
 
 	public Set<EmployeeDto> getEmployees() {

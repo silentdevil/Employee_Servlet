@@ -67,9 +67,12 @@ public class FactoryService {
 	
 	public Role createRole(RoleDto roleDto) {
 		Role role = new Role();
-		role.setRoleId(roleDto.getRoleId());
-		role.setRole(roleDto.getRole());
-		return role;
+		try {
+			role.setRole(roleDto.getRole());
+			role.setRoleId(roleDto.getRoleId());
+		} finally {
+			return role;
+		}
 	}
 	
 	public Set<Role> createRoleSet(Set<RoleDto> roleDtoSet) {

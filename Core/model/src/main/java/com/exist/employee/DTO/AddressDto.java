@@ -13,41 +13,47 @@ public class AddressDto {
       return addressId;
    }
 
-   public void setAddressId(long addressId) {
+   public AddressDto setAddressId(long addressId) {
       this.addressId = addressId;
+      return this;
    }
 
    public int getStreetno() {
       return streetno;
    }
 
-   public void setStreetno(int streetno) {
+   public AddressDto setStreetno(int streetno) {
       this.streetno = streetno;
+      return this;
    }
 
    public String getStreet() {
       return street;
    }
-   public void setStreet( String street ) {
+   public AddressDto setStreet( String street ) {
       this.street = street;
+      return this;
    }
    public String getCity() {
       return city;
    }
-   public void setCity( String city ) {
+   public AddressDto setCity( String city ) {
       this.city = city;
+      return this;
    }
    public String getBrgy() {
       return brgy;
    }
-   public void setBrgy(String brgy) {
+   public AddressDto setBrgy(String brgy) {
       this.brgy = brgy;
+      return this;
    }
    public String getZipcode() {
       return zipcode;
    }
-   public void setZipcode(String zipcode) {
+   public AddressDto setZipcode(String zipcode) {
       this.zipcode = zipcode;
+      return this;
    }
    
    public String toString() {

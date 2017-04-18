@@ -20,8 +20,8 @@ INSERT INTO ADDRESSES(addressid,streetno, street, brgy, city, zipcode)
 	VALUES (2, 12,'EMERALD','SAN ANTONIO', 'PASIG','1600');
 
 
-INSERT INTO CONTACTS(contactid, landline, mobile, email)
-	VALUES(2, '','','ervein@yahoo.com');
+INSERT INTO CONTACTS(employeeid, landline, mobile, email)
+	VALUES(2,'','','ervein@yahoo.com');
 
 INSERT INTO EMPLOYEES(employeeid, lastname, firstname, middlename, suffix, title, address, birthday, gwa, datehired, currentlyhired)
 	VALUES(2, 'CABANLIG','ERVEIN','BRAVO','','',2,'1993-02-01',3,'2016-04-02','F');

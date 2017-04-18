@@ -29,7 +29,7 @@
                 <TD> <%= e.getLastname() %></TD>
                 <TD> <%= e.getFirstname() %></TD>
                 <TD> <%= e.getMiddlename() %></TD>
-                <TD> <%= EmployeeServlet.addValue(e,output)%></TD>
+                <TD> <%= ButtonFunctions.addValue(e,output)%></TD>
                  <td>
                      <button type="submit" value=<%= e.getEmployeeId()+""%> name="edit">
                         EDIT

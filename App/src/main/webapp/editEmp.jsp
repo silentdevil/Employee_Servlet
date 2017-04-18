@@ -37,8 +37,9 @@
                     <td>Currently Hired</td>
                     <td>
                          <select name="currentlyhired">
-                          <option value="yes">Yes</option>
-                          <option value="no">No</option>
+                          <option value=<%= employee.getCurrentlyHired() %>>
+                            <%= employee.getCurrentlyHired() %>
+                          </option>
                         </select> 
                     </td>
                 </tr>
@@ -65,7 +66,7 @@
                                 <TR>
                                     <TD> <%= r.getRole() %></td>
                                      <td>
-                                         <button type="submit" value=<%= r.getRoleId()+""%> name="edit">Delete </button>
+                                         <button type="submit" value=<%= r.getRoleId()+""%> name="delEmpRole">Delete </button>
                                     </td>
                                 </TR>
                             <% }; %>
