@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,16 +16,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
 import javax.persistence.JoinTable;
-import javax.persistence.Transient;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.FetchType;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.HashSet;
 
 import javax.persistence.Cacheable;
 import org.hibernate.annotations.*;
-//import org.hibernate.cache.CacheConcurrencyStrategy;
+
 
 @Entity
 @Table(name = "employees")
@@ -44,6 +42,8 @@ public class Employee {
 	private String middlename = "";
 	private String suffix = "";
 	private String title = "";
+
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@ManyToOne
 	@Cascade({CascadeType.SAVE_UPDATE})
 	@JoinColumn(name = "address")

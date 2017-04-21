@@ -56,9 +56,10 @@
                 <tr>
                     <td>Contact</td>
                     <td>
-                        <input type="text" name="landline" placeholder="landline" />
-                        <input type="text" name="mobile" placeholder="mobile" />
-                        <input type="text" name="email" placeholder="*email" required />
+                        <input type="text" name="landline" placeholder="landline [XXX-XXXX]" />
+                        <input type="text" name="mobile" placeholder="mobile [XXXX-XXX-XXXX]" />
+                        <input type="text" id="email" name="email" placeholder="*email" 
+                           onblur="validateEmail(value)" required />
                     </td>
                 </tr>
 
@@ -77,7 +78,23 @@
                 </tr>
             </table>
             <input type="submit" value="Save Employee" name="addemployee" />
+            <a href="http://localhost:8080/Employee">
+                <button name="back"> Back to Main Menu </button>
+            </a> 
         </form>
+        <script>
+        function validateEmail(email){ 
+          var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          if(re.test(email)){
+            document.getElementById('email').style.background ='#ccffcc';
+            return true;
+          }else{
+            document.getElementById('email').style.background ='#e35152';
+            return false;
+          }
+        }
+        </script>
 
+       
 </body>
 </html>

@@ -6,11 +6,11 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.util.*;
 import java.util.stream.Collectors;
-// Extend HttpServlet class
+
 public class EmployeeServlet extends HttpServlet {
  
   EmployeeService empServ = new EmployeeService();
-  ButtonFunctions buttonFunctions = new ButtonFunctions(empServ,this);
+  ButtonFunctions buttonFunctions = new ButtonFunctions(empServ);
 
    List<Employee> empList;
   public void doGet(HttpServletRequest request,
@@ -75,6 +75,9 @@ public class EmployeeServlet extends HttpServlet {
 
     } else if(request.getParameter("addemployee") != null) {
       buttonFunctions.addEmployee(request, response);
+
+    } else if(request.getParameter("back") != null) {
+      buttonFunctions.backToMainMenu(request, response);
     }
 
 

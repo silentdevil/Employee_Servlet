@@ -16,7 +16,7 @@
                 <tr>
                     <td>Full Name</td>
                     <td>
-                        <%= employee.getTitle() +" " + employee.getLastname() + ", " + employee.getFirstname() + " " + employee.getMiddlename() %> 
+                        <%= employee.getTitle() +" " + employee.getLastname() + ", " + employee.getFirstname() + " " + employee.getMiddlename() + " " + employee.getSuffix() %> 
                     </td>
                 </tr>
                 <tr>
@@ -51,9 +51,12 @@
                 <tr>
                     <td>Contact</td>
                     <td>
-                        <input type="text" name="landline" value=<%= employee.getContact().getLandline() %> />
-                        <input type="text" name="mobile" value=<%= employee.getContact().getMobile() %> />
-                        <input type="text" name="email" value=<%= employee.getContact().getEmail() %> />
+                        <input type="text" name="landline" placeholder="landline"
+                            value=<%= employee.getContact().getLandline() %> >
+                        <input type="text" name="mobile" placeholder = "mobile" 
+                            value=<%= employee.getContact().getMobile() %> >
+                        <input type="text" name="email" placeholder="email"
+                            value=<%= employee.getContact().getEmail() %> >
                     </td>
                 </tr>
 
@@ -90,6 +93,7 @@
             </div>
 
             <input type="submit" value="Save Changes" name="savechanges">
+            <button type="submit" name="back" novalidate> Back to Main Menu </button> 
         </form>
 
 

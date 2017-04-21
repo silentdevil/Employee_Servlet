@@ -13,7 +13,21 @@
 
 	<%
 		List<Role> roleList = (List<Role>) request.getAttribute("roleList");
+        String roleStat = (String) request.getAttribute("ROLE_DELETE_STATUS");
 	%>
+
+    <%
+        if (roleStat == "SUCCESS") {
+            out.println("<script type=\"text/javascript\">");  
+            out.println("alert('Role is successfully deleted');");  
+            out.println("</script>");
+        } else if(roleStat == "FAILED") {
+            out.println("<script type=\"text/javascript\">");  
+            out.println("alert('Role is taken, can't delete it.);");  
+            out.println("</script>");
+        }
+    %>
+
 	<form action="Employee" method="post">
 	<TABLE BORDER="1">
             <TR>
@@ -24,11 +38,7 @@
             <TR>
                 <TD> <%= r.getRoleId() %></td>
                 <TD> <%= r.getRole() %></TD>
-                 <td>
-                     <button type="submit" value=<%= r.getRoleId()+""%> name="editrole">
-                        EDIT
-                     </button>
-                </td>
+        
                  <td>
                      <button type="submit" value=<%= r.getRoleId()+""%> name="deleterole" onclick="return confirm('Are you sure you want to delete this?')">
                         DELETE
@@ -54,6 +64,8 @@
                 </td>
             </TR>
     </TABLE>
+    <button type="submit" name="back" novalidate> Back to Main Menu </button> 
+</form>
 
 </body>
 </html>
