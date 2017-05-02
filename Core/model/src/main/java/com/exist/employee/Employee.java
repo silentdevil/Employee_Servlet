@@ -8,14 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import java.util.List;
 
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.OneToOne;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import javax.persistence.ManyToMany;
 import javax.persistence.JoinTable;
+import javax.persistence.Embedded;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,22 +33,15 @@ import org.hibernate.annotations.*;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Employee {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
-	@Column(name = "employeeid")
+	@Column(name = "employee_id")
 	private long employeeId;
 	
-	@Column(name = "lastname")
-	private String lastname = "";
-	private String firstname = "";
-	private String middlename = "";
-	private String suffix = "";
-	private String title = "";
+	@Embedded
+	private Name employeeName;
 
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	@ManyToOne
-	@Cascade({CascadeType.SAVE_UPDATE})
-	@JoinColumn(name = "address")
+	@Embedded
 	private Address address;
 	
 	@Temporal(TemporalType.DATE)
@@ -54,18 +49,23 @@ public class Employee {
 	private Float gwa;
 	
 	@Temporal(TemporalType.DATE)
-	private Date datehired;
+	@Column(name = "date_hired")
+	private Date dateHired;
+
+	@Column(name = "currently_hired")
 	private Boolean currentlyHired;
 	
-	@OneToOne(mappedBy = "employee", fetch=FetchType.EAGER)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@OneToMany(mappedBy="employee",fetch=FetchType.EAGER)
 	@Cascade({CascadeType.ALL})
-	private Contact contact;
+	private Set<Contact> contacts;
 	
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@ManyToMany(fetch=FetchType.EAGER)
 	@Cascade({CascadeType.SAVE_UPDATE})
 	@JoinTable(name = "employee_role", 
-	joinColumns = { @JoinColumn(name = "employeeid")}, 
-		inverseJoinColumns = { @JoinColumn(name = "roleid")})
+		joinColumns = { @JoinColumn(name = "employee_id")}, 
+			inverseJoinColumns = { @JoinColumn(name = "role_id")})
 	private Set<Role> roles = new HashSet<>();
 
 	public long getEmployeeId() {
@@ -76,44 +76,12 @@ public class Employee {
 		this.employeeId = employeeId;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public Name getEmployeeName(){
+		return employeeName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getMiddlename() {
-		return middlename;
-	}
-
-	public void setMiddlename(String middlename) {
-		this.middlename = middlename;
-	}
-
-	public String getSuffix() {
-		return suffix;
-	}
-
-	public void setSuffix(String suffix) {
-		this.suffix = suffix;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
+	public void setEmployeeName(Name employeeName){
+		this.employeeName = employeeName;
 	}
 
 	public Address getAddress() {
@@ -140,12 +108,12 @@ public class Employee {
 		this.gwa = gwa;
 	}
 	
-	public Date getDatehired() {
-		return datehired;
+	public Date getDateHired() {
+		return dateHired;
 	}
 	
-	public void setDatehired(Date datehired) {
-		this.datehired = datehired;
+	public void setDateHired(Date dateHired) {
+		this.dateHired = dateHired;
 	}
 	
 	public Boolean getCurrentlyHired() {
@@ -156,12 +124,12 @@ public class Employee {
 		this.currentlyHired = currentlyHired;
 	}
 	
-	public Contact getContact() {
-		return contact;
+	public Set<Contact> getContacts() {
+		return contacts;
 	}
 	
-	public void setContact(Contact contact) {
-		this.contact = contact;
+	public void setContacts(Set<Contact> contacts) {
+		this.contacts = contacts;
 	}
 	
 	public Set<Role> getRoles() {
@@ -184,7 +152,7 @@ public class Employee {
 	
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(employeeId + "\t").append(lastname + "," + firstname + " " + middlename + " " + suffix);
+		sb.append(employeeId + "\t").append(employeeName);
 		return sb.toString();
 	}
 }

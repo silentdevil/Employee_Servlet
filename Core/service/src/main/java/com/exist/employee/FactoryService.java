@@ -2,27 +2,45 @@ package com.exist.employee;
 import java.util.*;
 public class FactoryService {
 
-	private static EmployeeService empService = new EmployeeService();
+	private EmployeeService empService;
+	private DtoMapper mapper;
 
+	public FactoryService(EmployeeService empService, DtoMapper mapper) {
+		this.empService = empService;
+		this.mapper = mapper;
+	}
+
+	public EmployeeService getEmployeeService() {
+		return empService;
+	}
 	
+	public DtoMapper getMapper() {
+		return mapper;
+	}
+
 	public Employee createEmployee(EmployeeDto employeeDto) {
-		Employee employee = new Employee();
+		Employee employee = empService.findEmployeeById(employeeDto.getEmployeeId());
+		if(employee == null)
+			employee = new Employee();
+		Name employeeName = new Name();
+		NameDto nameDto = employeeDto.getEmployeeName();
 		try {
 			employee.setEmployeeId(employeeDto.getEmployeeId());
-			employee.setLastname(employeeDto.getLastname());
-			employee.setFirstname(employeeDto.getFirstname());
-			employee.setMiddlename(employeeDto.getMiddlename());
-			employee.setSuffix(employeeDto.getSuffix());
-			employee.setTitle(employeeDto.getTitle());
+			
+			employeeName.setLastName(nameDto.getLastName());
+			employeeName.setFirstName(nameDto.getFirstName());
+			employeeName.setMiddleName(nameDto.getMiddleName());
+			employeeName.setSuffix(nameDto.getSuffix());
+			employeeName.setTitle(nameDto.getTitle());
+			employee.setEmployeeName(employeeName);
 			employee.setAddress(createAddress(employeeDto.getAddress()));
 			employee.setBirthday(employeeDto.getBirthday());
 			employee.setGwa(employeeDto.getGwa());
-			employee.setDatehired(employeeDto.getDatehired());
+			employee.setDateHired(employeeDto.getDateHired());
 			employee.setCurrentlyHired(employeeDto.getCurrentlyHired());
-			Contact contact = createContact(employeeDto.getContact());
-			contact.setEmployeeId(employeeDto.getEmployeeId());
-			contact.setEmployee(employee);
-			employee.setContact(contact);
+			Set<Contact> contacts = createContacts(employeeDto, employee);
+			System.out.println(contacts);
+			employee.setContacts(contacts);
 			employee.setRoles(createRoleSet(employeeDto.getRoles()));
 		
 		} catch(Exception ex) {
@@ -31,54 +49,50 @@ public class FactoryService {
 		return employee;
 	}
 	
-	public void updateDto(Object object) {
-		empService.updateElement(object);
-	}
-	
-	public void saveDto(Object object){
-		empService.saveElement(object);	
-	}
-	
 	public  Address createAddress(AddressDto addressDto) throws Exception {
 		Address address = new Address();
-		try {
-			address.setStreetno(addressDto.getStreetno());
+
+			address.setStreetNo(addressDto.getStreetNo());
 			address.setStreet(addressDto.getStreet());
 			address.setBrgy(addressDto.getBrgy());
 			address.setCity(addressDto.getCity());
 			address.setZipcode(addressDto.getZipcode());
-		
-			return empService.getElement(address);
-		} catch(Exception ex) {
-			empService.saveElement(address);
-			return empService.getElement(address);
-		}
+		return address;
 	}
 	
-	public  Contact createContact(ContactDto contactDto) throws Exception {
-			Contact contact = new Contact();
-			
-			contact.setLandline(contactDto.getLandline());
-			contact.setMobile(contactDto.getMobile());
-			contact.setEmail(contactDto.getEmail());
-			return contact;
-		
+	public Set<Contact> createContacts(EmployeeDto employeeDto, Employee employee) throws Exception {
+		Set<Contact> contacts = employee.getContacts();
+		if(contacts == null)
+			contacts = new TreeSet<>();
+		System.out.println("printed from FactoryService.createContacts" + employeeDto.getContacts());
+		try {
+			for(ContactDto c: employeeDto.getContacts()) {
+				Contact contact = new Contact();
+				contact.setEmployee(employee);
+				contact.setContactType(c.getContactType());
+				contact.setContactInfo(c.getContactInfo());
+				contacts.add(contact);
+			}
+		} catch(Exception ex) {
+			System.out.println("Null contact passed");
+			ex.printStackTrace();
+			return null;
+		}
+			System.out.println("contacts from create contacts" + contacts);
+			return contacts;
 	}
 	
 	public Role createRole(RoleDto roleDto) {
 		Role role = new Role();
-		try {
-			role.setRole(roleDto.getRole());
-			role.setRoleId(roleDto.getRoleId());
-		} finally {
-			return role;
-		}
+		role.setRoleId(roleDto.getRoleId());
+		role.setRole(roleDto.getRole());
+		return role;
 	}
 	
 	public Set<Role> createRoleSet(Set<RoleDto> roleDtoSet) {
-		List<Role> roles = new ArrayList<>();
+		Set<Role> roles = new HashSet<>();
 		roleDtoSet.forEach(r -> roles.add(createRole(r)));
-		return new HashSet<Role>(roles);
+		return roles;
 	}
 	
 	

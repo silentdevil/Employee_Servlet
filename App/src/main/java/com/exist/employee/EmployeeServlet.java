@@ -9,14 +9,17 @@ import java.util.stream.Collectors;
 
 public class EmployeeServlet extends HttpServlet {
  
-  EmployeeService empServ = new EmployeeService();
-  ButtonFunctions buttonFunctions = new ButtonFunctions(empServ);
 
-   List<Employee> empList;
+  private ButtonFunctions buttonFunctions = new ButtonFunctions(
+                      new FactoryService(new EmployeeService(), new DtoMapper()), new EditEmployeeService());
+
+  private EmployeeService empServ = buttonFunctions.getFactoryService().getEmployeeService();
+
+  private List<Employee> empList;
   public void doGet(HttpServletRequest request,
                   HttpServletResponse response) throws ServletException, IOException {
    
-    empList = empServ.getAllElements(Employee.class);
+    empList = empServ.getAllEmployees();
   	request.setAttribute("empList", empList);
     request.setAttribute("addValue","");
   	request.getRequestDispatcher("/index.jsp").forward(request, response);
@@ -26,7 +29,8 @@ public class EmployeeServlet extends HttpServlet {
   public void doPost(HttpServletRequest request,
                   HttpServletResponse response) throws ServletException, IOException {
 
-    List<Role> roleList = empServ.getAllElements(Role.class);
+    List<Role> roleList = empServ.getAllRoles();
+
     request.setAttribute("roleList", roleList);
     
     if(request.getParameter("addEmp")!=null) {
@@ -56,6 +60,7 @@ public class EmployeeServlet extends HttpServlet {
     } else if(request.getParameter("delete") != null) {
       empServ.deleteElement(empServ.getElement(Employee.class,
         Long.valueOf(request.getParameter("delete"))));
+      request.setAttribute("empList", empList); request.setAttribute("addValue","");
       request.getRequestDispatcher("/index.jsp").forward(request, response);
 
     } else if(request.getParameter("deleterole") != null) {

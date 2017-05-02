@@ -19,8 +19,33 @@ public class EmployeeService {
 		return dao.getAll(type);	
 	}
 
+	public List<Employee> getAllEmployees() {
+		return dao.getAll(Employee.class);
+	}
+
+	public List<Employee> getAllEmployees(String order){
+		return dao.getAll(Employee.class,order);
+	}
+
+	public List<Role> getAllRoles() {
+		return dao.getAll(Role.class);
+	}
+
 	public <T> List<T> getAllElements(final Class<T> type, String order) {
       return dao.getAll(type, order);
+    }
+
+    public Role getRoleById(Long id) {
+    	return dao.get(Role.class,id);
+    }
+
+    public Contact getContactById(Long id){
+    	return dao.get(Contact.class,id);
+    }
+
+    public Employee findEmployeeById(Long id) {
+    	InputManager.output("hey");
+    	return dao.get(Employee.class, id);
     }
 
 	public <T> T getElement(final Class<T> type, final Long id){
@@ -42,8 +67,6 @@ public class EmployeeService {
 	public <E> void updateElement(E e) {
 		dao.update(e);
 	}
-
-
 
 
 /*

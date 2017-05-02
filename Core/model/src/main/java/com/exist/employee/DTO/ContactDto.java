@@ -1,21 +1,31 @@
 package com.exist.employee;
 
-public class ContactDto {
+public class ContactDto implements Comparable<ContactDto>{
 	
-
+	private long contactId;
 	private long employeeId;
 	
 	private EmployeeDto employee;
-	private String landline;
-	private String mobile;
-	private String email;
+	private String contactType;
+	private String contactInfo;
 
+
+	public long getContactId() {
+		return contactId;
+	}
+
+	public ContactDto setContactId(long contactId) {
+		this.contactId = contactId;
+		return this;
+	}
+	
 	public long getEmployeeId() {
 		return employeeId;
 	}
 	
-	public void setEmployeeId(long employeeId) {
+	public ContactDto setEmployeeId(long employeeId) {
 		this.employeeId = employeeId;
+		return this;
 	}
 
 	public EmployeeDto getEmployee() {
@@ -26,57 +36,49 @@ public class ContactDto {
 		this.employee = employee;
 		return this;
 	}
-	
-	public String getLandline() {
-		return landline;
+
+	public String getContactType(){
+		return contactType;
 	}
-	
-	public ContactDto setLandline(String landline) {
-		this.landline = landline;
+
+	public ContactDto setContactType(String contactType){
+		this.contactType = contactType;
+		return this;
+	}
+
+	public String getContactInfo(){
+		return contactInfo;
+	}
+
+	public ContactDto setContactInfo(String contactInfo){
+		this.contactInfo = contactInfo;
 		return this;
 	}
 	
-	public String getMobile() {
-		return mobile;
-	}
-	
-	public ContactDto setMobile(String mobile) {
-		this.mobile = mobile;
-		return this;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
-	
-	public ContactDto setEmail(String email) {
-		this.email = email;
-		return this;
-	}
 	
 	public String toString() {
-	   StringBuffer sb = new StringBuffer();
-		sb.append("Landline:  ").append(landline);
-		sb.append(" Mobile: ").append(mobile);
-		sb.append(" Email : ").append(email);
-		return sb.toString();
+	   return contactType + " : " + contactInfo;
+	}
+
+	public int compareTo(ContactDto cto) {
+		return (contactType+contactInfo).compareTo((cto.getContactType()+cto.getContactInfo()));
 	}
 
 	@Override
-   public boolean equals(Object obj) {
+   	public boolean equals(Object obj) {
        if(obj == null || getClass() != obj.getClass())
          return false;
 
         ContactDto add2 = (ContactDto) obj;
 
-         return this.landline.equals(add2.getLandline()) && 
-         		this.mobile.equals(add2.getMobile()) && this.email.equals(add2.getEmail());
+         return this.contactType.equals(add2.getContactType()) && 
+         		this.contactInfo.equals(add2.getContactInfo());
         
    }
 
    @Override
    public int hashCode() {
-        return java.util.Objects.hash(landline,mobile,email);
+        return java.util.Objects.hash(contactType,contactInfo);
     }
 
 }

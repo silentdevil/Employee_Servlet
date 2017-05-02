@@ -9,27 +9,40 @@ import java.util.stream.Collectors;
 public class ButtonFunctions {
 
 
-	private EmployeeService empServ;
-	private FactoryService factoryService = new FactoryService();
-	private DtoMapper mapper = new DtoMapper();
+	private FactoryService factoryService;
+	private EditEmployeeService editEmp;
+	private EmployeeService empService;// = factoryService.getEmployeeService();
+	private DtoMapper mapper;// = factoryService.getMapper();
+
+	public ButtonFunctions(FactoryService factoryService, EditEmployeeService editEmp) {
+		this.factoryService = factoryService;
+		this.editEmp = editEmp;
+		empService = factoryService.getEmployeeService();
+		mapper = factoryService.getMapper();
+	}
+
+	public FactoryService getFactoryService() {
+		return factoryService;
+	}
+
+	
 	private EmployeeDto employee;
 	private List<Employee> empList;
 	private List<Role> roleList;
-	private EditEmployeeService editEmp = new EditEmployeeService();
+	
 
 
-	public ButtonFunctions(EmployeeService empServ) {
-		this.empServ = empServ;
+	public ButtonFunctions(EmployeeService empService) {
+		this.empService = empService;
 	}
 
 	public void editEmp(HttpServletRequest request,
 	                  HttpServletResponse response) throws ServletException, IOException {
 
-	   Employee emp = empServ.getElement(Employee.class, 
-	              Long.valueOf(request.getParameter("edit")));
+	   Employee emp = empService.findEmployeeById(Long.valueOf(request.getParameter("edit")));
 	  employee = mapper.mapEmployeeDto(emp);
 
-	  List<Role> remainingRoles = empServ.getAllElements(Role.class).stream()
+	  List<Role> remainingRoles = empService.getAllRoles().stream()
 	    .filter(r ->!employee.getRoles().contains(mapper.mapRoleDto(r)))
 	    .collect(Collectors.toList());
 	  request.setAttribute("employee",employee);
@@ -41,14 +54,13 @@ public class ButtonFunctions {
 	public void deleteRole(HttpServletRequest request,
 	                  HttpServletResponse response) throws ServletException, IOException {
 		try {
-			empServ.deleteElement(empServ.getElement(Role.class,
-		        Long.valueOf(request.getParameter("deleterole"))));
+			empService.deleteElement(empService.getRoleById(Long.valueOf(request.getParameter("deleterole"))));
 		      
 		    request.setAttribute("ROLE_DELETE_STATUS","SUCCESS");
 	  	} catch(Exception ex) {
 	  		request.setAttribute("ROLE_DELETE_STATUS","FAILED");
 	  	}
-	  		roleList = empServ.getAllElements(Role.class);
+	  		roleList = empService.getAllElements(Role.class);
 		    request.setAttribute("roleList", roleList);
 	      	request.getRequestDispatcher("/modifyRoles.jsp").forward(request, response);
 	}
@@ -56,14 +68,13 @@ public class ButtonFunctions {
 	public void addEmployeeRole(HttpServletRequest request,
 	                  HttpServletResponse response) throws ServletException, IOException {
 
-	  RoleDto role = mapper.mapRoleDto(empServ.getElement(Role.class,
-        Long.valueOf(request.getParameter("addEmpRole"))));
-      employee.getContact().setLandline(request.getParameter("landline"))
+	  RoleDto role = mapper.mapRoleDto(empService.getRoleById(Long.valueOf(request.getParameter("addEmpRole"))));
+      /*employee.getContact().setLandline(request.getParameter("landline"))
                            .setMobile(request.getParameter("mobile"))
-                           .setEmail(request.getParameter("email"));
+                           .setEmail(request.getParameter("email"));*/
       employee = editEmp.addEmployeeRole(employee, role);
 
-      List<Role> remainingRoles = empServ.getAllElements(Role.class).stream()
+      List<Role> remainingRoles = empService.getAllRoles().stream()
         .filter(r ->!employee.getRoles().contains(mapper.mapRoleDto(r)))
         .collect(Collectors.toList());
       request.setAttribute("employee",employee);
@@ -73,15 +84,14 @@ public class ButtonFunctions {
 
 	public void deleteEmployeeRole(HttpServletRequest request,
 	                  HttpServletResponse response) throws ServletException, IOException {
-		RoleDto role = mapper.mapRoleDto(empServ.getElement(Role.class,
-	        Long.valueOf(request.getParameter("delEmpRole"))));
+		RoleDto role = mapper.mapRoleDto(empService.getRoleById(Long.valueOf(request.getParameter("delEmpRole"))));
 
-	      employee.getContact().setLandline(request.getParameter("landline"))
+	     /* employee.getContact().setLandline(request.getParameter("landline"))
 	                           .setMobile(request.getParameter("mobile"))
-	                           .setEmail(request.getParameter("email"));
+	                           .setEmail(request.getParameter("email"));*/
 	      employee = editEmp.delEmployeeRole(employee, role);
 
-	      List<Role> remainingRoles = empServ.getAllElements(Role.class).stream()
+	      List<Role> remainingRoles = empService.getAllRoles().stream()
 	        .filter(r ->!employee.getRoles().contains(mapper.mapRoleDto(r)))
 	        .collect(Collectors.toList());
 	      request.setAttribute("employee",employee);
@@ -91,10 +101,10 @@ public class ButtonFunctions {
 
 	public void saveChanges(HttpServletRequest request,
 	                  HttpServletResponse response) throws ServletException, IOException {
-		employee.getContact().setLandline(request.getParameter("landline"))
+		/*employee.getContact().setLandline(request.getParameter("landline"))
 	                           .setMobile(request.getParameter("mobile"))
-	                           .setEmail(request.getParameter("email"));
-	    factoryService.updateDto(factoryService.createEmployee(employee));
+	                           .setEmail(request.getParameter("email"));*/
+	    empService.updateElement(factoryService.createEmployee(employee));
 	   	backToMainMenu(request,response);
  
 	}
@@ -105,13 +115,13 @@ public class ButtonFunctions {
 		  RoleDto role = new RoleDto();
 	      role.setRole(request.getParameter("newrole").toUpperCase());
 	      try {
-	        empServ.getElement(factoryService.createRole(role));
+	        empService.getElement(factoryService.createRole(role));
 	      } catch(Exception ex) {
-	        empServ.saveElement(factoryService.createRole(role));
+	        empService.saveElement(factoryService.createRole(role));
 	      }
   	  }
 
-      roleList = empServ.getAllElements(Role.class);
+      roleList = empService.getAllElements(Role.class);
       request.setAttribute("roleList", roleList);
       request.getRequestDispatcher("/modifyRoles.jsp").forward(request, response);
 	}
@@ -120,39 +130,40 @@ public class ButtonFunctions {
 	                  HttpServletResponse response) throws ServletException, IOException {
 		
 	  EmployeeDto employee = new EmployeeDto();
-      employee.setLastname(request.getParameter("lastname").toUpperCase())
-              .setFirstname(request.getParameter("firstname").toUpperCase())
-              .setMiddlename(request.getParameter("middlename").toUpperCase())
+	  NameDto name = new NameDto();
+      name.setLastName(request.getParameter("lastname").toUpperCase())
+              .setFirstName(request.getParameter("firstname").toUpperCase())
+              .setMiddleName(request.getParameter("middlename").toUpperCase())
               .setTitle(request.getParameter("title").toUpperCase())
-              .setSuffix(request.getParameter("suffix").toUpperCase())
-              .setAddress(
-                new AddressDto().setStreetno(Integer.parseInt(request.getParameter("streetno")))
+              .setSuffix(request.getParameter("suffix").toUpperCase());
+      employee.setEmployeeName(name)        
+      		  .setAddress(
+                new AddressDto().setStreetNo(Integer.parseInt(request.getParameter("streetno")))
                                 .setStreet(request.getParameter("street").toUpperCase())
                                 .setBrgy(request.getParameter("brgy").toUpperCase())
                                 .setCity(request.getParameter("city").toUpperCase())
                                 .setZipcode(request.getParameter("zipcode").toUpperCase()))
               .setGwa(Float.valueOf(request.getParameter("gwa")))
               .setBirthday(DatePicker.parseDate(request.getParameter("birthday")))
-              .setDatehired(DatePicker.parseDate(request.getParameter("datehired")))
-              .setCurrentlyHired(Boolean.valueOf(request.getParameter("currentlyhired")))
-              .setContact(
+              .setDateHired(DatePicker.parseDate(request.getParameter("datehired")))
+              .setCurrentlyHired(Boolean.valueOf(request.getParameter("currentlyhired")));
+              /*.setContact(
                 new ContactDto().setMobile(request.getParameter("mobile").toUpperCase())
                                 .setLandline(request.getParameter("landline").toUpperCase())
                                 .setEmail(request.getParameter("email"))
-                                .setEmployee(employee));
+                                .setEmployee(employee));*/
 
-              RoleDto role = mapper.mapRoleDto(empServ.getElement(Role.class,
-                              Long.valueOf(request.getParameter("role"))));
+              RoleDto role = mapper.mapRoleDto(empService.getRoleById(Long.valueOf(request.getParameter("role"))));
               employee = editEmp.addEmployeeRole(employee,role);
 
-              empServ.saveElement(factoryService.createEmployee(employee));
+              empService.saveElement(factoryService.createEmployee(employee));
 
              backToMainMenu(request, response);
 	}
 
 	public void backToMainMenu(HttpServletRequest request,
 	                  HttpServletResponse response) throws ServletException, IOException {
-		empList = empServ.getAllElements(Employee.class);
+		empList = empService.getAllEmployees();
 		request.setAttribute("empList", empList);
 		request.setAttribute("addValue","");
 		request.getRequestDispatcher("/index.jsp").forward(request, response);
@@ -165,7 +176,7 @@ public class ButtonFunctions {
 	      case "gwa":
 	        return e.getGwa() + "";
 	      case "datehired":
-	        return e.getDatehired()+"";
+	        return e.getDateHired()+"";
 	    }
 	    return ""; 
   }

@@ -2,25 +2,21 @@ package com.exist.employee;
 import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
-
+import java.util.List;
 
 public class EmployeeDto {
 	
 	private long employeeId;
-	private String lastname = "";
-	private String firstname = "";
-	private String middlename = "";
-	private String suffix = "";
-	private String title = "";
+	private NameDto employeeName;
 	private AddressDto address;
 	
 	private Date birthday;
 	private Float gwa;
 	
-	private Date datehired;
+	private Date dateHired;
 	private Boolean currentlyHired;
 	
-	private ContactDto contact;
+	private Set<ContactDto> contacts;
 
 	private Set<RoleDto> roles = new HashSet<>();
 
@@ -28,52 +24,17 @@ public class EmployeeDto {
 		return employeeId;
 	}
 
-	public void setEmployeeId(long employeeId) {
+	public EmployeeDto setEmployeeId(long employeeId) {
 		this.employeeId = employeeId;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public EmployeeDto setLastname(String lastname) {
-		this.lastname = lastname;
 		return this;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public NameDto getEmployeeName(){
+		return employeeName;
 	}
 
-	public EmployeeDto setFirstname(String firstname) {
-		this.firstname = firstname;
-		return this;
-	}
-
-	public String getMiddlename() {
-		return middlename;
-	}
-
-	public EmployeeDto setMiddlename(String middlename) {
-		this.middlename = middlename;
-		return this;
-	}
-
-	public String getSuffix() {
-		return suffix;
-	}
-
-	public EmployeeDto setSuffix(String suffix) {
-		this.suffix = suffix;
-		return this;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public EmployeeDto setTitle(String title) {
-		this.title = title;
+	public EmployeeDto setEmployeeName(NameDto employeeName){
+		this.employeeName = employeeName;
 		return this;
 	}
 
@@ -104,12 +65,12 @@ public class EmployeeDto {
 		return this;
 	}
 	
-	public Date getDatehired() {
-		return datehired;
+	public Date getDateHired() {
+		return dateHired;
 	}
 	
-	public EmployeeDto setDatehired(Date datehired) {
-		this.datehired = datehired;
+	public EmployeeDto setDateHired(Date dateHired) {
+		this.dateHired = dateHired;
 		return this;
 	}
 	
@@ -122,16 +83,15 @@ public class EmployeeDto {
 		return this;
 	}
 	
-	public ContactDto getContact() {
-		return contact;
+	public Set<ContactDto> getContacts() {
+		return contacts;
 	}
 	
-	public EmployeeDto setContact(ContactDto contact) {
-		this.contact = contact;
+	public EmployeeDto setContacts(Set<ContactDto> contacts) {
+		this.contacts = contacts;
 		return this;
 	}
 	
-
 	public Set<RoleDto> getRoles() {
 		return roles;
 	}
@@ -142,10 +102,4 @@ public class EmployeeDto {
 	}
 	
 	
-
-	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		sb.append(employeeId + "\t").append(lastname + "," + firstname + " " + middlename + " " + suffix);
-		return sb.toString();
-	}
 }

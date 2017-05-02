@@ -5,27 +5,32 @@ import java.util.*;
 public class DtoMapper {
 
 	public EmployeeDto mapEmployeeDto(Employee employee) {
+		if(employee == null) {
+			return null;
+		}
 		EmployeeDto employeeDto = new EmployeeDto();
+		NameDto employeeName = new NameDto();
+		Name empName = employee.getEmployeeName();
 		try {
 			employeeDto.setEmployeeId(employee.getEmployeeId());
-			employeeDto.setLastname(employee.getLastname());
-			employeeDto.setFirstname(employee.getFirstname());
-			employeeDto.setMiddlename(employee.getMiddlename());
-			employeeDto.setSuffix(employee.getSuffix());
-			employeeDto.setTitle(employee.getTitle());
+			employeeName.setLastName(empName.getLastName());
+			employeeName.setFirstName(empName.getFirstName());
+			employeeName.setMiddleName(empName.getMiddleName());
+			employeeName.setSuffix(empName.getSuffix());
+			employeeName.setTitle(empName.getTitle());
+			employeeDto.setEmployeeName(employeeName);
 			employeeDto.setAddress(mapAddressDto(employee.getAddress()));
 			employeeDto.setBirthday(employee.getBirthday());
 			employeeDto.setGwa(employee.getGwa());
-			employeeDto.setDatehired(employee.getDatehired());
+			employeeDto.setDateHired(employee.getDateHired());
 			employeeDto.setCurrentlyHired(employee.getCurrentlyHired());
-			ContactDto contactDto = mapContactDto(employee.getContact());
-			contactDto.setEmployee(employeeDto);
-			employeeDto.setContact(contactDto);
+			Set<ContactDto> contactDto = mapContactDto(employee, employeeDto);
+
+			employeeDto.setContacts(contactDto);
 			employeeDto.setRoles(mapRoleSetDto(employee.getRoles()));
 		
 		} catch(Exception ex) {
 			ex.printStackTrace();
-			System.out.println("Error");
 		}
 		return employeeDto;
 	}
@@ -45,29 +50,41 @@ public class DtoMapper {
 	public  AddressDto mapAddressDto(Address address) {
 		AddressDto addressDto = new AddressDto();
 		try {
-			addressDto.setAddressId(address.getAddressId());
-			addressDto.setStreetno(address.getStreetno());
+			
+			addressDto.setStreetNo(address.getStreetNo());
 			addressDto.setStreet(address.getStreet());
 			addressDto.setBrgy(address.getBrgy());
 			addressDto.setCity(address.getCity());
 			addressDto.setZipcode(address.getZipcode());
 		} catch(Exception ex) {
+			return null;
 		}
 		return addressDto;
 	}
+
+	public ContactDto mapContactSingle(Contact c, EmployeeDto employee){
+		ContactDto contact = new ContactDto();
+		contact.setContactId(c.getContactId());
+		contact.setEmployee(employee);
+		contact.setContactType(c.getContactType());
+		contact.setContactInfo(c.getContactInfo());
+		return contact;
+	}
 	
-	public  ContactDto mapContactDto(Contact contact) {
-		ContactDto contactDto = new ContactDto();
+	public Set<ContactDto> mapContactDto(Employee employee, EmployeeDto employeeDto) {
+		Set<ContactDto> contacts = new TreeSet<>();
+		if(employee.getContacts() == null) {
+			employee.setContacts(new TreeSet<>());
+		}
 		try {
-			contactDto.setEmployeeId(contact.getEmployeeId());
-			contactDto.setLandline(contact.getLandline());
-			contactDto.setMobile(contact.getMobile());
-			contactDto.setEmail(contact.getEmail());
+			employee.getContacts().forEach( c -> contacts.add(mapContactSingle(c,employeeDto)));
 		} catch(Exception ex) {
 			System.out.println("Null contact passed");
+			ex.printStackTrace();
+			return null;
 		}
-			return contactDto;
-		
+			employeeDto.setContacts(contacts);
+			return contacts;	
 	}
 	
 	public RoleDto mapRoleDto(Role role) {
@@ -76,17 +93,12 @@ public class DtoMapper {
 		try {
 			roleDto.setRoleId(role.getRoleId());
 			roleDto.setRole(role.getRole());
-			//role.getEmployees();
-			//roleDto.setEmployees(mapEmployeeSetDto(role.getEmployees()));
 		} catch (Exception ex) {
 			System.out.println("Null role passed");
 			ex.printStackTrace();
+			return null;
 		}
 			return roleDto;
 	}
-	
-	
-	
-	
 
 }
