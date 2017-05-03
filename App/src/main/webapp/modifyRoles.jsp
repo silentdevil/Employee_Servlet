@@ -14,6 +14,7 @@
 	<%
 		List<Role> roleList = (List<Role>) request.getAttribute("roleList");
         String roleStat = (String) request.getAttribute("ROLE_DELETE_STATUS");
+        Role role = (Role) request.getAttribute("selected_role");
 	%>
 
     <%
@@ -38,12 +39,20 @@
             <TR>
                 <TD> <%= r.getRoleId() %></td>
                 <TD> <%= r.getRole() %></TD>
+
+                 <td>
+                     <button type="submit" value=<%= r.getRoleId()+""%> name="viewroleemp">
+                        View Employees
+                     </button>
+                </td>
         
                  <td>
                      <button type="submit" value=<%= r.getRoleId()+""%> name="deleterole" onclick="return confirm('Are you sure you want to delete this?')">
                         DELETE
                      </button>
                 </td>
+
+
 
             </TR>
 
@@ -64,6 +73,15 @@
                 </td>
             </TR>
     </TABLE>
+
+    Role : <%= role.getRole() %> <br>
+    <% if(role!=null) { %>
+       <% for(Employee e: role.getEmployees()) { %>
+       <%= e.getEmployeeName() %>  <br>
+        <% } %>
+
+    <% } %>
+ 
     <button type="submit" name="back" novalidate> Back to Main Menu </button> 
 </form>
 

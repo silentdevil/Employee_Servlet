@@ -170,6 +170,13 @@ public class ButtonFunctions {
 
 	}
 
+	public void viewRoleEmployees(HttpServletRequest request,
+	                  HttpServletResponse response) throws ServletException, IOException {
+		Role role = empService.getRoleById(Long.valueOf(request.getParameter("viewroleemp")));
+		request.setAttribute("selected_role",role);
+		request.getRequestDispatcher("/modifyRoles.jsp").forward(request, response);
+	}
+
 	  public static String addValue(Employee e, String id) {
 
 	    switch(id) {

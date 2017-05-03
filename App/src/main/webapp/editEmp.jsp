@@ -16,8 +16,8 @@
                 <tr>
                     <td>Full Name</td>
                     <td>
-                        <%= employee.getTitle() +" " + employee.getLastname() + ", " + employee.getFirstname() + " " + employee.getMiddlename() + " " + employee.getSuffix() %> 
-                    </td>
+                        <%= employee.getEmployeeName() %> 
+                    </td> 
                 </tr>
                 <tr>
                     <td>Address</td>
@@ -45,18 +45,54 @@
                 </tr>
                <tr>
                     <td>Date Hired</td>
-                    <td><%= employee.getDatehired() %></td>
+                    <td><%= employee.getDateHired() %></td>
                 </tr>
 
                 <tr>
                     <td>Contact</td>
                     <td>
-                        <input type="text" name="landline" placeholder="landline"
-                            value=<%= employee.getContact().getLandline() %> >
-                        <input type="text" name="mobile" placeholder = "mobile" 
-                            value=<%= employee.getContact().getMobile() %> >
-                        <input type="text" name="email" placeholder="email"
-                            value=<%= employee.getContact().getEmail() %> >
+                       <TABLE BORDER="1">
+                                <TR>
+                                    <TH>CONTACT TYPE</TH>
+                                    <TH>CONTACT INFO</TH>
+                                </TR>
+                                <% for(ContactDto c: employee.getContacts()) { %>
+                                <TR>
+                                    <TD> <%= c.getContactType() %></td>
+                                    <TD> <%= c.getContactInfo() %></TD>
+                            
+                                     <td>
+                                         <button type="submit" value=<%= c.getContactId()+""%> name="deleteemployeecontact" onclick="return confirm('Are you sure you want to delete this?')">
+                                            DELETE
+                                         </button>
+                                    </td>
+
+                                </TR>
+
+                                <% }; %>
+
+
+                                <TR>
+                                    <td>
+                                        <select name="newempcontact">
+                                            <% for(int i=1; i < ContactType.SIZE + 1; i++) { %>
+                                          <option value=<%= ContactType.valueOf(i)%>>
+                                            <%= ContactType.valueOf(i).getMessage() %>
+                                          </option>
+                                           <% } %>
+                                        </select> 
+                                    </td>
+
+                                    <td>
+                                        <input type="text">
+                                    </td>
+
+                                    <td>
+                                         <input type="submit" value="ADD" name="addempcontact">
+                                    </td>
+                                </TR>
+                               
+                        </TABLE>
                     </td>
                 </tr>
 

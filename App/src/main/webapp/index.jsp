@@ -23,12 +23,13 @@
                 <TH>Firstname</TH>
                 <TH>Middlename</TH>
             </TR>
-            <% for(Employee e: empList) { %>
+            <% for(Employee e: empList) { 
+                Name name = e.getEmployeeName(); %>
             <TR>
                 <TD> <%= e.getEmployeeId() %></td>
-                <TD> <%= e.getLastname() %></TD>
-                <TD> <%= e.getFirstname() %></TD>
-                <TD> <%= e.getMiddlename() %></TD>
+                <TD> <%= name.getLastName() %></TD>
+                <TD> <%= name.getFirstName() %></TD>
+                <TD> <%= name.getMiddleName() %></TD>
                 <TD> <%= ButtonFunctions.addValue(e,output)%></TD>
                  <td>
                      <button type="submit" value=<%= e.getEmployeeId()+""%> name="edit">

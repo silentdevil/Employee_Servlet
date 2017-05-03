@@ -83,7 +83,11 @@ public class EmployeeServlet extends HttpServlet {
 
     } else if(request.getParameter("back") != null) {
       buttonFunctions.backToMainMenu(request, response);
+
+    } else if(request.getParameter("viewroleemp") != null) {
+      buttonFunctions.viewRoleEmployees(request, response);
     }
+
 
 
   }

@@ -56,10 +56,15 @@
                 <tr>
                     <td>Contact</td>
                     <td>
-                        <input type="text" name="landline" placeholder="landline [XXX-XXXX]" />
-                        <input type="text" name="mobile" placeholder="mobile [XXXX-XXX-XXXX]" />
-                        <input type="text" id="email" name="email" placeholder="*email" 
-                           onblur="validateEmail(value)" required />
+                        <select name="newempcontact">
+                            <% for(int i=1; i < ContactType.SIZE + 1; i++) { %>
+                          <option value=<%= ContactType.valueOf(i)%>>
+                            <%= ContactType.valueOf(i).getMessage() %>
+                          </option>
+                           <% } %>
+                        </select> 
+                    
+                        <input type="text" name="empcontact" required/>
                     </td>
                 </tr>
 
