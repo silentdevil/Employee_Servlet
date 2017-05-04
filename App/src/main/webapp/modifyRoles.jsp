@@ -12,9 +12,17 @@
 	<H1>The Role Table </H1>
 
 	<%
-		List<Role> roleList = (List<Role>) request.getAttribute("roleList");
-        String roleStat = (String) request.getAttribute("ROLE_DELETE_STATUS");
-        Role role = (Role) request.getAttribute("selected_role");
+		List<Role> roleList = null;// = (List<Role>) request.getAttribute("roleList");
+        String roleStat = "";// = (String) request.getAttribute("ROLE_DELETE_STATUS");
+        Role role = null;// = (Role) request.getAttribute("selected_role");
+
+        try {
+            roleList = (List<Role>) request.getAttribute("roleList");
+            roleStat = (String) request.getAttribute("ROLE_DELETE_STATUS");
+            role = (Role) request.getAttribute("selected_role");
+        } catch(Exception ex) {
+            System.out.println("HAHAHAHAHAHAHAHA");
+        }
 	%>
 
     <%

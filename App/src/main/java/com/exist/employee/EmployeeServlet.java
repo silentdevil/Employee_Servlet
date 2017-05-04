@@ -55,6 +55,8 @@ public class EmployeeServlet extends HttpServlet {
       buttonFunctions.editEmp(request, response);
 
     } else if(request.getParameter("modifyroles") != null) {
+      request.setAttribute("roleList", roleList);
+      request.setAttribute("selected_role",new Role());
       request.getRequestDispatcher("/modifyRoles.jsp").forward(request, response);
 
     } else if(request.getParameter("delete") != null) {

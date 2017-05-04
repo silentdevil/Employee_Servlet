@@ -5,7 +5,7 @@ public class FactoryService {
 	private EmployeeService empService;
 	private DtoMapper mapper;
 
-	public FactoryService(EmployeeService empService, DtoMapper mapper) {
+	public FactoryService(EmployeeService empService, DtoMapper mapper){
 		this.empService = empService;
 		this.mapper = mapper;
 	}
@@ -18,8 +18,10 @@ public class FactoryService {
 		return mapper;
 	}
 
-	public Employee createEmployee(EmployeeDto employeeDto) {
-		Employee employee = empService.findEmployeeById(employeeDto.getEmployeeId());
+	public Employee createEmployee(EmployeeDto employeeDto) throws Exception {
+		System.out.println(employeeDto.getEmployeeId() + "FactoryService:22");
+		Employee employee = empService.getElement(Employee.class,employeeDto.getEmployeeId());
+			InputManager.output(employee.getEmployeeName().toString());
 		if(employee == null)
 			employee = new Employee();
 		Name employeeName = new Name();
@@ -64,6 +66,7 @@ public class FactoryService {
 		Set<Contact> contacts = employee.getContacts();
 		if(contacts == null)
 			contacts = new TreeSet<>();
+		contacts.clear();
 		System.out.println("printed from FactoryService.createContacts" + employeeDto.getContacts());
 		try {
 			for(ContactDto c: employeeDto.getContacts()) {
@@ -71,7 +74,7 @@ public class FactoryService {
 				contact.setEmployee(employee);
 				contact.setContactType(c.getContactType());
 				contact.setContactInfo(c.getContactInfo());
-				contacts.add(contact);
+				System.out.println(contacts.add(contact) + contact.toString());
 			}
 		} catch(Exception ex) {
 			System.out.println("Null contact passed");

@@ -104,7 +104,11 @@ public class ButtonFunctions {
 		/*employee.getContact().setLandline(request.getParameter("landline"))
 	                           .setMobile(request.getParameter("mobile"))
 	                           .setEmail(request.getParameter("email"));*/
-	    empService.updateElement(factoryService.createEmployee(employee));
+	    try {
+	    	empService.updateElement(factoryService.createEmployee(employee));
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}
 	   	backToMainMenu(request,response);
  
 	}
@@ -128,7 +132,7 @@ public class ButtonFunctions {
 
 	public void addEmployee(HttpServletRequest request,
 	                  HttpServletResponse response) throws ServletException, IOException {
-		
+	  try {
 	  EmployeeDto employee = new EmployeeDto();
 	  NameDto name = new NameDto();
       name.setLastName(request.getParameter("lastname").toUpperCase())
@@ -155,8 +159,9 @@ public class ButtonFunctions {
 
               RoleDto role = mapper.mapRoleDto(empService.getRoleById(Long.valueOf(request.getParameter("role"))));
               employee = editEmp.addEmployeeRole(employee,role);
-
-              empService.saveElement(factoryService.createEmployee(employee));
+          } catch(Exception ex){
+          	ex.printStackTrace();
+          }
 
              backToMainMenu(request, response);
 	}
