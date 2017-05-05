@@ -25,6 +25,10 @@ public class ButtonFunctions {
 		return factoryService;
 	}
 
+	public DtoMapper getMapper() {
+		return mapper;
+	}
+
 	
 	private EmployeeDto employee;
 	private List<Employee> empList;
@@ -105,7 +109,7 @@ public class ButtonFunctions {
 	                           .setMobile(request.getParameter("mobile"))
 	                           .setEmail(request.getParameter("email"));*/
 	    try {
-	    	empService.updateElement(factoryService.createEmployee(employee));
+	    	factoryService.createEmployee(employee);
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}

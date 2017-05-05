@@ -21,7 +21,7 @@
             roleStat = (String) request.getAttribute("ROLE_DELETE_STATUS");
             role = (Role) request.getAttribute("selected_role");
         } catch(Exception ex) {
-            System.out.println("HAHAHAHAHAHAHAHA");
+            System.out.println("HAHAHAHAHAHAHAHA")
         }
 	%>
 
