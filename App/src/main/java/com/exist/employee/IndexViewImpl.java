@@ -8,6 +8,10 @@ public class IndexViewImpl implements View {
 		this.screen = screen;
 	}
 
+	public void setScreen(Screen screen) {
+		this.screen = screen;
+	}
+
 	public String publish() {
 		return screen.show();
 	}

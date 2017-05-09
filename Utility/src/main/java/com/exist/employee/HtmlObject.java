@@ -29,18 +29,18 @@ public class HtmlObject {
 
 	public HtmlObject setTitle(String title) {
 		this.title = title;
-		titleOutput = "<head><title>" + title + "</title></head>";
+		titleOutput = "<head>\n\t<title>" + title + "</title>\n</head>\n";
 		return this;
 	}
 
 	public HtmlObject addBody(String input){
 		body += input;
-		bodyOutput = "<body>" + body + "</body>";
+		bodyOutput = "<body>\n\t" + body + "</body>";
 		return this;
 	}
 
 	public String getStringOutput(){
-		stringOutput = "<html>" + titleOutput + bodyOutput + "</html>";
+		stringOutput = "<html>\n" + titleOutput + bodyOutput + "</html>";
 		return stringOutput;
 	}
 

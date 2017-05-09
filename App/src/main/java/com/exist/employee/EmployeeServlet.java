@@ -31,7 +31,9 @@ public class EmployeeServlet extends HttpServlet {
     if(request.getParameter("edit") != null) {
       EmployeeDto employee = buttonFunctions.getMapper()
               .mapEmployeeDto(empService.findEmployeeById(Long.valueOf(request.getParameter("edit"))));
-      view = new IndexViewImpl(new EditEmployeeScreenImpl(employee));
+      view.setScreen(new EditEmployeeScreenImpl(employee));
+    } else if(request.getParameter("addEmp") != null) {
+      view.setScreen(new EmployeeRegisterScreenImpl());
     }
     out.print(view.publish());
    

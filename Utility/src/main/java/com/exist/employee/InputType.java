@@ -2,7 +2,7 @@ package com.exist.employee;
 
 public class InputType {
 	protected String type;
-	protected String value;
+	protected String value = "";
 	protected String name;
 	protected String output;
 	private String required = "";
@@ -28,6 +28,11 @@ public class InputType {
 		return this;
 	}
 
+	public InputType setPlaceHolder(String placeholder) {
+		this.placeholder = placeholder;
+		return this;
+	}
+
 	public InputType setOutput(String output) {
 		this.output = output;
 		return this;
@@ -35,7 +40,7 @@ public class InputType {
 
 	public String getStringOutput() {
 		return "<input type=\"" + type +"\" value=\"" 
-				+ value + "\" name=\"" + name + "\" placeholder=\n" + placeholder + "\"/>";
+				+ value + "\" name=\"" + name + "\" placeholder=\"" + placeholder + "\"/>\n";
 	}
 	
 }

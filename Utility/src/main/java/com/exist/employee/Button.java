@@ -10,9 +10,9 @@ public class Button extends InputType {
 	}
 
 	public String getStringOutput() {
-		return "<button type=\"" + type +"\" value=\"" 
-				+ value + "\" name=\"" + name + "\" onclick=\"" + onClick + "\">" + output 
-				+ "</button>";
+		return "\n<button type=\"" + type +"\" value=\"" 
+				+ value + "\" name=\"" + name + "\" onclick=\"" + onClick + "\">\n\t" + output 
+				+ "\n</button>\n";
 	}
 }
 

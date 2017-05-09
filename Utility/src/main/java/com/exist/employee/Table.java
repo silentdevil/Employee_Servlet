@@ -42,7 +42,7 @@ public class Table {
 	}
 
 	public String getStringOutput() {
-		String stringOutput = "<form action=\"" + formAction + "\" method=\"" + formMethod + "\"><table border=\""+ border + "\">";
+		String stringOutput = "<form action=\"" + formAction + "\" method=\"" + formMethod + "\">\n<table border=\""+ border + "\">\n";
 		for(Row row : rows) {
 			stringOutput += row;
 		}
@@ -62,11 +62,11 @@ class Row {
 	}
 
 	public String toString() {
-		String output = "<tr>";
+		String output = "<tr>\n";
 
 		for(String string : values)
-			output += "<td>" + string + "</td>";
+			output += "\t<td>" + string + "</td>\n";
 
-		return output + "</tr>";
+		return output + "</tr>\n";
 	}
 }
