@@ -3,21 +3,16 @@ import java.util.*;
 public class FactoryService {
 
 	private EmployeeService empService;
-	private DtoMapper mapper;
-
-	public FactoryService(EmployeeService empService, DtoMapper mapper){
-		this.empService = empService;
-		this.mapper = mapper;
+	private MappedService mappedService;
+	public FactoryService(MappedService mappedService){
+		this.mappedService = mappedService;
+		empService = mappedService.getEmployeeService();
 	}
 
-	public EmployeeService getEmployeeService() {
-		return empService;
+	public MappedService getMappedService() {
+		return mappedService;
 	}
 	
-	public DtoMapper getMapper() {
-		return mapper;
-	}
-
 	public void createEmployee(EmployeeDto employeeDto) {
 		//System.out.println(employeeDto.getEmployeeId() + "FactoryService:22");
 		Employee employee = empService.getElement(Employee.class,employeeDto.getEmployeeId());

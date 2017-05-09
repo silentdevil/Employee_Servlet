@@ -1,6 +1,6 @@
 package com.exist.employee;
 
-import java.util.Set;
+import java.util.*;
 
 public class EditEmployeeService {
 	public EmployeeDto addEmployeeRole(EmployeeDto employee, RoleDto role) {
@@ -20,6 +20,15 @@ public class EditEmployeeService {
 		}
 		return employee;
 	}
+
+	public  Set<ContactDto> createContacts(ContactDto contact) throws Exception {
+		Set<ContactDto> contacts = new TreeSet<>();
+		if(contact.getContactInfo() != null && !contact.getContactInfo().isEmpty())
+			contacts.add(contact);
+		return contacts;
+	}
+
+
 
 	/*public EmployeeDto addEmployeeContact( EmployeeDto employee, ContactDto contact) {
 		

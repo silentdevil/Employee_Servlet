@@ -4,10 +4,11 @@ import java.util.List;
 
 public class ModifyRoleScreenImpl implements Screen {
 
-	private List<Object[]> roleList;
+	private List<RoleDto> roleList;
 
-	public ModifyRoleScreenImpl(List<Object[]> roleList) {
+	public ModifyRoleScreenImpl setRoleList(List<RoleDto> roleList) {
 		this.roleList = roleList;
+		return this;
 	}
 
 	public String show() {
@@ -19,11 +20,31 @@ public class ModifyRoleScreenImpl implements Screen {
 	         .setBorder(1)
 
 	         .addRow()
-	         .addColumn("");
+	         .addColumn("ID")
+	         .addColumn("Role");
 
+			 for(RoleDto r: roleList) {
+			 	table.addRow()
+			 		 .addColumn(r.getRoleId() + "")
+			 		 .addColumn(r.getRole())
+					 .addColumn(new Button().setType("submit")
+	                                  .setName("btn_outputRole_Employees")
+	                                  .setValue(r.getRoleId() + "")
+	                                  .setOutput("Show Employees")
+	                                  .getStringOutput())
+					 .addColumn(new Button().setType("submit")
+	                                  .setName("btn_editRole")
+	                                  .setValue(r.getRoleId() + "")
+	                                  .setOutput("EDIT")
+	                                  .getStringOutput())
+					 .addColumn(new Button().setType("submit")
+	                                  .setName("btn_deleteRole")
+	                                  .setValue(r.getRoleId() + "")
+	                                  .setOutput("DELETE")
+	                                  .getStringOutput());
+			 }
 
-	     
-	      return html.getStringOutput();
+	      return html.setTitle("Index").addBody(table.getStringOutput()).getStringOutput();
 	}
 
 }

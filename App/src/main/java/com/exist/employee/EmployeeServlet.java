@@ -11,15 +11,26 @@ public class EmployeeServlet extends HttpServlet {
  
 
   private ButtonFunctions buttonFunctions = new ButtonFunctions(
-                      new FactoryService(new EmployeeService(), new DtoMapper()), new EditEmployeeService());
+                      new FactoryService
+                          (new MappedService
+                            (new EmployeeService(),new DtoMapper())), 
+                      new EditEmployeeService());
 
-  private EmployeeService empService = buttonFunctions.getFactoryService().getEmployeeService();
+  private EmployeeService empService = buttonFunctions.getFactoryService().getMappedService().getEmployeeService();
+  private IndexScreenImpl indexScreen = new IndexScreenImpl();
+  private EditEmployeeScreenImpl editEmployeeScreen = new EditEmployeeScreenImpl();
+  private ModifyRoleScreenImpl modifyRoleScreen = new ModifyRoleScreenImpl();
+  private EmployeeRegisterScreenImpl employeeRegisterScreen = new EmployeeRegisterScreenImpl();
+  private Screen[] screens = {indexScreen, editEmployeeScreen, 
+                employeeRegisterScreen, modifyRoleScreen};
   private View view;
+
+  private ButtonHandler buttonHandler = new ButtonHandler(buttonFunctions, screens);
 
   public void doGet(HttpServletRequest request,
                   HttpServletResponse response) throws ServletException, IOException {
     PrintWriter out = response.getWriter();
-    view = new IndexViewImpl(new IndexScreenImpl(empService.getAllEmployees("employeeName")));
+    view = new IndexViewImpl(indexScreen.setEmpList(empService.getAllEmployees("employeeName")));
     out.print(view.publish());
 
   }
@@ -28,13 +39,7 @@ public class EmployeeServlet extends HttpServlet {
                   HttpServletResponse response) throws ServletException, IOException {
     PrintWriter out = response.getWriter();
     
-    if(request.getParameter("edit") != null) {
-      EmployeeDto employee = buttonFunctions.getMapper()
-              .mapEmployeeDto(empService.findEmployeeById(Long.valueOf(request.getParameter("edit"))));
-      view.setScreen(new EditEmployeeScreenImpl(employee));
-    } else if(request.getParameter("addEmp") != null) {
-      view.setScreen(new EmployeeRegisterScreenImpl());
-    }
+    view.setScreen(buttonHandler.handle(request, response));
     out.print(view.publish());
    
   }

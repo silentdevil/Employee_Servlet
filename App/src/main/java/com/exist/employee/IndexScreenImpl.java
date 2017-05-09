@@ -6,10 +6,15 @@ public class IndexScreenImpl implements Screen {
 
 	private List<Object[]> empList;
 
-	public IndexScreenImpl(List<Object[]> empList) {
+	public IndexScreenImpl setEmpList(List<Object[]> empList) {
 		this.empList = empList;
+		return this;
 	}
 
+	public List<Object[]> getEmpList() {
+		return empList;
+	}
+	
 	public String show() {
 
 		HtmlObject html = new HtmlObject();
@@ -24,13 +29,14 @@ public class IndexScreenImpl implements Screen {
 	      table.addRow()
 	           .addColumn(obj[0] + "")
 	           .addColumn(obj[1] + "")
+	           .addColumn(obj[2] + "")
 	           .addColumn(new Button().setType("submit")
-	                                  .setName("edit")
+	                                  .setName("btn_EditEmployee")
 	                                  .setValue(obj[0] + "")
 	                                  .setOutput("EDIT")
 	                                  .getStringOutput())
 	           .addColumn(new Button().setType("submit")
-	                                  .setName("delete")
+	                                  .setName("btn_DeleteEmployee")
 	                                  .setValue(obj[0] + "")
 	                                  .setOutput("DELETE")
 	                                  .getStringOutput());
@@ -39,23 +45,23 @@ public class IndexScreenImpl implements Screen {
 	    html.setTitle("Index")
 	      .addBody(table.getStringOutput())
 	      .addBody(new InputType().setType("submit")
-	                                   .setName("addEmp")
+	                                   .setName("btn_AddEmp")
 	                                   .setValue("Add Employee")
 	                                   .getStringOutput())
 	      .addBody(new InputType().setType("submit")
-	                              .setName("sort_gwa")
+	                              .setName("btn_SortGwa")
 	                              .setValue("Sort by GWA")
 	                              .getStringOutput())
 	      .addBody(new InputType().setType("submit")
-	                              .setName("sort_date")
+	                              .setName("btn_SortDate")
 	                              .setValue("Sort by Hiredate")
 	                              .getStringOutput())
 	      .addBody(new InputType().setType("submit")
-	                              .setName("sort_lastname")
+	                              .setName("btn_SortLastname")
 	                              .setValue("Sort by Lastname")
 	                              .getStringOutput())
 	      .addBody(new InputType().setType("submit")
-	                              .setName("modifyRoles")
+	                              .setName("btn_ModifyRoles")
 	                              .setValue("Modify Roles")
 	                              .getStringOutput());
 	      return html.getStringOutput();

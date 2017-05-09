@@ -1,13 +1,14 @@
 package com.exist.employee;
 
-import java.util.List;
+import java.util.*;
 
 public class EditEmployeeScreenImpl implements Screen {
 
 	private EmployeeDto employee;
 
-	public EditEmployeeScreenImpl(EmployeeDto employee) {
+	public EditEmployeeScreenImpl setEmployee(EmployeeDto employee) {
 		this.employee = employee;
+		return this;
 	}
 
 	public String show() {
@@ -55,12 +56,43 @@ public class EditEmployeeScreenImpl implements Screen {
 	         		for(ContactDto contact : employee.getContacts()) {
 	         			contactTable.addRow()
 			         				.addColumn(contact.getContactType())
-			         				.addColumn(contact.getContactInfo());
+			         				.addColumn(contact.getContactInfo())
+			         				.addColumn(new Button().setType("submit")
+				                                  .setName("btn_DeleteEmployeeContact")
+				                                  .setValue(contact.getContactId() + "")
+				                                  .setOutput("DELETE")
+				                                  .getStringOutput());
 	         		}
-	    table.addColumn(contactTable.getStringOutput());
+	    table.addColumn(contactTable.getStringOutput())
+		     .addRow()
+		         .addColumn("Role");
+
+		         	Table roleTable = new Table()
+		         		.setBorder(1)
+		         		.addRow();
+		         		for(RoleDto role : employee.getRoles()) {
+				         	   roleTable.addColumn(role.getRole())
+				         				.addColumn(new Button().setType("submit")
+					                                  .setName("btn_DeleteEmployeeRole")
+					                                  .setValue(role.getRoleId() + "")
+					                                  .setOutput("DELETE")
+					                                  .getStringOutput());
+		         		}
+		    table.addColumn(roleTable.getStringOutput());
+	    
+	    
 
 	   	return html.setTitle("Edit Employee")
-	   		       .addBody(table.getStringOutput()).getStringOutput();
+	   		       .addBody(table.getStringOutput())
+	   		       .addBody(new InputType().setType("submit")
+	                              .setName("btn_UpdateEmployee")
+	                              .setValue("Update Employee")
+	                              .getStringOutput())
+	   		 	   .addBody(new InputType().setType("submit")
+	                              .setName("btn_Back")
+	                              .setValue("Back")
+	                              .getStringOutput())
+	   		 	   .getStringOutput();
 
 	}
 }
