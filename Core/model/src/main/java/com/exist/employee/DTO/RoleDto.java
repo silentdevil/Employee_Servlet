@@ -46,7 +46,7 @@ public class RoleDto {
    }
    public int hashCode() {
       int tmp = 0;
-      tmp = (roleId + role).hashCode();
+      tmp = (role).hashCode();
       return tmp;
    }
    

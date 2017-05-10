@@ -68,7 +68,9 @@ public class Dao {
 
     public <T> T get(T t) {
       Session session = beginTransaction();
-      List<T> list = session.createCriteria(t.getClass()).list();
+      Criteria criteria = session.createCriteria(t.getClass());
+      criteria.setCacheable(true);   
+      List<T> list = criteria.list();
   	  session.getTransaction().commit();
       session.close();
       return (T) list.get(list.indexOf((T)t));
@@ -85,6 +87,7 @@ public class Dao {
       Session session = beginTransaction();
 	    Criteria criteria = session.createCriteria(type)   
                                  .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+      criteria.setCacheable(true);
       List<T> list = criteria.list();
       printStatistics(statistics);
       session.close();

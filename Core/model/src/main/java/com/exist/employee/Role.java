@@ -32,7 +32,7 @@ public class Role {
 	private long roleId;
 	private String role;
 	
-
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@Cascade({CascadeType.ALL})
 	@ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
 	private Set<Employee> employees = new HashSet<>();

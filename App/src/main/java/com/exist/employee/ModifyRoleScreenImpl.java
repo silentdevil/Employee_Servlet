@@ -26,23 +26,37 @@ public class ModifyRoleScreenImpl implements Screen {
 			 for(RoleDto r: roleList) {
 			 	table.addRow()
 			 		 .addColumn(r.getRoleId() + "")
-			 		 .addColumn(r.getRole())
+			 		 .addColumn(new InputType().setType("text")
+		                                   .setName("txt_EditRole_"+r.getRoleId())
+		                                   .setValue(r.getRole())
+		                               	   .setPlaceHolder(r.getRole())
+		                                   .getStringOutput())
 					 .addColumn(new Button().setType("submit")
-	                                  .setName("btn_outputRole_Employees")
+	                                  .setName("btn_OutputRole_Employees")
 	                                  .setValue(r.getRoleId() + "")
 	                                  .setOutput("Show Employees")
 	                                  .getStringOutput())
 					 .addColumn(new Button().setType("submit")
-	                                  .setName("btn_editRole")
+	                                  .setName("btn_EditRole")
 	                                  .setValue(r.getRoleId() + "")
 	                                  .setOutput("EDIT")
 	                                  .getStringOutput())
 					 .addColumn(new Button().setType("submit")
-	                                  .setName("btn_deleteRole")
+	                                  .setName("btn_DeleteRole")
 	                                  .setValue(r.getRoleId() + "")
 	                                  .setOutput("DELETE")
 	                                  .getStringOutput());
 			 }
+		table.addRow()
+			  .addColumn(new InputType().setType("text")
+		                                   .setName("txt_AddNewRole")
+		                               	   .setPlaceHolder("New Role")
+		                                   .getStringOutput())
+			  .addColumn(new InputType().setType("submit")
+	                              .setName("btn_AddNewRole")
+	                              .setValue("Add Role")
+	                              .getStringOutput());
+
 
 	      return html.setTitle("Index").addBody(table.getStringOutput()).getStringOutput();
 	}

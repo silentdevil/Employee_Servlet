@@ -50,7 +50,7 @@ public class ButtonFunctions {
 
 	public void saveEmployee(Map<String,String> employeeMap) {
 		try {
-		  EmployeeDto employee = new EmployeeDto();
+		  employee = new EmployeeDto();
 		  NameDto name = new NameDto();
 		      	  name.setLastName(employeeMap.get("lastname").toUpperCase())
 		              .setFirstName(employeeMap.get("firstname").toUpperCase())
@@ -80,6 +80,46 @@ public class ButtonFunctions {
 	        ex.printStackTrace();
 	    }
 
+	}
+
+	public void addNewRole(List<RoleDto> roleList, String role) {
+
+		RoleDto r = new RoleDto();
+		r.setRole(role);
+
+		if(!roleList.contains(r)) {
+			empService.saveElement(factoryService.createRole(r));
+		}
+	}
+
+	public void editRole(long id, String name) {
+		RoleDto role = mappedService.getRoleDtoById(id);
+		role.setRole(name.toUpperCase());
+		if(!name.isEmpty())
+			empService.updateElement(factoryService.createRole(role));
+	}
+
+	public void deleteRole(long id) {
+		RoleDto role = mappedService.getRoleDtoById(id);
+		empService.deleteElement(factoryService.createRole(role));
+	}
+
+	public EmployeeDto addEmployeeRole(long employeeId, long roleId) {
+		employee = mappedService.getEmployeeDtoById(employeeId);
+		RoleDto role = mappedService.getRoleDtoById(roleId);
+		employee = editEmp.addEmployeeRole(employee, role);
+		return employee;
+	}
+
+	public void updateEmployee() {
+		factoryService.createEmployee(employee);
+	}
+
+	public EmployeeDto addEmployeeContact(long employeeId, ContactDto contact) {
+		employee = mappedService.getEmployeeDtoById(employeeId);
+		employee = editEmp.addEmployeeContact(employee, contact);
+
+		return employee;
 	}
 
 }

@@ -49,7 +49,7 @@ public class ButtonHandler {
 		} else if(request.getParameter("btn_EditEmployee") != null) {
 			long id = Long.valueOf(request.getParameter("btn_EditEmployee"));
 			EmployeeDto employee = buttonFunctions.editEmployee(id);
-			editEmployeeScreen.setEmployee(employee);
+			editEmployeeScreen.setEmployee(employee, buttonFunctions.getAllRoles());
 			screen = editEmployeeScreen;
 		} else if(request.getParameter("btn_ModifyRoles") != null) {
 			modifyRoleScreen.setRoleList(buttonFunctions.getAllRoles());
@@ -60,13 +60,32 @@ public class ButtonHandler {
 			indexScreen.setEmpList(buttonFunctions.sort("dateHired"));
 			screen = indexScreen;
 		} else if(request.getParameter("btn_DeleteRole") != null) {
-		 // buttonFunctions.deleteRole(request, response);
+			buttonFunctions.deleteRole(Long.valueOf(request.getParameter("btn_DeleteRole")));
+			modifyRoleScreen.setRoleList(buttonFunctions.getAllRoles());
+			screen = modifyRoleScreen;
+		} else if(request.getParameter("btn_AddEmployeeRole") != null) {
+			long roleId = Long.valueOf(request.getParameter("drp_EmployeeRole"));
+			long employeeId = Long.valueOf(request.getParameter("btn_AddEmployeeRole"));
+			EmployeeDto employee = buttonFunctions.addEmployeeRole(employeeId,roleId);
+			editEmployeeScreen.setEmployee(employee, buttonFunctions.getAllRoles());
+			screen = editEmployeeScreen;
 
-		} else if(request.getParameter("addEmpRole") != null) {
-		 // buttonFunctions.addEmployeeRole(request, response);
+		 } else if(request.getParameter("btn_AddEmployeeContact") != null) {
+			long employeeId = Long.valueOf(request.getParameter("btn_AddEmployeeContact"));
+			if(!request.getParameter("employee_ContactInfo").isEmpty()) {
+				ContactDto contact = new ContactDto();
+				contact.setContactType(request.getParameter("employee_ContactType"));
+				contact.setContactInfo(request.getParameter("employee_ContactInfo"));
+				EmployeeDto employee = buttonFunctions.addEmployeeContact(employeeId, contact);
+				editEmployeeScreen.setEmployee(employee, buttonFunctions.getAllRoles());
+				screen = editEmployeeScreen;
+			}
+			
 
-		} else if(request.getParameter("delEmpRole") != null) {
-		 // buttonFunctions.deleteEmployeeRole(request, response);
+		} else if(request.getParameter("btn_UpdateEmployee") != null) {
+			buttonFunctions.updateEmployee();
+			 indexScreen.setEmpList(buttonFunctions.sort("dateHired"));
+			 screen = indexScreen; 
 
 		} else if(request.getParameter("btn_SaveEmployee") != null) {
 			 Enumeration<String> paramNames = request.getParameterNames();
@@ -79,8 +98,17 @@ public class ButtonHandler {
 			 indexScreen.setEmpList(buttonFunctions.sort("dateHired"));
 			 screen = indexScreen; 
 
-		} else if(request.getParameter("btn_AddRole") != null) {
-		 // buttonFunctions.addNewRole(request, response);
+		} else if(request.getParameter("btn_AddNewRole") != null) {
+			buttonFunctions.addNewRole(buttonFunctions.getAllRoles(),
+				request.getParameter("txt_AddNewRole"));
+			modifyRoleScreen.setRoleList(buttonFunctions.getAllRoles());
+			screen = modifyRoleScreen;
+
+		} else if(request.getParameter("btn_EditRole") != null) {
+			long id = Long.valueOf(request.getParameter("btn_EditRole"));
+			buttonFunctions.editRole(id, request.getParameter("txt_EditRole_"+id));
+			modifyRoleScreen.setRoleList(buttonFunctions.getAllRoles());
+			screen = modifyRoleScreen;
 
 		} else if(request.getParameter("btn_Back") != null) {
 			screen = indexScreen;

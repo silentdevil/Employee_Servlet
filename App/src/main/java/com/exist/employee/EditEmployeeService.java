@@ -28,6 +28,16 @@ public class EditEmployeeService {
 		return contacts;
 	}
 
+	public EmployeeDto addEmployeeContact(EmployeeDto employee, ContactDto contact) {
+		Set<ContactDto> contacts = employee.getContacts();
+		if(contacts == null)
+			contacts = new HashSet<>();
+		contacts.add(contact);
+		employee.setContacts(contacts);
+		return employee;
+	}
+	
+
 
 
 	/*public EmployeeDto addEmployeeContact( EmployeeDto employee, ContactDto contact) {
