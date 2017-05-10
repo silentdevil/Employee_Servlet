@@ -6,10 +6,14 @@ public class EditEmployeeScreenImpl implements Screen {
 
 	private EmployeeDto employee;
 	private List<RoleDto> roles;
+	private NameDto employeeName;
+	private AddressDto employeeAddress;
 
 	public EditEmployeeScreenImpl setEmployee(EmployeeDto employee, List<RoleDto> roles) {
 		this.employee = employee;
 		this.roles = roles;
+		employeeName = employee.getEmployeeName();
+		employeeAddress = employee.getAddress();
 		roles.removeAll(employee.getRoles());
 		return this;
 	}
@@ -24,30 +28,86 @@ public class EditEmployeeScreenImpl implements Screen {
 
 	         .addRow()
 	         .addColumn("Full name")
-	         .addColumn(employee.getEmployeeName().toString())
+	         .addColumn(new InputType().setType("text")
+			                                   .setName("txt_Title")
+			                                   .setValue(employeeName.getTitle())
+			                               	   .setPlaceHolder(employeeName.getTitle())
+			                                   .getStringOutput())
+	         .addColumn(new InputType().setType("text")
+			                                   .setName("txt_LastName")
+			                                   .setValue(employeeName.getLastName())
+			                               	   .setPlaceHolder(employeeName.getLastName())
+			                                   .getStringOutput())
+	         .addColumn(new InputType().setType("text")
+			                                   .setName("txt_FirstName")
+			                                   .setValue(employeeName.getFirstName())
+			                               	   .setPlaceHolder(employeeName.getFirstName())
+			                                   .getStringOutput())
+	         .addColumn(new InputType().setType("text")
+			                                   .setName("txt_MiddleName")
+			                                   .setValue(employeeName.getMiddleName())
+			                               	   .setPlaceHolder(employeeName.getMiddleName())
+			                                   .getStringOutput())
+	         .addColumn(new InputType().setType("text")
+			                                   .setName("txt_Suffix")
+			                                   .setValue(employeeName.getSuffix())
+			                               	   .setPlaceHolder(employeeName.getSuffix())
+			                                   .getStringOutput())
+						
 
 	         .addRow()
 	         .addColumn("Address")
-	         .addColumn(employee.getAddress().toString())
+	         .addColumn(new InputType().setType("text")
+			                                   .setName("txt_StreetNo")
+			                                   .setValue(employeeAddress.getStreetNo() + "")
+			                               	   .setPlaceHolder(employeeAddress.getStreetNo() + "")
+			                                   .getStringOutput())
+	         .addColumn(new InputType().setType("text")
+			                                   .setName("txt_Street")
+			                                   .setValue(employeeAddress.getStreet())
+			                               	   .setPlaceHolder(employeeAddress.getStreet())
+			                                   .getStringOutput())
+	         .addColumn(new InputType().setType("text")
+			                                   .setName("txt_Brgy")
+			                                   .setValue(employeeAddress.getBrgy())
+			                               	   .setPlaceHolder(employeeAddress.getBrgy())
+			                                   .getStringOutput())
+	         .addColumn(new InputType().setType("text")
+			                                   .setName("txt_City")
+			                                   .setValue(employeeAddress.getCity())
+			                               	   .setPlaceHolder(employeeAddress.getCity())
+			                                   .getStringOutput())
+	         .addColumn(new InputType().setType("text")
+			                                   .setName("txt_Zipcode")
+			                                   .setValue(employeeAddress.getZipcode())
+			                               	   .setPlaceHolder(employeeAddress.getZipcode())
+			                                   .getStringOutput())
 
 	         .addRow()
 	         .addColumn("Birthday")
-	         .addColumn(employee.getBirthday().toString())
-
-	         .addRow()
-	         .addColumn("Address")
-	         .addColumn(employee.getAddress().toString())
+	         .addColumn(new InputType().setType("text")
+			                                   .setName("txt_Birthday")
+			                                   .setValue(employee.getBirthday().toString())
+			                               	   .setPlaceHolder(employee.getBirthday().toString())
+			                                   .getStringOutput())
 
 	         .addRow()
 	         .addColumn("GWA")
-	         .addColumn(employee.getGwa() + "")
+	         .addColumn(new InputType().setType("text")
+			                                   .setName("txt_Gwa")
+			                                   .setValue(employee.getGwa() + "")
+			                               	   .setPlaceHolder(employee.getGwa() + "")
+			                                   .getStringOutput())
 
 	         .addRow()
 	         .addColumn("Date hired")
-	         .addColumn(employee.getDateHired().toString())
+	         .addColumn(new InputType().setType("text")
+			                                   .setName("txt_DateHired")
+			                                   .setValue(employee.getDateHired().toString())
+			                               	   .setPlaceHolder(employee.getDateHired().toString())
+			                                   .getStringOutput());
 
-	         .addRow()
-	         .addColumn("Contact");
+	        html.addBody(table.getStringOutput());
 
 	         Table contactTable = new Table()
 	         		.setBorder(1)
@@ -67,8 +127,7 @@ public class EditEmployeeScreenImpl implements Screen {
 				                                  .getStringOutput());
 	         		}
 
-	         		contactTable.addRow()
-									.addColumn("Contact");
+	         		contactTable.addRow();
 									DropDownMenu dropDownMenu = new DropDownMenu("employee_ContactType");
 									for(int i = 1; i < ContactType.SIZE + 1; i++) {
 										dropDownMenu.addOption(new Option(ContactType.valueOf(i) + "",
@@ -87,10 +146,9 @@ public class EditEmployeeScreenImpl implements Screen {
 				                                  .getStringOutput());
 
 
-	    table.addColumn(contactTable.getStringOutput())
-		     .addRow()
-		         .addColumn("Role");
-
+	    html.addBody(contactTable.getStringOutput());
+		
+		html.addBody("\n\nRole\n");
 		         	Table roleTable = new Table()
 		         		.setBorder(1)
 		         		.addRow();
@@ -115,13 +173,12 @@ public class EditEmployeeScreenImpl implements Screen {
 					                                  .setValue(employee.getEmployeeId() + "")
 					                                  .setOutput("Add Role")
 					                                  .getStringOutput());
-		    table.addColumn(roleTable.getStringOutput());
+		   html.addBody(roleTable.getStringOutput());
 
 	    
 	    
 
 	   	return html.setTitle("Edit Employee")
-	   		       .addBody(table.getStringOutput())
 	   		       .addBody(new InputType().setType("submit")
 	                              .setName("btn_UpdateEmployee")
 	                              .setValue("Update Employee")

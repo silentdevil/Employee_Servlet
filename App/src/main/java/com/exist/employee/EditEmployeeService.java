@@ -12,7 +12,7 @@ public class EditEmployeeService {
 		return employee;
 	}
 
-	public EmployeeDto delEmployeeRole(EmployeeDto employee, RoleDto role) {
+	public EmployeeDto deleteEmployeeRole(EmployeeDto employee, RoleDto role) {
 		try {
 			employee.getRoles().remove(role);	
 		} catch(Exception ex) {
@@ -36,6 +36,15 @@ public class EditEmployeeService {
 		employee.setContacts(contacts);
 		return employee;
 	}
+
+	public EmployeeDto deleteEmployeeContact(EmployeeDto employee, ContactDto contact) {
+		Set<ContactDto> contacts = employee.getContacts();
+		contacts.remove(contact);
+		employee.setContacts(contacts);
+		return employee;
+	}
+
+
 	
 
 

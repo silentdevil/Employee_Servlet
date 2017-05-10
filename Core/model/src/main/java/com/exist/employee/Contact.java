@@ -31,7 +31,7 @@ public class Contact implements java.io.Serializable, Comparable<Contact>
 	@Column(name="contact_id")
 	private long contactId;
 
-	
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="employee_id")
 	private Employee employee;

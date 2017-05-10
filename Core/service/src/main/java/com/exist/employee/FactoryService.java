@@ -67,7 +67,6 @@ public class FactoryService {
 	}
 	
 	public Set<Contact> createContacts(EmployeeDto employeeDto, Employee employee) throws Exception {
-		InputManager.output("PRINTED FROM CREATE CONTACTS");
 		Set<Contact> contacts = employee.getContacts();
 		if(contacts == null)
 			contacts = new TreeSet<>();

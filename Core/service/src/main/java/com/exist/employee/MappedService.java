@@ -38,4 +38,9 @@ public class MappedService {
 		
 		return roleList;
 	}
+
+	public ContactDto getContactDtoById(long id) {
+		Contact contact = empService.getContactById(id);
+		return mapper.mapContactSingle(contact);
+	}
 }

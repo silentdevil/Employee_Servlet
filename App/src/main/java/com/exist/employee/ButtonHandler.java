@@ -65,36 +65,39 @@ public class ButtonHandler {
 			screen = modifyRoleScreen;
 		} else if(request.getParameter("btn_AddEmployeeRole") != null) {
 			long roleId = Long.valueOf(request.getParameter("drp_EmployeeRole"));
-			long employeeId = Long.valueOf(request.getParameter("btn_AddEmployeeRole"));
-			EmployeeDto employee = buttonFunctions.addEmployeeRole(employeeId,roleId);
+			EmployeeDto employee = buttonFunctions.addEmployeeRole(roleId);
 			editEmployeeScreen.setEmployee(employee, buttonFunctions.getAllRoles());
 			screen = editEmployeeScreen;
 
 		 } else if(request.getParameter("btn_AddEmployeeContact") != null) {
-			long employeeId = Long.valueOf(request.getParameter("btn_AddEmployeeContact"));
 			if(!request.getParameter("employee_ContactInfo").isEmpty()) {
 				ContactDto contact = new ContactDto();
 				contact.setContactType(request.getParameter("employee_ContactType"));
 				contact.setContactInfo(request.getParameter("employee_ContactInfo"));
-				EmployeeDto employee = buttonFunctions.addEmployeeContact(employeeId, contact);
+				EmployeeDto employee = buttonFunctions.addEmployeeContact(contact);
 				editEmployeeScreen.setEmployee(employee, buttonFunctions.getAllRoles());
 				screen = editEmployeeScreen;
 			}
+		
+		} else if(request.getParameter("btn_DeleteEmployeeContact") != null) {
+			long contactId = Long.valueOf(request.getParameter("btn_DeleteEmployeeContact"));
+			EmployeeDto employee = buttonFunctions.deleteEmployeeContact(contactId);
+			editEmployeeScreen.setEmployee(employee, buttonFunctions.getAllRoles());
+			screen = editEmployeeScreen;
 			
+		} else if(request.getParameter("btn_DeleteEmployeeRole") != null) {
+			long roleId = Long.valueOf(request.getParameter("btn_DeleteEmployeeRole"));
+			EmployeeDto employee = buttonFunctions.deleteEmployeeRole(roleId);
+			editEmployeeScreen.setEmployee(employee, buttonFunctions.getAllRoles());
+			screen = editEmployeeScreen;
 
 		} else if(request.getParameter("btn_UpdateEmployee") != null) {
-			buttonFunctions.updateEmployee();
+			buttonFunctions.updateEmployee(getMapfromServlet(request, response));
 			 indexScreen.setEmpList(buttonFunctions.sort("dateHired"));
 			 screen = indexScreen; 
 
-		} else if(request.getParameter("btn_SaveEmployee") != null) {
-			 Enumeration<String> paramNames = request.getParameterNames();
-			 Map<String, String> employeeMap = new HashMap<>();
-			 while(paramNames.hasMoreElements()) {
-			 	String paramName = paramNames.nextElement();
-			 	employeeMap.put(paramName, request.getParameter(paramName));
-			 }
-			 buttonFunctions.saveEmployee(employeeMap);
+		}else if(request.getParameter("btn_SaveEmployee") != null) {
+			 buttonFunctions.saveEmployee(getMapfromServlet(request,response));
 			 indexScreen.setEmpList(buttonFunctions.sort("dateHired"));
 			 screen = indexScreen; 
 
@@ -110,6 +113,22 @@ public class ButtonHandler {
 			modifyRoleScreen.setRoleList(buttonFunctions.getAllRoles());
 			screen = modifyRoleScreen;
 
+		} else if(request.getParameter("btn_OutputRole_Employees") != null) { 
+			long roleId = Long.valueOf(request.getParameter("btn_OutputRole_Employees"));
+			RoleDto role = buttonFunctions.outputEmployees(roleId);
+			modifyRoleScreen.setSelectedRole(role);
+			modifyRoleScreen.setRoleList(buttonFunctions.getAllRoles());
+			screen = modifyRoleScreen;
+
+		} else if(request.getParameter("btn_RegEmpContact") != null) { 
+			ContactDto contact = new ContactDto();
+			contact.setContactType(request.getParameter("employee_ContactType"));
+			contact.setContactInfo(request.getParameter("employee_ContactInfo"));
+			EmployeeDto employee = buttonFunctions.regEmpAddContact(contact);
+			employeeRegisterScreen.setRoleList(buttonFunctions.getAllRoles());
+			employeeRegisterScreen.setEmployee(employee);
+			screen = employeeRegisterScreen;
+
 		} else if(request.getParameter("btn_Back") != null) {
 			screen = indexScreen;
 		}
@@ -117,8 +136,15 @@ public class ButtonHandler {
 
 	}
 
-
-
-
+	public  Map<String, String> getMapfromServlet(HttpServletRequest request,
+	                  HttpServletResponse response) throws ServletException, IOException { 
+		Enumeration<String> paramNames = request.getParameterNames();
+		 Map<String, String> employeeMap = new HashMap<>();
+		 while(paramNames.hasMoreElements()) {
+		 	String paramName = paramNames.nextElement();
+		 	employeeMap.put(paramName, request.getParameter(paramName));
+		 }
+		 return employeeMap;
+	}
 
 }

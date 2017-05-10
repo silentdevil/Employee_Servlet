@@ -44,7 +44,6 @@ public class EmployeeService {
     }
 
     public Employee findEmployeeById(Long id) {
-    	InputManager.output("hey");
     	return dao.get(Employee.class, id);
     }
 

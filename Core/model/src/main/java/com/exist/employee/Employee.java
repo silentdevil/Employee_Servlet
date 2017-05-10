@@ -56,7 +56,7 @@ public class Employee {
 	private Boolean currentlyHired;
 	
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	@OneToMany(mappedBy="employee",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="employee",fetch=FetchType.EAGER, orphanRemoval=true)
 	@Cascade({CascadeType.ALL})
 	private Set<Contact> contacts;
 	

@@ -62,9 +62,8 @@ public class DtoMapper {
 		return addressDto;
 	}
 
-	public ContactDto mapContactSingle(Contact c, EmployeeDto employee){
+	public ContactDto mapContactSingle(Contact c){
 		ContactDto contact = new ContactDto().setContactId(c.getContactId());
-		contact.setEmployee(employee);
 		contact.setContactType(c.getContactType());
 		contact.setContactInfo(c.getContactInfo());
 		return contact;
@@ -76,7 +75,8 @@ public class DtoMapper {
 			employee.setContacts(new TreeSet<>());
 		}
 		try {
-			employee.getContacts().forEach( c -> contacts.add(mapContactSingle(c,employeeDto)));
+			employee.getContacts().forEach( c -> contacts.add(mapContactSingle(c)
+									.setEmployee(employeeDto)));
 		} catch(Exception ex) {
 			System.out.println("Null contact passed");
 			ex.printStackTrace();
@@ -92,6 +92,8 @@ public class DtoMapper {
 		try {
 			roleDto.setRoleId(role.getRoleId());
 			roleDto.setRole(role.getRole());
+			roleDto.setEmployees(role.getEmployees());
+
 		} catch (Exception ex) {
 			System.out.println("Null role passed");
 			ex.printStackTrace();

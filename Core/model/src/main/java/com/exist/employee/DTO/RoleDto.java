@@ -10,7 +10,7 @@ public class RoleDto {
 	private long roleId;
 	private String role;
 	
-	private Set<EmployeeDto> employees = new HashSet<>();
+	private Set<Employee> employees = new HashSet<>();
 	
 
 	public long getRoleId() {
@@ -29,11 +29,11 @@ public class RoleDto {
 		this.role = role;
 	}
 
-	public Set<EmployeeDto> getEmployees() {
+	public Set<Employee> getEmployees() {
 		return employees;
 	}
 
-	public void setEmployees(Set<EmployeeDto> employees) {
+	public void setEmployees(Set<Employee> employees) {
 		this.employees = employees;
 	}
 	
