@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.ProjectionList;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Property;
@@ -98,10 +99,14 @@ public class Dao {
       Session session = beginTransaction();
 	  Criteria criteria = session.createCriteria(type);
 	  criteria.setCacheable(true);
-    criteria.setProjection(Projections.projectionList()
-                                      .add(Projections.property("employeeId"))
-                                      .add(Projections.property("employeeName"))
-                                      .add(Projections.property(order)))
+    ProjectionList projectionList = Projections.projectionList();
+    
+    projectionList .add(Projections.property("employeeId"))
+                   .add(Projections.property("employeeName"));
+    if(!order.equals("employeeName.lastName")) {
+       projectionList.add(Projections.property(order));
+    } 
+    criteria.setProjection(projectionList)
             .addOrder(Property.forName(order).asc());
       List list = criteria.list();
       printStatistics(statistics);

@@ -112,8 +112,7 @@ public class EmployeeRegisterScreenImpl implements Screen {
 		     	 .addColumn("GWA")
 		     	 .addColumn(new InputType().setType("text")
 		                                   .setName("txt_Gwa")
-		                                   .setValue((employee.getGwa() == null) ?
-		                                     		"0" : employee.getGwa() + "")
+		                                   .setValue(employee.getGwa() + "")
 		                               	   .setPlaceHolder("GWA")
 		                               	   .setRequired("required")
 		                                   .getStringOutput())

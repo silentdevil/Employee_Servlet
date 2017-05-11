@@ -48,8 +48,8 @@ public class ButtonHandler {
 			indexScreen.setEmpList(buttonFunctions.sort("dateHired"));
 			screen = indexScreen;
 
-		} else if(request.getParameter("btn_Lastname")!=null) {
-			indexScreen.setEmpList(buttonFunctions.sort("dateHired"));
+		} else if(request.getParameter("btn_SortLastname")!=null) {
+			indexScreen.setEmpList(buttonFunctions.sort("employeeName.lastName"));
 			screen = indexScreen;
 
 		} else if(request.getParameter("btn_EditEmployee") != null) {

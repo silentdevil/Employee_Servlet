@@ -30,7 +30,7 @@ public class EmployeeServlet extends HttpServlet {
   public void doGet(HttpServletRequest request,
                   HttpServletResponse response) throws ServletException, IOException {
     PrintWriter out = response.getWriter();
-    view = new IndexViewImpl(indexScreen.setEmpList(empService.getAllEmployees("employeeName")));
+    view = new IndexViewImpl(indexScreen.setEmpList(empService.getAllEmployees("employeeName.lastName")));
     out.print(view.publish());
 
   }

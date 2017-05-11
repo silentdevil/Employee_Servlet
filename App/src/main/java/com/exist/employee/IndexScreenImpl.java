@@ -28,9 +28,10 @@ public class IndexScreenImpl implements Screen {
 	    for(Object[] obj: empList) {
 	      table.addRow()
 	           .addColumn(obj[0] + "")
-	           .addColumn(obj[1] + "")
-	           .addColumn(obj[2] + "")
-	           .addColumn(new Button().setType("submit")
+	           .addColumn(obj[1] + "");
+	        if(obj.length > 2)
+	        	table.addColumn(obj[2] + ""); 
+	      table.addColumn(new Button().setType("submit")
 	                                  .setName("btn_EditEmployee")
 	                                  .setValue(obj[0] + "")
 	                                  .setOutput("EDIT")
