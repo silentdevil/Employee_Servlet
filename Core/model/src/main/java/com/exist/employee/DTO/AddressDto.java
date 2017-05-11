@@ -3,18 +3,18 @@ package com.exist.employee;
 public class AddressDto {
 
    
-   private int streetNo;
+   private String streetNo;
    private String street; 
    private String brgy;    
    private String city;     
    private String zipcode; 
 
   
-   public int getStreetNo() {
+   public String getStreetNo() {
       return streetNo;
    }
 
-   public AddressDto setStreetNo(int streetNo) {
+   public AddressDto setStreetNo(String streetNo) {
       this.streetNo = streetNo;
       return this;
    }

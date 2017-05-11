@@ -14,7 +14,7 @@ import org.hibernate.annotations.*;
 public class Address {
 	
    @Column(name="street_no")
-   private int streetNo;
+   private String streetNo;
    private String street; 
    private String brgy; 
 
@@ -23,11 +23,11 @@ public class Address {
 
    
 
-   public int getStreetNo() {
+   public String getStreetNo() {
       return streetNo;
    }
 
-   public void setStreetNo(int streetNo) {
+   public void setStreetNo(String streetNo) {
       this.streetNo = streetNo;
    }
 

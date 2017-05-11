@@ -35,34 +35,44 @@ public class ButtonHandler {
 	                  HttpServletResponse response) throws ServletException, IOException {
 		Screen screen = null;
 		if(request.getParameter("btn_AddEmp")!=null) {
+			EmployeeDto employee = buttonFunctions.addEmployee();
+			employeeRegisterScreen.setEmployee(employee);
 			employeeRegisterScreen.setRoleList(buttonFunctions.getAllRoles());
 			screen = employeeRegisterScreen;
+
 		} else if(request.getParameter("btn_SortGwa")!=null) {
 			indexScreen.setEmpList(buttonFunctions.sort("gwa"));
 			screen = indexScreen;
+
 		} else if(request.getParameter("btn_SortDate")!=null) {
 			indexScreen.setEmpList(buttonFunctions.sort("dateHired"));
 			screen = indexScreen;
+
 		} else if(request.getParameter("btn_Lastname")!=null) {
 			indexScreen.setEmpList(buttonFunctions.sort("dateHired"));
 			screen = indexScreen;
+
 		} else if(request.getParameter("btn_EditEmployee") != null) {
 			long id = Long.valueOf(request.getParameter("btn_EditEmployee"));
 			EmployeeDto employee = buttonFunctions.editEmployee(id);
 			editEmployeeScreen.setEmployee(employee, buttonFunctions.getAllRoles());
 			screen = editEmployeeScreen;
+
 		} else if(request.getParameter("btn_ModifyRoles") != null) {
 			modifyRoleScreen.setRoleList(buttonFunctions.getAllRoles());
 			screen = modifyRoleScreen;
+
 		} else if(request.getParameter("btn_DeleteEmployee") != null) {
 			long id = Long.valueOf(request.getParameter("btn_DeleteEmployee"));
 			buttonFunctions.deleteEmployee(id);
 			indexScreen.setEmpList(buttonFunctions.sort("dateHired"));
 			screen = indexScreen;
+
 		} else if(request.getParameter("btn_DeleteRole") != null) {
 			buttonFunctions.deleteRole(Long.valueOf(request.getParameter("btn_DeleteRole")));
 			modifyRoleScreen.setRoleList(buttonFunctions.getAllRoles());
 			screen = modifyRoleScreen;
+
 		} else if(request.getParameter("btn_AddEmployeeRole") != null) {
 			long roleId = Long.valueOf(request.getParameter("drp_EmployeeRole"));
 			EmployeeDto employee = buttonFunctions.addEmployeeRole(roleId);
@@ -124,13 +134,30 @@ public class ButtonHandler {
 			ContactDto contact = new ContactDto();
 			contact.setContactType(request.getParameter("employee_ContactType"));
 			contact.setContactInfo(request.getParameter("employee_ContactInfo"));
-			EmployeeDto employee = buttonFunctions.regEmpAddContact(contact);
+			EmployeeDto employee = buttonFunctions.regEmpAddContact(contact, 
+										getMapfromServlet(request, response));
 			employeeRegisterScreen.setRoleList(buttonFunctions.getAllRoles());
 			employeeRegisterScreen.setEmployee(employee);
 			screen = employeeRegisterScreen;
 
 		} else if(request.getParameter("btn_Back") != null) {
 			screen = indexScreen;
+
+		} else if(request.getParameter("btn_RegEmpRole") != null) { 
+			long roleId = Long.valueOf(request.getParameter("employee_Role"));
+			EmployeeDto employee = buttonFunctions.regEmpAddRole(roleId, 
+										getMapfromServlet(request, response));
+			employeeRegisterScreen.setRoleList(buttonFunctions.getAllRoles());
+			employeeRegisterScreen.setEmployee(employee);
+			screen = employeeRegisterScreen;
+
+		} else if(request.getParameter("btn_RegEmpRoleDelete") != null) {
+			long roleId = Long.valueOf(request.getParameter("btn_RegEmpRoleDelete"));
+			EmployeeDto employee = buttonFunctions.regEmpDeleteRole(roleId, 
+										getMapfromServlet(request, response));
+			employeeRegisterScreen.setRoleList(buttonFunctions.getAllRoles());
+			employeeRegisterScreen.setEmployee(employee);
+			screen = employeeRegisterScreen;
 		}
 		return screen;
 

@@ -30,7 +30,13 @@ public class ButtonFunctions {
 	private List<Employee> empList;
 	private List<Role> roleList;
 
-	
+	public EmployeeDto addEmployee() {
+		employee = new EmployeeDto();
+		employee.setEmployeeName(new NameDto());
+		employee.setAddress(new AddressDto());
+		return employee;
+	}
+
 	public EmployeeDto editEmployee(long employeeId) {
 		employee = mappedService.getEmployeeDtoById(employeeId);
 		return employee;
@@ -68,7 +74,7 @@ public class ButtonFunctions {
 
 	}
 
-	public EmployeeDto employeeFillValues(Map<String, String> employeeMap, EmployeeDto employee) {
+	public EmployeeDto employeeFillValues(Map<String, String> employeeMap, EmployeeDto emp) {
 		 NameDto name = new NameDto();
 		      	  name.setLastName(employeeMap.get("txt_LastName").toUpperCase())
 		              .setFirstName(employeeMap.get("txt_FirstName").toUpperCase())
@@ -76,9 +82,9 @@ public class ButtonFunctions {
 		              .setTitle(employeeMap.get("txt_Title").toUpperCase())
 		              .setSuffix(employeeMap.get("txt_Suffix").toUpperCase());
 
-	    return employee.setEmployeeName(name)        
+	   		   emp.setEmployeeName(name)        
 	      		  .setAddress(
-	                new AddressDto().setStreetNo(Integer.parseInt(employeeMap.get("txt_StreetNo")))
+	                new AddressDto().setStreetNo(employeeMap.get("txt_StreetNo").toUpperCase())
 	                                .setStreet(employeeMap.get("txt_Street").toUpperCase())
 	                                .setBrgy(employeeMap.get("txt_Brgy").toUpperCase())
 	                                .setCity(employeeMap.get("txt_City").toUpperCase())
@@ -86,7 +92,9 @@ public class ButtonFunctions {
 	              .setGwa(Float.valueOf(employeeMap.get("txt_Gwa")))
 	              .setBirthday(DatePicker.parseDate(employeeMap.get("txt_Birthday")))
 	              .setDateHired(DatePicker.parseDate(employeeMap.get("txt_DateHired")))
-	              .setCurrentlyHired(Boolean.valueOf(employeeMap.get("txt_CurrentlyHired")));
+	              .setCurrentlyHired(Boolean.valueOf(employeeMap.get("drp_CurrentlyHired")));
+	    return emp;
+
 	}
 
 	public void addNewRole(List<RoleDto> roleList, String role) {
@@ -146,9 +154,22 @@ public class ButtonFunctions {
 		return mappedService.getRoleDtoById(roleId);
 	}
 
-	public EmployeeDto regEmpAddContact(ContactDto contact) {
-		employee = new EmployeeDto();
-		employee.getContacts().add(contact);
+	public EmployeeDto regEmpAddContact(ContactDto contact, Map<String, String> employeeMap) {
+		Set<ContactDto> contacts = employee.getContacts();
+		contacts.add(contact);
+		employee = employeeFillValues(employeeMap, employee);
+		return employee;
+	}
+
+	public EmployeeDto regEmpAddRole(long roleId, Map<String, String> employeeMap) {
+		employee = addEmployeeRole(roleId);
+		employee = employeeFillValues(employeeMap, employee);
+		return employee;
+	}
+
+	public EmployeeDto regEmpDeleteRole(long roleId, Map<String, String> employeeMap) {
+		employee = deleteEmployeeRole(roleId);
+		employee = employeeFillValues(employeeMap, employee);
 		return employee;
 	}
 

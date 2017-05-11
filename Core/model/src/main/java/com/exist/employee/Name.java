@@ -5,7 +5,7 @@ import javax.persistence.Column;
 import org.hibernate.annotations.*;
 
 @Embeddable
-public class Name{
+public class Name {
 
 	@Column(name = "last_name")
 	private String lastName = "";

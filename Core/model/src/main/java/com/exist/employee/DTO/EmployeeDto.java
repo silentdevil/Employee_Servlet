@@ -3,6 +3,7 @@ import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 
 public class EmployeeDto {
 	
@@ -11,12 +12,12 @@ public class EmployeeDto {
 	private AddressDto address;
 	
 	private Date birthday;
-	private Float gwa;
+	private float gwa = 0;
 	
 	private Date dateHired;
 	private Boolean currentlyHired;
 	
-	private Set<ContactDto> contacts;
+	private Set<ContactDto> contacts = new TreeSet<>();
 
 	private Set<RoleDto> roles = new HashSet<>();
 
@@ -56,11 +57,11 @@ public class EmployeeDto {
 		return this;
 	}
 	
-	public Float getGwa() {
+	public float getGwa() {
 		return gwa;
 	}
 	
-	public EmployeeDto setGwa(Float gwa) {
+	public EmployeeDto setGwa(float gwa) {
 		this.gwa = gwa;
 		return this;
 	}

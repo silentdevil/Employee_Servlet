@@ -23,7 +23,7 @@ public class IndexScreenImpl implements Screen {
 	         .setFormMethod("POST")
 	         .setBorder(1)
 	         .addRow()
-	         .addColumn("ID").addColumn("Firstname").addColumn("Middlename");
+	         .addColumn("ID").addColumn("Fullname");
 
 	    for(Object[] obj: empList) {
 	      table.addRow()

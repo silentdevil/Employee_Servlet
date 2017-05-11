@@ -77,7 +77,12 @@ public class ModifyRoleScreenImpl implements Screen {
 			}
 		}
 
-	    return html.addBody(employeeTable.getStringOutput()).getStringOutput();
+	    return html.addBody(employeeTable.getStringOutput())
+	    		    .addBody(new InputType().setType("submit")
+	                              .setName("btn_Back")
+	                              .setValue("Back")
+	                              .getStringOutput())
+	    		    .getStringOutput();
 	}
 
 }
